@@ -61,3 +61,13 @@ idea {
         sourceDirs += file('src/api/java')
     }
 }
+
+// TODO: temporarily disable some mod compats
+sourceSets {
+    main {
+        java {
+            exclude '**/modcompat/thaumcraft/**'
+            exclude '**/modcompat/enderio/**'
+        }
+    }
+}
