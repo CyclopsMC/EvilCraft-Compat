@@ -14,11 +14,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.cyclops.cyclopscore.helper.L10NHelpers;
 import org.cyclops.evilcraft.block.SanguinaryEnvironmentalAccumulator;
 import org.cyclops.evilcraft.client.gui.container.GuiBloodInfuser;
-import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.CommonEnvironmentalAccumulatorRecipeCategory;
-import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEIBase;
-import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeHandler;
 import org.cyclops.evilcraft.tileentity.TileSanguinaryEnvironmentalAccumulator;
 import org.cyclops.evilcraft.tileentity.tickaction.sanguinaryenvironmentalaccumulator.AccumulateItemTickAction;
+import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.CommonEnvironmentalAccumulatorRecipeCategory;
+import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEIBase;
 
 import javax.annotation.Nonnull;
 
@@ -49,7 +48,7 @@ public class SanguinaryEnvironmentalAccumulatorRecipeCategory extends CommonEnvi
     @Nonnull
     @Override
     public String getUid() {
-        return SanguinaryEnvironmentalAccumulatorRecipeHandler.CATEGORY;
+        return SanguinaryEnvironmentalAccumulatorRecipeJEI.CATEGORY;
     }
 
     @Nonnull

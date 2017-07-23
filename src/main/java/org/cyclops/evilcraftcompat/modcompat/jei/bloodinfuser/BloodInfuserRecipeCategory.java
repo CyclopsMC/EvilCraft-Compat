@@ -12,10 +12,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.cyclops.cyclopscore.helper.L10NHelpers;
+import org.cyclops.evilcraft.Reference;
 import org.cyclops.evilcraft.block.BloodInfuser;
 import org.cyclops.evilcraft.client.gui.container.GuiBloodInfuser;
 import org.cyclops.evilcraft.item.Promise;
-import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeJEI;
 import org.cyclops.evilcraft.tileentity.TileBloodInfuser;
 import org.cyclops.evilcraft.tileentity.TileWorking;
 
@@ -49,13 +49,18 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory {
     @Nonnull
     @Override
     public String getUid() {
-        return BloodInfuserRecipeHandler.CATEGORY;
+        return BloodInfuserRecipeJEI.CATEGORY;
     }
 
     @Nonnull
     @Override
     public String getTitle() {
         return L10NHelpers.localize(BloodInfuser.getInstance().getUnlocalizedName() + ".name");
+    }
+
+    @Override
+    public String getModName() {
+        return Reference.MOD_NAME;
     }
 
     @Nonnull

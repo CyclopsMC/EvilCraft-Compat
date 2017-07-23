@@ -8,6 +8,7 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IStackHelper;
 import mezz.jei.plugins.vanilla.crafting.ShapedOreRecipeWrapper;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
@@ -16,7 +17,6 @@ import org.cyclops.cyclopscore.helper.BlockHelpers;
 import org.cyclops.evilcraft.block.DisplayStand;
 import org.cyclops.evilcraft.core.recipe.DisplayStandRecipe;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,7 +40,7 @@ public class DisplayStandRecipeJEI extends ShapedOreRecipeWrapper {
             int plankWoodMeta = plankWoodStack.getItemDamage();
             if (plankWoodMeta == OreDictionary.WILDCARD_VALUE) {
                 NonNullList<ItemStack> plankWoodSubItems = NonNullList.create();
-                plankWoodStack.getItem().getSubItems(plankWoodStack.getItem(), null, plankWoodSubItems);
+                plankWoodStack.getItem().getSubItems(CreativeTabs.SEARCH, plankWoodSubItems);
                 for (ItemStack plankWoodSubItem : plankWoodSubItems) {
                     IBlockState plankWoodBlockState = BlockHelpers.getBlockStateFromItemStack(plankWoodSubItem);
                     this.outputs.add(DisplayStand.getInstance()
@@ -57,7 +57,7 @@ public class DisplayStandRecipeJEI extends ShapedOreRecipeWrapper {
     @Override
     public void getIngredients(IIngredients ingredients) {
         IStackHelper stackHelper = jeiHelpers.getStackHelper();
-        List<List<ItemStack>> inputs = stackHelper.expandRecipeItemStackInputs(Arrays.asList(recipe.getInput()));
+        List<List<ItemStack>> inputs = stackHelper.expandRecipeItemStackInputs(recipe.getIngredients());
         ingredients.setInputLists(ItemStack.class, inputs);
         ingredients.setOutputs(ItemStack.class, outputs);
     }

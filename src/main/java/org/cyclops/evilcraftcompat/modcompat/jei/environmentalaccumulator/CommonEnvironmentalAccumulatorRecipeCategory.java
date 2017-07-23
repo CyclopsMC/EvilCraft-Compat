@@ -13,7 +13,6 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.cyclops.evilcraft.Reference;
 import org.cyclops.evilcraft.core.weather.WeatherType;
-import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEI;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -38,6 +37,11 @@ public abstract class CommonEnvironmentalAccumulatorRecipeCategory implements IR
         weatherIcons.put(WeatherType.CLEAR, guiHelper.createDrawable(weatherResourceLocation, 0, 0, 16, 16));
         weatherIcons.put(WeatherType.RAIN, guiHelper.createDrawable(weatherResourceLocation, 16, 0, 16, 16));
         weatherIcons.put(WeatherType.LIGHTNING, guiHelper.createDrawable(weatherResourceLocation, 32, 0, 16, 16));
+    }
+
+    @Override
+    public String getModName() {
+        return Reference.MOD_NAME;
     }
 
     @Nullable

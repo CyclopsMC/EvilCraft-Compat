@@ -12,9 +12,6 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.cyclops.cyclopscore.helper.L10NHelpers;
 import org.cyclops.evilcraft.block.EnvironmentalAccumulator;
-import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.CommonEnvironmentalAccumulatorRecipeCategory;
-import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeHandler;
-import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEIBase;
 
 import javax.annotation.Nonnull;
 
@@ -41,7 +38,7 @@ public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalA
     @Nonnull
     @Override
     public String getUid() {
-        return EnvironmentalAccumulatorRecipeHandler.CATEGORY;
+        return EnvironmentalAccumulatorRecipeJEI.CATEGORY;
     }
 
     @Nonnull

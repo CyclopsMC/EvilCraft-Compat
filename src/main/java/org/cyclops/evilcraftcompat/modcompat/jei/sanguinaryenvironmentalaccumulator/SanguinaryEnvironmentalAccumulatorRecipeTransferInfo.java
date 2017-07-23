@@ -5,7 +5,6 @@ import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import org.cyclops.evilcraft.inventory.container.ContainerSanguinaryEnvironmentalAccumulator;
-import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeHandler;
 import org.cyclops.evilcraft.tileentity.TileSanguinaryEnvironmentalAccumulator;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public class SanguinaryEnvironmentalAccumulatorRecipeTransferInfo implements IRe
 
     @Override
     public String getRecipeCategoryUid() {
-        return SanguinaryEnvironmentalAccumulatorRecipeHandler.CATEGORY;
+        return SanguinaryEnvironmentalAccumulatorRecipeJEI.CATEGORY;
     }
 
     @Override

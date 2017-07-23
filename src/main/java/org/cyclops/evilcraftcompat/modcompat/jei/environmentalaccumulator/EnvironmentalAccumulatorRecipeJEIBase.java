@@ -3,7 +3,7 @@ package org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.BlankRecipeWrapper;
+import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
 import org.cyclops.cyclopscore.recipe.custom.api.IRecipe;
 import org.cyclops.evilcraft.core.recipe.custom.EnvironmentalAccumulatorRecipeComponent;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
-public abstract class EnvironmentalAccumulatorRecipeJEIBase extends BlankRecipeWrapper {
+public abstract class EnvironmentalAccumulatorRecipeJEIBase implements IRecipeWrapper {
 
     private final IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties> recipe;
     private final WeatherType inputWeather;

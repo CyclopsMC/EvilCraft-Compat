@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import org.cyclops.cyclopscore.recipe.custom.api.IRecipe;
+import org.cyclops.evilcraft.Reference;
 import org.cyclops.evilcraft.block.EnvironmentalAccumulator;
 import org.cyclops.evilcraft.core.recipe.custom.EnvironmentalAccumulatorRecipeComponent;
 import org.cyclops.evilcraft.core.recipe.custom.EnvironmentalAccumulatorRecipeProperties;
@@ -18,6 +19,8 @@ import java.util.List;
  */
 @Data
 public class EnvironmentalAccumulatorRecipeJEI extends EnvironmentalAccumulatorRecipeJEIBase {
+
+    public static final String CATEGORY = Reference.MOD_ID + ":environmentalAccumulator";
 
     public EnvironmentalAccumulatorRecipeJEI(IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties> recipe) {
         super(recipe);

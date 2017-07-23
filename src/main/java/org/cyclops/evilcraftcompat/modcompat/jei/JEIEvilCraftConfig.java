@@ -2,29 +2,28 @@ package org.cyclops.evilcraftcompat.modcompat.jei;
 
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
+import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import org.cyclops.evilcraft.Configs;
 import org.cyclops.evilcraft.block.*;
 import org.cyclops.evilcraft.client.gui.container.GuiBloodInfuser;
 import org.cyclops.evilcraft.client.gui.container.GuiExaltedCrafter;
 import org.cyclops.evilcraft.client.gui.container.GuiSanguinaryEnvironmentalAccumulator;
+import org.cyclops.evilcraft.core.recipe.DisplayStandRecipe;
 import org.cyclops.evilcraft.item.*;
-import org.cyclops.evilcraftcompat.modcompat.jei.JEIModCompat;
-import org.cyclops.evilcraftcompat.modcompat.jei.SubtypeInterpreterActivatableFluidContainer;
 import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeCategory;
-import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeHandler;
 import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeJEI;
 import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeTransferInfo;
-import org.cyclops.evilcraftcompat.modcompat.jei.displaystand.DisplayStandRecipeHandler;
+import org.cyclops.evilcraftcompat.modcompat.jei.displaystand.DisplayStandRecipeJEI;
 import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeCategory;
-import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeHandler;
 import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEI;
 import org.cyclops.evilcraftcompat.modcompat.jei.exaltedcrafter.ExaltedCrafterRecipeTransferInfo;
 import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeCategory;
-import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeHandler;
 import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeJEI;
 import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeTransferInfo;
 
@@ -62,51 +61,54 @@ public class JEIEvilCraftConfig implements IModPlugin {
     }
 
     @Override
+    public void registerCategories(IRecipeCategoryRegistration registry) {
+        registry.addRecipeCategories(new BloodInfuserRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new EnvironmentalAccumulatorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new SanguinaryEnvironmentalAccumulatorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+    }
+
+    @Override
     public void register(@Nonnull IModRegistry registry) {
         JEI_HELPER = registry.getJeiHelpers();
         if(JEIModCompat.canBeUsed) {
             // Blood Infuser
-            registry.addRecipes(BloodInfuserRecipeJEI.getAllRecipes());
-            registry.addRecipeCategories(new BloodInfuserRecipeCategory(JEI_HELPER.getGuiHelper()));
-            registry.addRecipeHandlers(new BloodInfuserRecipeHandler());
+            registry.addRecipes(BloodInfuserRecipeJEI.getAllRecipes(), BloodInfuserRecipeJEI.CATEGORY);
             registry.addRecipeClickArea(GuiBloodInfuser.class,
                     GuiBloodInfuser.PROGRESSTARGETX, GuiBloodInfuser.PROGRESSTARGETY,
                     GuiBloodInfuser.PROGRESSWIDTH, GuiBloodInfuser.PROGRESSHEIGHT,
-                    BloodInfuserRecipeHandler.CATEGORY);
+                    BloodInfuserRecipeJEI.CATEGORY);
             registry.getRecipeTransferRegistry().addRecipeTransferHandler(new BloodInfuserRecipeTransferInfo());
-            registry.addRecipeCategoryCraftingItem(new ItemStack(BloodInfuser.getInstance()), BloodInfuserRecipeHandler.CATEGORY);
+            registry.addRecipeCatalyst(new ItemStack(BloodInfuser.getInstance()), BloodInfuserRecipeJEI.CATEGORY);
 
             // Envir Acc
-            registry.addRecipes(EnvironmentalAccumulatorRecipeJEI.getAllRecipes());
-            registry.addRecipeCategories(new EnvironmentalAccumulatorRecipeCategory(JEI_HELPER.getGuiHelper()));
-            registry.addRecipeHandlers(new EnvironmentalAccumulatorRecipeHandler());
-            registry.addRecipeCategoryCraftingItem(new ItemStack(EnvironmentalAccumulator.getInstance()), EnvironmentalAccumulatorRecipeHandler.CATEGORY);
+            registry.addRecipes(EnvironmentalAccumulatorRecipeJEI.getAllRecipes(), EnvironmentalAccumulatorRecipeJEI.CATEGORY);
+            registry.addRecipeCatalyst(new ItemStack(EnvironmentalAccumulator.getInstance()), EnvironmentalAccumulatorRecipeJEI.CATEGORY);
 
             // Sanguinary Envir Acc
-            registry.addRecipes(SanguinaryEnvironmentalAccumulatorRecipeJEI.getAllSanguinaryRecipes());
-            registry.addRecipeCategories(new SanguinaryEnvironmentalAccumulatorRecipeCategory(JEI_HELPER.getGuiHelper()));
-            registry.addRecipeHandlers(new SanguinaryEnvironmentalAccumulatorRecipeHandler());
+            registry.addRecipes(SanguinaryEnvironmentalAccumulatorRecipeJEI.getAllSanguinaryRecipes(), SanguinaryEnvironmentalAccumulatorRecipeJEI.CATEGORY);
             registry.addRecipeClickArea(GuiSanguinaryEnvironmentalAccumulator.class, GuiSanguinaryEnvironmentalAccumulator.PROGRESSTARGETX,
                     GuiSanguinaryEnvironmentalAccumulator.PROGRESSTARGETY, GuiSanguinaryEnvironmentalAccumulator.PROGRESSWIDTH,
-                    GuiSanguinaryEnvironmentalAccumulator.PROGRESSHEIGHT, SanguinaryEnvironmentalAccumulatorRecipeHandler.CATEGORY);
+                    GuiSanguinaryEnvironmentalAccumulator.PROGRESSHEIGHT, SanguinaryEnvironmentalAccumulatorRecipeJEI.CATEGORY);
             registry.getRecipeTransferRegistry().addRecipeTransferHandler(new SanguinaryEnvironmentalAccumulatorRecipeTransferInfo());
-            registry.addRecipeCategoryCraftingItem(new ItemStack(SanguinaryEnvironmentalAccumulator.getInstance()), SanguinaryEnvironmentalAccumulatorRecipeHandler.CATEGORY);
+            registry.addRecipeCatalyst(new ItemStack(SanguinaryEnvironmentalAccumulator.getInstance()), SanguinaryEnvironmentalAccumulatorRecipeJEI.CATEGORY);
 
             // Exalted Crafter
             registry.addRecipeClickArea(GuiExaltedCrafter.class, 88, 32, 28, 23, VanillaRecipeCategoryUid.CRAFTING);
             registry.getRecipeTransferRegistry().addRecipeTransferHandler(new ExaltedCrafterRecipeTransferInfo());
             NonNullList<ItemStack> exaltedCrafters = NonNullList.create();
-            ExaltedCrafter.getInstance().getSubItems(ExaltedCrafter.getInstance(), null, exaltedCrafters);
+            ExaltedCrafter.getInstance().getSubItems(CreativeTabs.SEARCH, exaltedCrafters);
             for (ItemStack exaltedCrafter : exaltedCrafters) {
-                registry.addRecipeCategoryCraftingItem(exaltedCrafter, VanillaRecipeCategoryUid.CRAFTING);
+                registry.addRecipeCatalyst(exaltedCrafter, VanillaRecipeCategoryUid.CRAFTING);
             }
 
             // Display Stand
-            registry.addRecipeHandlers(new DisplayStandRecipeHandler());
+            registry.handleRecipes(DisplayStandRecipe.class,
+                    (recipe) -> new DisplayStandRecipeJEI(JEIEvilCraftConfig.JEI_HELPER, recipe),
+                    VanillaRecipeCategoryUid.CRAFTING);
 
             // Ignore items
-            JEI_HELPER.getItemBlacklist().addItemToBlacklist(new ItemStack(BloodStainedBlock.getInstance()));
-            JEI_HELPER.getItemBlacklist().addItemToBlacklist(new ItemStack(InvisibleRedstoneBlock.getInstance()));
+            JEI_HELPER.getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(BloodStainedBlock.getInstance()));
+            JEI_HELPER.getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(InvisibleRedstoneBlock.getInstance()));
         }
     }
 

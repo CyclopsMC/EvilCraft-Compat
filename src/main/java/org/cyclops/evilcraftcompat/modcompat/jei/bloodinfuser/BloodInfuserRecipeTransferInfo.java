@@ -5,7 +5,6 @@ import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import org.cyclops.evilcraft.inventory.container.ContainerBloodInfuser;
-import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeHandler;
 import org.cyclops.evilcraft.tileentity.TileBloodInfuser;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public class BloodInfuserRecipeTransferInfo implements IRecipeTransferInfo {
 
     @Override
     public String getRecipeCategoryUid() {
-        return BloodInfuserRecipeHandler.CATEGORY;
+        return BloodInfuserRecipeJEI.CATEGORY;
     }
 
     @Override
