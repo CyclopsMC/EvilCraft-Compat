@@ -1,8 +1,8 @@
 package org.cyclops.evilcraftcompat.modcompat.jei;
 
 import org.cyclops.cyclopscore.modcompat.IModCompat;
-import org.cyclops.evilcraft.EvilCraft;
 import org.cyclops.evilcraft.Reference;
+import org.cyclops.evilcraftcompat.EvilCraftCompat;
 
 /**
  * Config for the JEI integration of this mod.
@@ -19,7 +19,7 @@ public class JEIModCompat implements IModCompat {
 	@Override
 	public void onInit(Step initStep) {
 		if(initStep == Step.PREINIT) {
-			canBeUsed = EvilCraft._instance.getModCompatLoader().shouldLoadModCompat(this);
+			canBeUsed = EvilCraftCompat._instance.getModCompatLoader().shouldLoadModCompat(this);
 		}
 	}
 
