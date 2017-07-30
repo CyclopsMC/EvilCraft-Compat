@@ -18,7 +18,7 @@ import java.util.List;
  * @author rubensworks
  */
 @Data
-public class EnvironmentalAccumulatorRecipeJEI extends EnvironmentalAccumulatorRecipeJEIBase {
+public class EnvironmentalAccumulatorRecipeJEI extends EnvironmentalAccumulatorRecipeJEIBase<EnvironmentalAccumulatorRecipeJEI> {
 
     public static final String CATEGORY = Reference.MOD_ID + ":environmentalAccumulator";
 
@@ -26,13 +26,16 @@ public class EnvironmentalAccumulatorRecipeJEI extends EnvironmentalAccumulatorR
         super(recipe);
     }
 
-    public static List<org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEI> getAllRecipes() {
-        return Lists.transform(EnvironmentalAccumulator.getInstance().getRecipeRegistry().allRecipes(), new Function<IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties>, org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEI>() {
-            @Nullable
-            @Override
-            public org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEI apply(@Nullable IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties> input) {
-                return new org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEI(input);
-            }
-        });
+    protected EnvironmentalAccumulatorRecipeJEI() {
+        super();
+    }
+
+    @Override
+    protected EnvironmentalAccumulatorRecipeJEI newInstance(IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties> input) {
+        return new EnvironmentalAccumulatorRecipeJEI(input);
+    }
+
+    public static List<EnvironmentalAccumulatorRecipeJEI> getAllRecipes() {
+        return new EnvironmentalAccumulatorRecipeJEI().createAllRecipes();
     }
 }

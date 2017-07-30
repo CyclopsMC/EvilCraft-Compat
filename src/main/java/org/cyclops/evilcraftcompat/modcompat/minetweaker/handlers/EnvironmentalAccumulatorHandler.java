@@ -31,16 +31,6 @@ public class EnvironmentalAccumulatorHandler extends RecipeRegistryHandler<Envir
         return "EnvironmentalAccumulator";
     }
 
-    @Override
-    protected IJeiRecipeWrapperWrapper<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties> createJeiWrapperWrapper() {
-        return new IJeiRecipeWrapperWrapper<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties>() {
-            @Override
-            public IRecipeWrapper wrap(IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties> recipe) {
-                return new EnvironmentalAccumulatorRecipeJEI(recipe);
-            }
-        };
-    }
-
     protected static WeatherType getWeather(String weather) {
         return Objects.requireNonNull(WeatherType.valueOf(weather), "Could not find a weather by name " + weather);
     }

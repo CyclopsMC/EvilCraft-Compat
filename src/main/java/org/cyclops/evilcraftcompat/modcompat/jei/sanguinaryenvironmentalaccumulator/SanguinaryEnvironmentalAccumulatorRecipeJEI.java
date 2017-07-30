@@ -1,5 +1,7 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator;
 
+import lombok.EqualsAndHashCode;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import lombok.Data;
@@ -20,7 +22,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class SanguinaryEnvironmentalAccumulatorRecipeJEI extends EnvironmentalAccumulatorRecipeJEIBase {
+public class SanguinaryEnvironmentalAccumulatorRecipeJEI extends EnvironmentalAccumulatorRecipeJEIBase<SanguinaryEnvironmentalAccumulatorRecipeJEI> {
 
     public static final String CATEGORY = Reference.MOD_ID + ":sanguinaryEnvironmentalAccumulator";
 
@@ -28,13 +30,16 @@ public class SanguinaryEnvironmentalAccumulatorRecipeJEI extends EnvironmentalAc
         super(recipe);
     }
 
-    public static List<org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeJEI> getAllSanguinaryRecipes() {
-        return Lists.transform(EnvironmentalAccumulator.getInstance().getRecipeRegistry().allRecipes(), new Function<IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties>, org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeJEI>() {
-            @Nullable
-            @Override
-            public org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeJEI apply(@Nullable IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties> input) {
-                return new org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeJEI(input);
-            }
-        });
+    protected SanguinaryEnvironmentalAccumulatorRecipeJEI() {
+        super();
+    }
+
+    @Override
+    protected SanguinaryEnvironmentalAccumulatorRecipeJEI newInstance(IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties> input) {
+        return new SanguinaryEnvironmentalAccumulatorRecipeJEI(input);
+    }
+
+    public static List<SanguinaryEnvironmentalAccumulatorRecipeJEI> getAllSanguinaryRecipes() {
+        return new SanguinaryEnvironmentalAccumulatorRecipeJEI().createAllRecipes();
     }
 }

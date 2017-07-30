@@ -30,16 +30,6 @@ public class BloodInfuserHandler extends RecipeRegistryHandler<BloodInfuser, Ing
         return "BloodInfuser";
     }
 
-    @Override
-    protected IJeiRecipeWrapperWrapper<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties> createJeiWrapperWrapper() {
-        return new IJeiRecipeWrapperWrapper<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties>() {
-            @Override
-            public IRecipeWrapper wrap(IRecipe<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties> recipe) {
-                return new BloodInfuserRecipeJEI(recipe);
-            }
-        };
-    }
-
     @ZenMethod
     public static void addRecipe(IItemStack inputStack, ILiquidStack inputFluid, int tier,
                                  IItemStack outputStack, int duration, int xp) {

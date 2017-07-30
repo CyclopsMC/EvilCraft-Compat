@@ -7,7 +7,6 @@ import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import org.cyclops.evilcraft.Configs;
 import org.cyclops.evilcraft.block.*;
