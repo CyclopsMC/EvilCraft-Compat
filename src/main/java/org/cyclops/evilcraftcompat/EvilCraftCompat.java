@@ -20,7 +20,7 @@ import org.cyclops.evilcraftcompat.modcompat.forestry.ForestryModCompat;
 import org.cyclops.evilcraftcompat.modcompat.ic2.IC2ModCompat;
 import org.cyclops.evilcraftcompat.modcompat.immersiveengineering.ImmersiveEngineeringModCompat;
 import org.cyclops.evilcraftcompat.modcompat.jei.JEIModCompat;
-import org.cyclops.evilcraftcompat.modcompat.minetweaker.MineTweakerModCompat;
+import org.cyclops.evilcraftcompat.modcompat.crafttweaker.CraftTweakerModCompat;
 import org.cyclops.evilcraftcompat.modcompat.tconstruct.TConstructModCompat;
 import org.cyclops.evilcraftcompat.modcompat.thermalexpansion.ThermalExpansionModCompat;
 import org.cyclops.evilcraftcompat.modcompat.waila.WailaModCompat;
@@ -70,7 +70,7 @@ public class EvilCraftCompat extends ModBaseVersionable {
         // TODO: temporarily disable some mod compats
         //modCompatLoader.addModCompat(new EnderIOModCompat());
         modCompatLoader.addModCompat(new ThermalExpansionModCompat());
-        modCompatLoader.addModCompat(new MineTweakerModCompat());
+        modCompatLoader.addModCompat(new CraftTweakerModCompat());
 
         // Capabilities
         getCapabilityConstructorRegistry().registerTile(TickingTankInventoryTileEntity.class, new WorkerWorkingTileCompat());

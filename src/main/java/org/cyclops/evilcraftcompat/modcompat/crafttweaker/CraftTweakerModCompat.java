@@ -1,26 +1,23 @@
-package org.cyclops.evilcraftcompat.modcompat.minetweaker;
+package org.cyclops.evilcraftcompat.modcompat.crafttweaker;
 
 import org.cyclops.cyclopscore.modcompat.IModCompat;
-import org.cyclops.evilcraft.Reference;
-import org.cyclops.evilcraftcompat.modcompat.minetweaker.MineTweaker;
+import org.cyclops.evilcraftcompat.Reference;
 
 /**
  * Config for the JEI integration of this mod.
  * @author rubensworks
  *
  */
-public class MineTweakerModCompat implements IModCompat {
+public class CraftTweakerModCompat implements IModCompat {
 
     @Override
     public void onInit(Step initStep) {
-        if(initStep == Step.INIT) {
-            MineTweaker.register();
-        }
+
     }
 
     @Override
     public String getModID() {
-        return Reference.MOD_MINETWEAKER;
+        return Reference.MOD_CRAFTTWEAKER;
     }
 
     @Override

@@ -1,24 +1,23 @@
-package org.cyclops.evilcraftcompat.modcompat.minetweaker.handlers;
+package org.cyclops.evilcraftcompat.modcompat.crafttweaker.handlers;
 
-import mezz.jei.api.recipe.IRecipeWrapper;
-import minetweaker.api.item.IItemStack;
-import minetweaker.api.liquid.ILiquidStack;
-import org.cyclops.cyclopscore.modcompat.jei.IJeiRecipeWrapperWrapper;
-import org.cyclops.cyclopscore.modcompat.minetweaker.handlers.RecipeRegistryHandler;
+import crafttweaker.annotations.ZenRegister;
+import crafttweaker.api.item.IIngredient;
+import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.liquid.ILiquidStack;
+import org.cyclops.cyclopscore.modcompat.crafttweaker.handlers.RecipeRegistryHandler;
 import org.cyclops.cyclopscore.recipe.custom.Recipe;
-import org.cyclops.cyclopscore.recipe.custom.api.IRecipe;
 import org.cyclops.cyclopscore.recipe.custom.component.IngredientRecipeComponent;
 import org.cyclops.evilcraft.block.BloodInfuser;
 import org.cyclops.evilcraft.core.recipe.custom.DurationXpRecipeProperties;
 import org.cyclops.evilcraft.core.recipe.custom.IngredientFluidStackAndTierRecipeComponent;
-import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeJEI;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.evilcraft.BloodInfuser")
+@ZenRegister
 public class BloodInfuserHandler extends RecipeRegistryHandler<BloodInfuser, IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties> {
 
-    private static final org.cyclops.evilcraftcompat.modcompat.minetweaker.handlers.BloodInfuserHandler INSTANCE = new org.cyclops.evilcraftcompat.modcompat.minetweaker.handlers.BloodInfuserHandler();
+    private static final BloodInfuserHandler INSTANCE = new BloodInfuserHandler();
 
     @Override
     protected BloodInfuser getMachine() {
@@ -31,19 +30,19 @@ public class BloodInfuserHandler extends RecipeRegistryHandler<BloodInfuser, Ing
     }
 
     @ZenMethod
-    public static void addRecipe(IItemStack inputStack, ILiquidStack inputFluid, int tier,
+    public static void addRecipe(IIngredient inputIngredient, ILiquidStack inputFluid, int tier,
                                  IItemStack outputStack, int duration, int xp) {
         INSTANCE.add(new Recipe<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties>(
-                new IngredientFluidStackAndTierRecipeComponent(RecipeRegistryHandler.toStack(inputStack), RecipeRegistryHandler.toFluid(inputFluid), tier),
+                new IngredientFluidStackAndTierRecipeComponent(RecipeRegistryHandler.toIngredient(inputIngredient), RecipeRegistryHandler.toFluid(inputFluid), tier),
                 new IngredientRecipeComponent(RecipeRegistryHandler.toStack(outputStack)),
                 new DurationXpRecipeProperties(duration, xp)));
     }
 
     @ZenMethod
-    public static void removeRecipe(IItemStack inputStack, ILiquidStack inputFluid, int tier,
+    public static void removeRecipe(IIngredient inputIngredient, ILiquidStack inputFluid, int tier,
                                     IItemStack outputStack, int duration, int xp) {
         INSTANCE.remove(new Recipe<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties>(
-                new IngredientFluidStackAndTierRecipeComponent(RecipeRegistryHandler.toStack(inputStack), RecipeRegistryHandler.toFluid(inputFluid), tier),
+                new IngredientFluidStackAndTierRecipeComponent(RecipeRegistryHandler.toIngredient(inputIngredient), RecipeRegistryHandler.toFluid(inputFluid), tier),
                 new IngredientRecipeComponent(RecipeRegistryHandler.toStack(outputStack)),
                 new DurationXpRecipeProperties(duration, xp)));
     }
