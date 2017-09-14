@@ -10,8 +10,9 @@
   "updateUrl": "https://minecraft.curseforge.com/projects/TODO",
   "authorList": [ "rubensworks (aka kroeserr)" ],
   "credits": "rubensworks (aka kroeserr)",
-  "parent": "",
+  "parent": "evilcraft",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": [],
+  "requiredMods": [ "forge", "cyclopscore", "evilcraft" ]
 }
 ]
