@@ -68,10 +68,14 @@ dependencies {
     deobfCompile "blusunrize:ImmersiveEngineering:${config.ie_version}"// http://maven.blamejared.com/blusunrize/ImmersiveEngineering/
     //deobfCompile "com.enderio:EnderIO:1.9.4-${config.enderio_version}" // http://maven.tterrag.com/com/enderio/EnderIO
     //deobfCompile "com.enderio.core:EnderCore:1.9.4-${config.endercore_version}" // http://maven.tterrag.com/com/enderio/EnderIO
-    deobfCompile "CraftTweaker2:CraftTweaker2-API:${config.crafttweakerapi_version}"; // http://maven.blamejared.com/CraftTweaker2/CraftTweaker2-API/
+    deobfCompile ("CraftTweaker2:CraftTweaker2-API:${config.crafttweakerapi_version}") { // http://maven.blamejared.com/CraftTweaker2/CraftTweaker2-API/
+        exclude group: 'org.ow2.asm', module: 'asm-debug-all'
+    }
 
     // Only needed for testing
-    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:${config.crafttweakermain_version}" // http://maven.blamejared.com/CraftTweaker2/CraftTweaker2-MC1120-Main/
+    deobfCompile ("CraftTweaker2:CraftTweaker2-MC1120-Main:${config.crafttweakermain_version}") { // http://maven.blamejared.com/CraftTweaker2/CraftTweaker2-MC1120-Main/
+        exclude group: 'org.ow2.asm', module: 'asm-debug-all'
+    }
 
     // Project lombok
     compile "org.projectlombok:lombok:1.14.4"
