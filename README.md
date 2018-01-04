@@ -1,12 +1,12 @@
 ## EvilCraftCompat
 
 [![Build Status](https://travis-ci.org/CyclopsMC/EvilCraft-Compat.svg?branch=master-1.10)](https://travis-ci.org/CyclopsMC/EvilCraft-Compat)
-[![Download](https://img.shields.io/maven-metadata/v/http/cyclopsmc.jfrog.io/cyclopsmc/libs-release/org/cyclops/evilcraftcompat/EvilCraftCompat/maven-metadata.xml.svg) ](https://cyclopsmc.jfrog.io/cyclopsmc/libs-release/org/cyclops/evilcraftcompat/EvilCraftCompat/)
+[![Download](https://img.shields.io/maven-metadata/v/http/cyclopsmc.jfrog.io/cyclopsmc/libs-release/org/cyclops/evilcraftcompat/EvilCraftCompat/maven-metadata.xml.svg) ](https://oss.jfrog.org/artifactory/simple/libs-release/org/cyclops/evilcraftcompat/EvilCraftCompat/)
 
 [EvilCraft](https://github.com/CyclopsMC/EvilCraft) compatibility with other mods.
 This mod is automatically packaged with [EvilCraft](https://github.com/CyclopsMC/EvilCraft).
 
-[Development builds](https://cyclopsmc.jfrog.io/cyclopsmc/libs-release/org/cyclops/evilcraftcompat/EvilCraftCompat/) are hosted by [JFrog Artifactory](https://www.jfrog.com/artifactory/).
+[Development builds](https://oss.jfrog.org/artifactory/simple/libs-release/org/cyclops/evilcraftcompat/EvilCraftCompat/) are hosted by [JFrog Artifactory](https://www.jfrog.com/artifactory/).
 
 ### Contributing
 * Before submitting a pull request containing a new feature, please discuss this first with one of the lead developers.
