@@ -61,9 +61,9 @@ public class JEIEvilCraftConfig implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
-        registry.addRecipeCategories(new BloodInfuserRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-        registry.addRecipeCategories(new EnvironmentalAccumulatorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-        registry.addRecipeCategories(new SanguinaryEnvironmentalAccumulatorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        if (Configs.isEnabled(BloodInfuserConfig.class)) registry.addRecipeCategories(new BloodInfuserRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        if (Configs.isEnabled(EnvironmentalAccumulatorConfig.class)) registry.addRecipeCategories(new EnvironmentalAccumulatorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        if (Configs.isEnabled(SanguinaryEnvironmentalAccumulatorConfig.class)) registry.addRecipeCategories(new SanguinaryEnvironmentalAccumulatorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -71,43 +71,53 @@ public class JEIEvilCraftConfig implements IModPlugin {
         JEI_HELPER = registry.getJeiHelpers();
         if(JEIModCompat.canBeUsed) {
             // Blood Infuser
-            registry.addRecipes(BloodInfuserRecipeJEI.getAllRecipes(), BloodInfuserRecipeJEI.CATEGORY);
-            registry.addRecipeClickArea(GuiBloodInfuser.class,
-                    GuiBloodInfuser.PROGRESSTARGETX, GuiBloodInfuser.PROGRESSTARGETY,
-                    GuiBloodInfuser.PROGRESSWIDTH, GuiBloodInfuser.PROGRESSHEIGHT,
-                    BloodInfuserRecipeJEI.CATEGORY);
-            registry.getRecipeTransferRegistry().addRecipeTransferHandler(new BloodInfuserRecipeTransferInfo());
-            registry.addRecipeCatalyst(new ItemStack(BloodInfuser.getInstance()), BloodInfuserRecipeJEI.CATEGORY);
+            if (Configs.isEnabled(BloodInfuserConfig.class)) {
+                registry.addRecipes(BloodInfuserRecipeJEI.getAllRecipes(), BloodInfuserRecipeJEI.CATEGORY);
+                registry.addRecipeClickArea(GuiBloodInfuser.class,
+                        GuiBloodInfuser.PROGRESSTARGETX, GuiBloodInfuser.PROGRESSTARGETY,
+                        GuiBloodInfuser.PROGRESSWIDTH, GuiBloodInfuser.PROGRESSHEIGHT,
+                        BloodInfuserRecipeJEI.CATEGORY);
+                registry.getRecipeTransferRegistry().addRecipeTransferHandler(new BloodInfuserRecipeTransferInfo());
+                registry.addRecipeCatalyst(new ItemStack(BloodInfuser.getInstance()), BloodInfuserRecipeJEI.CATEGORY);
+            }
 
             // Envir Acc
-            registry.addRecipes(EnvironmentalAccumulatorRecipeJEI.getAllRecipes(), EnvironmentalAccumulatorRecipeJEI.CATEGORY);
-            registry.addRecipeCatalyst(new ItemStack(EnvironmentalAccumulator.getInstance()), EnvironmentalAccumulatorRecipeJEI.CATEGORY);
+            if (Configs.isEnabled(EnvironmentalAccumulatorConfig.class)) {
+                registry.addRecipes(EnvironmentalAccumulatorRecipeJEI.getAllRecipes(), EnvironmentalAccumulatorRecipeJEI.CATEGORY);
+                registry.addRecipeCatalyst(new ItemStack(EnvironmentalAccumulator.getInstance()), EnvironmentalAccumulatorRecipeJEI.CATEGORY);
+            }
 
             // Sanguinary Envir Acc
-            registry.addRecipes(SanguinaryEnvironmentalAccumulatorRecipeJEI.getAllSanguinaryRecipes(), SanguinaryEnvironmentalAccumulatorRecipeJEI.CATEGORY);
-            registry.addRecipeClickArea(GuiSanguinaryEnvironmentalAccumulator.class, GuiSanguinaryEnvironmentalAccumulator.PROGRESSTARGETX,
-                    GuiSanguinaryEnvironmentalAccumulator.PROGRESSTARGETY, GuiSanguinaryEnvironmentalAccumulator.PROGRESSWIDTH,
-                    GuiSanguinaryEnvironmentalAccumulator.PROGRESSHEIGHT, SanguinaryEnvironmentalAccumulatorRecipeJEI.CATEGORY);
-            registry.getRecipeTransferRegistry().addRecipeTransferHandler(new SanguinaryEnvironmentalAccumulatorRecipeTransferInfo());
-            registry.addRecipeCatalyst(new ItemStack(SanguinaryEnvironmentalAccumulator.getInstance()), SanguinaryEnvironmentalAccumulatorRecipeJEI.CATEGORY);
+            if (Configs.isEnabled(SanguinaryEnvironmentalAccumulatorConfig.class)) {
+                registry.addRecipes(SanguinaryEnvironmentalAccumulatorRecipeJEI.getAllSanguinaryRecipes(), SanguinaryEnvironmentalAccumulatorRecipeJEI.CATEGORY);
+                registry.addRecipeClickArea(GuiSanguinaryEnvironmentalAccumulator.class, GuiSanguinaryEnvironmentalAccumulator.PROGRESSTARGETX,
+                        GuiSanguinaryEnvironmentalAccumulator.PROGRESSTARGETY, GuiSanguinaryEnvironmentalAccumulator.PROGRESSWIDTH,
+                        GuiSanguinaryEnvironmentalAccumulator.PROGRESSHEIGHT, SanguinaryEnvironmentalAccumulatorRecipeJEI.CATEGORY);
+                registry.getRecipeTransferRegistry().addRecipeTransferHandler(new SanguinaryEnvironmentalAccumulatorRecipeTransferInfo());
+                registry.addRecipeCatalyst(new ItemStack(SanguinaryEnvironmentalAccumulator.getInstance()), SanguinaryEnvironmentalAccumulatorRecipeJEI.CATEGORY);
+            }
 
             // Exalted Crafter
-            registry.addRecipeClickArea(GuiExaltedCrafter.class, 88, 32, 28, 23, VanillaRecipeCategoryUid.CRAFTING);
-            registry.getRecipeTransferRegistry().addRecipeTransferHandler(new ExaltedCrafterRecipeTransferInfo());
-            NonNullList<ItemStack> exaltedCrafters = NonNullList.create();
-            ExaltedCrafter.getInstance().getSubItems(CreativeTabs.SEARCH, exaltedCrafters);
-            for (ItemStack exaltedCrafter : exaltedCrafters) {
-                registry.addRecipeCatalyst(exaltedCrafter, VanillaRecipeCategoryUid.CRAFTING);
+            if (Configs.isEnabled(ExaltedCrafterConfig.class)) {
+                registry.addRecipeClickArea(GuiExaltedCrafter.class, 88, 32, 28, 23, VanillaRecipeCategoryUid.CRAFTING);
+                registry.getRecipeTransferRegistry().addRecipeTransferHandler(new ExaltedCrafterRecipeTransferInfo());
+                NonNullList<ItemStack> exaltedCrafters = NonNullList.create();
+                ExaltedCrafter.getInstance().getSubItems(CreativeTabs.SEARCH, exaltedCrafters);
+                for (ItemStack exaltedCrafter : exaltedCrafters) {
+                    registry.addRecipeCatalyst(exaltedCrafter, VanillaRecipeCategoryUid.CRAFTING);
+                }
             }
 
             // Display Stand
-            registry.handleRecipes(DisplayStandRecipe.class,
-                    (recipe) -> new DisplayStandRecipeJEI(JEIEvilCraftConfig.JEI_HELPER, recipe),
-                    VanillaRecipeCategoryUid.CRAFTING);
+            if (Configs.isEnabled(DisplayStandConfig.class)) {
+                registry.handleRecipes(DisplayStandRecipe.class,
+                        (recipe) -> new DisplayStandRecipeJEI(JEIEvilCraftConfig.JEI_HELPER, recipe),
+                        VanillaRecipeCategoryUid.CRAFTING);
+            }
 
             // Ignore items
-            JEI_HELPER.getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(BloodStainedBlock.getInstance()));
-            JEI_HELPER.getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(InvisibleRedstoneBlock.getInstance()));
+            if (Configs.isEnabled(BloodStainedBlockConfig.class)) JEI_HELPER.getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(BloodStainedBlock.getInstance()));
+            if (Configs.isEnabled(InvisibleRedstoneBlockConfig.class)) JEI_HELPER.getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(InvisibleRedstoneBlock.getInstance()));
         }
     }
 
