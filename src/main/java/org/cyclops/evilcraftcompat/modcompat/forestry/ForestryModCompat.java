@@ -7,11 +7,9 @@ import org.cyclops.cyclopscore.modcompat.IModCompat;
 import org.cyclops.evilcraft.Configs;
 import org.cyclops.evilcraft.Reference;
 import org.cyclops.evilcraft.block.UndeadLogConfig;
-import org.cyclops.evilcraft.block.UndeadSaplingConfig;
 import org.cyclops.evilcraft.item.DarkGem;
 import org.cyclops.evilcraft.item.DarkGemConfig;
 import org.cyclops.evilcraft.item.PoisonSacConfig;
-import org.cyclops.evilcraftcompat.modcompat.forestry.ForestryRecipeManager;
 
 /**
  * Compatibility plugin for Forestry.
@@ -28,12 +26,7 @@ public class ForestryModCompat implements IModCompat {
     @Override
     public void onInit(Step step) {
     	if(step == Step.INIT) {
-	        // Register the Undead Sapling.
-	        if(Configs.isEnabled(UndeadSaplingConfig.class)) {
-	            FMLInterModComms.sendMessage(getModID(), "add-farmable-sapling",
-						"farmArboreal@" + Block.REGISTRY.getNameForObject(UndeadSaplingConfig._instance.getBlockInstance()).toString() + ".0");
-	        }
-	        
+
 	        // Add dark gem to the miner backpack.
 	        if(Configs.isEnabled(DarkGemConfig.class)) {
 	            FMLInterModComms.sendMessage(getModID(), "add-backpack-items",
@@ -51,7 +44,8 @@ public class ForestryModCompat implements IModCompat {
 	            FMLInterModComms.sendMessage(getModID(), "add-backpack-items",
 						"forestry.forester@" + Block.REGISTRY.getNameForObject(UndeadLogConfig._instance.getBlockInstance()).toString() + ":*");
 	        }
-	        
+
+			ForestryFarmManager.register();
 	        ForestryRecipeManager.register();
     	}
     }
