@@ -2,7 +2,7 @@ package org.cyclops.evilcraftcompat.modcompat.forestry;
 
 import forestry.api.core.ForestryAPI;
 import forestry.api.farming.IFarmRegistry;
-import forestry.farming.logic.FarmableSapling;
+import forestry.farming.logic.farmables.FarmableSapling;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import org.cyclops.evilcraft.Configs;

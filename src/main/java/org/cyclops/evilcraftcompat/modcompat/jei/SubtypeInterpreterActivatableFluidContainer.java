@@ -10,9 +10,9 @@ import javax.annotation.Nullable;
  * @author rubensworks
  */
 public class SubtypeInterpreterActivatableFluidContainer implements ISubtypeRegistry.ISubtypeInterpreter {
-    @Nullable
+
     @Override
-    public String getSubtypeInfo(@Nonnull ItemStack itemStack) {
+    public String apply(@Nonnull ItemStack itemStack) {
         return "";
         /*FluidStack fluidStack = FluidUtil.getFluidContained(itemStack);
         if (fluidStack.amount == 0) fluidStack = null;
