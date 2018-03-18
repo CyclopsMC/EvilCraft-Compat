@@ -70,7 +70,6 @@ sourceSets {
         java {
             exclude '**/modcompat/thaumcraft/**'
             exclude '**/modcompat/enderio/**'
-            exclude '**/modcompat/bloodmagic/**'
         }
     }
 }

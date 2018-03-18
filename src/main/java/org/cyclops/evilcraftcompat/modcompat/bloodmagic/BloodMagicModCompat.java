@@ -1,10 +1,10 @@
 package org.cyclops.evilcraftcompat.modcompat.bloodmagic;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.cyclops.cyclopscore.modcompat.IModCompat;
 import org.cyclops.evilcraft.EvilCraft;
 import org.cyclops.evilcraft.Reference;
+import org.cyclops.evilcraftcompat.EvilCraftCompat;
 
 /**
  * Compatibility plugin for Blood Magic.
@@ -22,10 +22,9 @@ public class BloodMagicModCompat implements IModCompat {
     public void onInit(Step step) {
     	if(step == Step.PREINIT) {
     		ClientSoulNetworkHandler.reset();
-			EvilCraft._instance.getConfigHandler().add(new BoundBloodDropConfig());
+			EvilCraftCompat._instance.getConfigHandler().add(new BoundBloodDropConfig());
     	} else if(step == Step.INIT) {
-    		FMLCommonHandler.instance().bus().register(ClientSoulNetworkHandler.getInstance());
-    		MinecraftForge.EVENT_BUS.register(ClientSoulNetworkHandler.getInstance());
+			MinecraftForge.EVENT_BUS.register(ClientSoulNetworkHandler.getInstance());
 			MinecraftForge.EVENT_BUS.register(new VengeanceSpiritWillDropper());
 			TranquilityHandlers.register();
 		} else if(step == Step.POSTINIT) {

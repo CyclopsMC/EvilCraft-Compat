@@ -1,7 +1,7 @@
 package org.cyclops.evilcraftcompat.modcompat.bloodmagic;
 
-import WayofTime.bloodmagic.api.soul.IDemonWill;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.soul.IDemonWill;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -21,7 +21,7 @@ public class VengeanceSpiritWillDropper {
         EntityLivingBase attackedEntity = event.getEntityLiving();
         if (attackedEntity instanceof VengeanceSpirit && event.getSource() instanceof ExtendedDamageSource.VengeanceBeamDamageSource) {
             double amountOfSouls = attackedEntity.getEntityWorld().rand.nextDouble() * 20;
-            ItemStack soulStack = ((IDemonWill) ModItems.MONSTER_SOUL).createWill(0, amountOfSouls);
+            ItemStack soulStack = ((IDemonWill) RegistrarBloodMagicItems.MONSTER_SOUL).createWill(0, amountOfSouls);
             event.getDrops().add(new EntityItem(attackedEntity.getEntityWorld(), attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
         }
     }

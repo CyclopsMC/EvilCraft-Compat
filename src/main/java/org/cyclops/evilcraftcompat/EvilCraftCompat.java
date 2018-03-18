@@ -14,6 +14,7 @@ import org.cyclops.cyclopscore.modcompat.ModCompatLoader;
 import org.cyclops.cyclopscore.proxy.ICommonProxy;
 import org.cyclops.evilcraft.core.tileentity.TickingTankInventoryTileEntity;
 import org.cyclops.evilcraft.tileentity.TileEnvironmentalAccumulator;
+import org.cyclops.evilcraftcompat.modcompat.bloodmagic.BloodMagicModCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerEnvirAccTileCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerWorkingTileCompat;
 import org.cyclops.evilcraftcompat.modcompat.forestry.ForestryModCompat;
@@ -62,7 +63,7 @@ public class EvilCraftCompat extends ModBaseVersionable {
         // Mod compats
         modCompatLoader.addModCompat(new WailaModCompat());
         modCompatLoader.addModCompat(new JEIModCompat());
-        //modCompatLoader.addModCompat(new BloodMagicModCompat());
+        modCompatLoader.addModCompat(new BloodMagicModCompat());
         modCompatLoader.addModCompat(new TConstructModCompat());
         modCompatLoader.addModCompat(new ForestryModCompat());
         modCompatLoader.addModCompat(new IC2ModCompat());

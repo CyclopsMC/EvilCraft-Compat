@@ -1,13 +1,13 @@
 package org.cyclops.evilcraftcompat.modcompat.bloodmagic;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.block.BlockLifeEssence;
+import WayofTime.bloodmagic.core.data.Binding;
+import WayofTime.bloodmagic.iface.IBindable;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
@@ -25,16 +25,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.cyclops.cyclopscore.config.configurable.ConfigurableDamageIndicatedItemFluidContainer;
 import org.cyclops.cyclopscore.config.extendedconfig.ExtendedConfig;
 import org.cyclops.cyclopscore.config.extendedconfig.ItemConfig;
+import org.cyclops.cyclopscore.helper.ItemStackHelpers;
 import org.cyclops.cyclopscore.helper.L10NHelpers;
 import org.cyclops.cyclopscore.helper.MinecraftHelpers;
 import org.cyclops.evilcraft.core.fluid.BloodFluidConverter;
 import org.cyclops.evilcraft.core.fluid.FluidContainerItemWrapperWithSimulation;
 import org.cyclops.evilcraft.core.helper.ItemHelpers;
 import org.cyclops.evilcraft.fluid.Blood;
-import org.cyclops.evilcraftcompat.modcompat.bloodmagic.BoundBloodDropConfig;
-import org.cyclops.evilcraftcompat.modcompat.bloodmagic.ClientSoulNetworkHandler;
 
+import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Can convert soul network life essence to blood.
@@ -59,27 +60,11 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
     }
 
     @Override
-    public String getOwnerName(ItemStack item) {
-        if(item.getTagCompound() == null) {
-            item.setTagCompound(new NBTTagCompound());
-        }
-        return item.getTagCompound().getString(Constants.NBT.OWNER_NAME);
-    }
-
-    @Override
-    public String getOwnerUUID(ItemStack item) {
-        if(item.getTagCompound() == null) {
-            item.setTagCompound(new NBTTagCompound());
-        }
-        return item.getTagCompound().getString(Constants.NBT.OWNER_UUID);
-    }
-
-    @Override
     public boolean onBind(EntityPlayer player, ItemStack stack) {
         return true;
     }
 
-    private static int getCurrentEssence(String uuid) {
+    private static int getCurrentEssence(UUID uuid) {
     	return ClientSoulNetworkHandler.getInstance().getCurrentEssence(uuid);
     }
 
@@ -89,19 +74,22 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
     }
 
     @Override
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> itemList) {
-        itemList.add(new ItemStack(this));
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> itemList) {
+        if (ItemStackHelpers.isValidCreativeTab(this, tab)) {
+            itemList.add(new ItemStack(this));
+        }
     }
-    
+
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean par4) {
-        super.addInformation(itemStack, entityPlayer, list, par4);
+    public void addInformation(ItemStack itemStack, World world, List<String> list, ITooltipFlag flag) {
+        super.addInformation(itemStack, world, list, flag);
         L10NHelpers.addStatusInfo(list, ItemHelpers.isActivated(itemStack),
                 getUnlocalizedName() + ".info.auto_supply");
-        if(itemStack.getTagCompound() != null) {
-        	String owner = getOwnerName(itemStack);
+        Binding binding = getBinding(itemStack);
+        if(binding != null) {
+        	String owner = binding.getOwnerName();
         	if(owner == null || owner.isEmpty()) {
         		owner = TextFormatting.ITALIC + L10NHelpers.localize(getUnlocalizedName() + ".info.current_owner.none");
         	}
@@ -147,15 +135,24 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
             return Math.max(contentsAmount, BoundBloodDropConfig.maxCapacity);
         }
 
+        @Nullable
+        protected Binding getBinding() {
+            return BoundBloodDrop.getInstance().getBinding(getContainer());
+        }
+
         @Override
         public int fill(FluidStack resource, boolean doFill) {
             doFill = shouldDoFill(resource, doFill);
-            String uuid = org.cyclops.evilcraftcompat.modcompat.bloodmagic.BoundBloodDrop.getInstance().getOwnerUUID(container);
-            if(uuid == null || uuid.isEmpty()) {
+            Binding binding = getBinding();
+            if (binding == null) {
+                return 0;
+            }
+            UUID uuid = binding.getOwnerId();
+            if (uuid == null) {
                 return 0;
             }
             int essence = getCurrentEssence(uuid);
-            FluidStack essenceFluid = BloodFluidConverter.getInstance().convertReverse(BloodMagicAPI.getLifeEssence(), resource);
+            FluidStack essenceFluid = BloodFluidConverter.getInstance().convertReverse(BlockLifeEssence.getLifeEssence(), resource);
             int filled = essenceFluid == null ? 0 : essenceFluid.amount;
             if(doFill && !MinecraftHelpers.isClientSide()) {
                 NetworkHelper.getSoulNetwork(uuid).setCurrentEssence(essence + filled);
@@ -165,18 +162,22 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
 
         @Override
         public FluidStack drain(int maxDrain, boolean doDrain) {
-            String uuid = org.cyclops.evilcraftcompat.modcompat.bloodmagic.BoundBloodDrop.getInstance().getOwnerUUID(container);
-            if(uuid == null || uuid.isEmpty()) {
+            Binding binding = getBinding();
+            if (binding == null) {
+                return null;
+            }
+            UUID uuid = binding.getOwnerId();
+            if(uuid == null) {
                 return null;
             }
             int essence = getCurrentEssence(uuid);
             FluidStack toDrain = new FluidStack(Blood.getInstance(), maxDrain);
-            FluidStack toDrainEssence = BloodFluidConverter.getInstance().convertReverse(BloodMagicAPI.getLifeEssence(), toDrain);
+            FluidStack toDrainEssence = BloodFluidConverter.getInstance().convertReverse(BlockLifeEssence.getLifeEssence(), toDrain);
             int drainEssence = Math.min(essence, toDrainEssence == null ? 0 : toDrainEssence.amount);
             if(doDrain && !MinecraftHelpers.isClientSide()) {
                 NetworkHelper.getSoulNetwork(uuid).setCurrentEssence(essence - drainEssence);
             }
-            FluidStack drainedEssence = new FluidStack(BloodMagicAPI.getLifeEssence(), drainEssence);
+            FluidStack drainedEssence = new FluidStack(BlockLifeEssence.getLifeEssence(), drainEssence);
             return wrapSimulatedDrained(BloodFluidConverter.getInstance().convert(drainedEssence), doDrain);
         }
 

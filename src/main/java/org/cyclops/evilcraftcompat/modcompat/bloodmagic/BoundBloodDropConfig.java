@@ -1,5 +1,13 @@
 package org.cyclops.evilcraftcompat.modcompat.bloodmagic;
 
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.cyclops.cyclopscore.config.ConfigurableProperty;
 import org.cyclops.cyclopscore.config.ConfigurableTypeCategory;
 import org.cyclops.cyclopscore.config.extendedconfig.ItemConfig;
@@ -41,6 +49,25 @@ public class BoundBloodDropConfig extends ItemConfig {
                 null,
                 BoundBloodDrop.class
         );
+        MinecraftForge.EVENT_BUS.register(this);
     }
-    
+
+    @Override
+    public void onRegistered() {
+        super.onRegistered();
+        // TODO: make this not required anymore
+        // This is to make the recipe work, which was registered in EC
+        EvilCraft._instance.getConfigHandler().addToConfigDictionary(this);
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void afterItemsRegistered(RegistryEvent<Item> event) {
+        // TODO: make this not required anymore
+        // This is to make the recipe work, which was registered in EC
+        ItemStack weakOrb = new ItemStack(Item.getByNameOrId("bloodmagic:blood_orb"));
+        NBTTagCompound tag = new NBTTagCompound();
+        tag.setString("orb", "bloodmagic:weak");
+        weakOrb.setTagCompound(tag);
+        EvilCraft._instance.getRecipeHandler().getPredefinedItems().put("evilcraft:weakbloodorb", weakOrb);
+    }
 }

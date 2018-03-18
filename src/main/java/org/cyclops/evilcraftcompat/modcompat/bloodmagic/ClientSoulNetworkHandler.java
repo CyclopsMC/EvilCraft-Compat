@@ -1,6 +1,6 @@
 package org.cyclops.evilcraftcompat.modcompat.bloodmagic;
 
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import net.minecraftforge.event.world.WorldEvent;
@@ -12,10 +12,10 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import org.cyclops.cyclopscore.helper.MinecraftHelpers;
 import org.cyclops.cyclopscore.helper.WorldHelpers;
 import org.cyclops.evilcraft.EvilCraft;
-import org.cyclops.evilcraftcompat.modcompat.bloodmagic.RequestSoulNetworkUpdatesPacket;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * A client-side cache for the soul network contents.
@@ -55,11 +55,11 @@ public class ClientSoulNetworkHandler {
 	 * @param uuid The owner uuid.
 	 * @return The essence.
 	 */
-	public int getCurrentEssence(String uuid) {
+	public int getCurrentEssence(UUID uuid) {
 		if(MinecraftHelpers.isClientSide()) {
-			Integer ret = PLAYER_CACHE.get(uuid);
+			Integer ret = PLAYER_CACHE.get(uuid.toString());
 			if(ret == null) {
-				EvilCraft._instance.getPacketHandler().sendToServer(new RequestSoulNetworkUpdatesPacket(uuid));
+				EvilCraft._instance.getPacketHandler().sendToServer(new RequestSoulNetworkUpdatesPacket(uuid.toString()));
 				return 0;
 			}
 			return ret;

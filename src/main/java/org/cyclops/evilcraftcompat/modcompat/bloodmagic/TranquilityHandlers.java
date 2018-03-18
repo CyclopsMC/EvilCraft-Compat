@@ -1,9 +1,9 @@
 package org.cyclops.evilcraftcompat.modcompat.bloodmagic;
 
-import WayofTime.bloodmagic.api.incense.EnumTranquilityType;
-import WayofTime.bloodmagic.api.incense.ITranquilityHandler;
-import WayofTime.bloodmagic.api.incense.IncenseTranquilityRegistry;
-import WayofTime.bloodmagic.api.incense.TranquilityStack;
+import WayofTime.bloodmagic.incense.EnumTranquilityType;
+import WayofTime.bloodmagic.incense.ITranquilityHandler;
+import WayofTime.bloodmagic.incense.IncenseTranquilityRegistry;
+import WayofTime.bloodmagic.incense.TranquilityStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
