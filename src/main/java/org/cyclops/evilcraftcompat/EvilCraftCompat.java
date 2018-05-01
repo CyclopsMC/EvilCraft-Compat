@@ -17,6 +17,7 @@ import org.cyclops.evilcraft.tileentity.TileEnvironmentalAccumulator;
 import org.cyclops.evilcraftcompat.modcompat.bloodmagic.BloodMagicModCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerEnvirAccTileCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerWorkingTileCompat;
+import org.cyclops.evilcraftcompat.modcompat.enderio.EnderIOModCompat;
 import org.cyclops.evilcraftcompat.modcompat.forestry.ForestryModCompat;
 import org.cyclops.evilcraftcompat.modcompat.ic2.IC2ModCompat;
 import org.cyclops.evilcraftcompat.modcompat.immersiveengineering.ImmersiveEngineeringModCompat;
@@ -68,8 +69,7 @@ public class EvilCraftCompat extends ModBaseVersionable {
         modCompatLoader.addModCompat(new ForestryModCompat());
         modCompatLoader.addModCompat(new IC2ModCompat());
         modCompatLoader.addModCompat(new ImmersiveEngineeringModCompat());
-        // TODO: temporarily disable some mod compats
-        //modCompatLoader.addModCompat(new EnderIOModCompat());
+        modCompatLoader.addModCompat(new EnderIOModCompat());
         modCompatLoader.addModCompat(new ThermalExpansionModCompat());
         modCompatLoader.addModCompat(new CraftTweakerModCompat());
 

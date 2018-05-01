@@ -1,11 +1,10 @@
 package org.cyclops.evilcraftcompat.modcompat.enderio;
 
 import org.cyclops.cyclopscore.modcompat.IModCompat;
-import org.cyclops.evilcraft.Reference;
-import org.cyclops.evilcraft.modcompat.enderio.EnderIORecipeManager;
+import org.cyclops.evilcraftcompat.Reference;
 
 /**
- * Compatibility plugin for Extra Utilities.
+ * Compatibility plugin for Ender IO.
  * @author rubensworks
  *
  */

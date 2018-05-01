@@ -1,6 +1,10 @@
 package org.cyclops.evilcraftcompat.modcompat.enderio;
 
-import crazypants.enderio.machine.sagmill.SagMillRecipeManager;
+import crazypants.enderio.base.recipe.Recipe;
+import crazypants.enderio.base.recipe.RecipeBonusType;
+import crazypants.enderio.base.recipe.RecipeInput;
+import crazypants.enderio.base.recipe.RecipeOutput;
+import crazypants.enderio.base.recipe.sagmill.SagMillRecipeManager;
 import net.minecraft.item.ItemStack;
 import org.cyclops.evilcraft.Configs;
 import org.cyclops.evilcraft.block.DarkOre;
@@ -21,7 +25,8 @@ public class EnderIORecipeManager{
             ItemStack output = new ItemStack(DarkGem.getInstance(), 2);
             int energy = 3600;
 
-            SagMillRecipeManager.getInstance().addRecipe(input, energy, output);
+            SagMillRecipeManager.getInstance().addRecipe(new Recipe(
+                    new RecipeInput(input), energy, RecipeBonusType.MULTIPLY_OUTPUT, new RecipeOutput(output)));
         }
 
         // Sagmill dark gem -> crushed dark gem
@@ -30,7 +35,8 @@ public class EnderIORecipeManager{
             ItemStack output = new ItemStack(DarkGemCrushedConfig._instance.getItemInstance(), 1);
             int energy = 2400;
 
-            SagMillRecipeManager.getInstance().addRecipe(input, energy, output);
+            SagMillRecipeManager.getInstance().addRecipe(new Recipe(
+                    new RecipeInput(input), energy, RecipeBonusType.MULTIPLY_OUTPUT, new RecipeOutput(output)));
         }
     }
 
