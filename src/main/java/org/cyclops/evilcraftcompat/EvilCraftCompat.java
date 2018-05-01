@@ -5,24 +5,33 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import org.apache.logging.log4j.Level;
 import org.cyclops.cyclopscore.config.ConfigHandler;
+import org.cyclops.cyclopscore.infobook.IInfoBookRegistry;
 import org.cyclops.cyclopscore.init.ModBaseVersionable;
 import org.cyclops.cyclopscore.init.RecipeHandler;
 import org.cyclops.cyclopscore.modcompat.ModCompatLoader;
 import org.cyclops.cyclopscore.proxy.ICommonProxy;
+import org.cyclops.evilcraft.EvilCraft;
+import org.cyclops.evilcraft.ExtendedRecipeHandler;
 import org.cyclops.evilcraft.core.tileentity.TickingTankInventoryTileEntity;
+import org.cyclops.evilcraft.infobook.OriginsOfDarknessBook;
 import org.cyclops.evilcraft.tileentity.TileEnvironmentalAccumulator;
 import org.cyclops.evilcraftcompat.modcompat.bloodmagic.BloodMagicModCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerEnvirAccTileCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerWorkingTileCompat;
+import org.cyclops.evilcraftcompat.modcompat.crafttweaker.CraftTweakerModCompat;
 import org.cyclops.evilcraftcompat.modcompat.enderio.EnderIOModCompat;
 import org.cyclops.evilcraftcompat.modcompat.forestry.ForestryModCompat;
 import org.cyclops.evilcraftcompat.modcompat.ic2.IC2ModCompat;
 import org.cyclops.evilcraftcompat.modcompat.immersiveengineering.ImmersiveEngineeringModCompat;
 import org.cyclops.evilcraftcompat.modcompat.jei.JEIModCompat;
-import org.cyclops.evilcraftcompat.modcompat.crafttweaker.CraftTweakerModCompat;
 import org.cyclops.evilcraftcompat.modcompat.tconstruct.TConstructModCompat;
 import org.cyclops.evilcraftcompat.modcompat.thermalexpansion.ThermalExpansionModCompat;
 import org.cyclops.evilcraftcompat.modcompat.waila.WailaModCompat;
@@ -80,7 +89,12 @@ public class EvilCraftCompat extends ModBaseVersionable {
 
     @Override
     protected RecipeHandler constructRecipeHandler() {
-        return new RecipeHandler(this);
+        return new ExtendedRecipeHandler(EvilCraft._instance, "bloodinfuser_mods.xml") {
+            @Override
+            protected String getRecipesBasePath() {
+                return "/assets/" + Reference.MOD_ID + "/recipes/";
+            }
+        };
     }
 
     /**
@@ -111,6 +125,12 @@ public class EvilCraftCompat extends ModBaseVersionable {
     @Override
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
+
+        // Initialize info book
+        EvilCraft._instance.getRegistryManager().getRegistry(IInfoBookRegistry.class)
+                .registerSection(
+                        OriginsOfDarknessBook.getInstance(), "info_book.evilcraft.section.main",
+                        "/assets/" + Reference.MOD_ID + "/info/modcompat.xml");
     }
     
     /**
