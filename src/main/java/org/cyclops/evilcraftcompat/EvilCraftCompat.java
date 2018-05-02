@@ -33,6 +33,7 @@ import org.cyclops.evilcraftcompat.modcompat.ic2.IC2ModCompat;
 import org.cyclops.evilcraftcompat.modcompat.immersiveengineering.ImmersiveEngineeringModCompat;
 import org.cyclops.evilcraftcompat.modcompat.jei.JEIModCompat;
 import org.cyclops.evilcraftcompat.modcompat.tconstruct.TConstructModCompat;
+import org.cyclops.evilcraftcompat.modcompat.thaumcraft.ThaumcraftModCompat;
 import org.cyclops.evilcraftcompat.modcompat.thermalexpansion.ThermalExpansionModCompat;
 import org.cyclops.evilcraftcompat.modcompat.waila.WailaModCompat;
 
@@ -81,6 +82,7 @@ public class EvilCraftCompat extends ModBaseVersionable {
         modCompatLoader.addModCompat(new EnderIOModCompat());
         modCompatLoader.addModCompat(new ThermalExpansionModCompat());
         modCompatLoader.addModCompat(new CraftTweakerModCompat());
+        modCompatLoader.addModCompat(new ThaumcraftModCompat());
 
         // Capabilities
         getCapabilityConstructorRegistry().registerTile(TickingTankInventoryTileEntity.class, new WorkerWorkingTileCompat());
@@ -89,7 +91,10 @@ public class EvilCraftCompat extends ModBaseVersionable {
 
     @Override
     protected RecipeHandler constructRecipeHandler() {
-        return new ExtendedRecipeHandler(EvilCraft._instance, "bloodinfuser_mods.xml") {
+        return new ExtendedRecipeHandler(EvilCraft._instance,
+                "bloodinfuser_mods.xml",
+                "shapeless_mods.xml"
+        ) {
             @Override
             protected String getRecipesBasePath() {
                 return "/assets/" + Reference.MOD_ID + "/recipes/";

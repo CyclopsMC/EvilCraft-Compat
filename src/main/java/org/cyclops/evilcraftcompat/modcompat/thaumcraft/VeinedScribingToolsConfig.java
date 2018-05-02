@@ -4,7 +4,7 @@ import org.cyclops.cyclopscore.config.extendedconfig.ItemConfig;
 import org.cyclops.evilcraft.EvilCraft;
 
 /**
- * Config for the {@link org.cyclops.evilcraft.modcompat.thaumcraft.VeinedScribingTools}.
+ * Config for the {@link org.cyclops.evilcraftcompat.modcompat.thaumcraft.VeinedScribingTools}.
  * @author rubensworks
  *
  */
@@ -22,10 +22,18 @@ public class VeinedScribingToolsConfig extends ItemConfig {
         super(
             EvilCraft._instance,
         	true,
-            "veinedScribingTools",
+            "veined_scribing_tools",
             null,
             VeinedScribingTools.class
         );
+    }
+
+    @Override
+    public void onRegistered() {
+        super.onRegistered();
+        // TODO: make this not required anymore
+        // This is to make the recipe work, which was registered in EC
+        EvilCraft._instance.getConfigHandler().addToConfigDictionary(this);
     }
     
 }

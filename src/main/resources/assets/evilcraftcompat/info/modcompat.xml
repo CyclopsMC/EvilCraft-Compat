@@ -37,11 +37,9 @@
     <section name="info_book.evilcraftcompat.mod_integrations.thaumcraft">
         <tag type="mod">thaumcraft</tag>
         <tag>veined_scribing_tools</tag>
-        <tag>blood_wand_cap</tag>
         <paragraph>info_book.evilcraftcompat.mod_integrations.thaumcraft.text</paragraph>
         <appendix type="crafting_recipe" index="0">evilcraft:veined_scribing_tools</appendix>
         <appendix type="crafting_recipe" index="1">evilcraft:veined_scribing_tools</appendix>
-        <appendix type="evilcraft:blood_infuser_recipe">evilcraft:blood_wand_cap</appendix>
     </section>
     <section name="info_book.evilcraftcompat.mod_integrations.thermal_expansion">
         <tag type="mod">thermalexpansion</tag>

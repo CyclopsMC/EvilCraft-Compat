@@ -1,8 +1,10 @@
 package org.cyclops.evilcraftcompat.modcompat.thaumcraft;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.cyclops.cyclopscore.config.configurable.ConfigurableDamageIndicatedItemFluidContainer;
 import org.cyclops.cyclopscore.config.extendedconfig.ExtendedConfig;
 import org.cyclops.cyclopscore.config.extendedconfig.ItemConfig;
@@ -17,7 +19,7 @@ import thaumcraft.api.items.IScribeTools;
  */
 public class VeinedScribingTools extends ConfigurableDamageIndicatedItemFluidContainer implements IScribeTools {
 
-    private static final int CAPACITY = FluidContainerRegistry.BUCKET_VOLUME * 2;
+    private static final int CAPACITY = Fluid.BUCKET_VOLUME * 2;
     private static final int USAGE = 10;
 
     private static VeinedScribingTools _instance = null;
@@ -38,16 +40,17 @@ public class VeinedScribingTools extends ConfigurableDamageIndicatedItemFluidCon
 
     @Override
     public int getDamage(ItemStack itemStack) {
-        FluidStack fluidStack = getFluid(itemStack);
+        FluidStack fluidStack = FluidUtil.getFluidContained(itemStack);
         if(fluidStack == null) return 0;
         return (CAPACITY - fluidStack.amount) / USAGE;
     }
 
     @Override
     public void setDamage(ItemStack itemStack, int damage) {
-        FluidStack fluidStack = getFluid(itemStack);
+        IFluidHandler fluidHandler = FluidUtil.getFluidHandler(itemStack);
+        FluidStack fluidStack = fluidHandler.drain(Integer.MAX_VALUE, false);
         if(fluidStack != null) {
-            drain(itemStack, (damage - getDamage(itemStack)) * USAGE, true);
+            fluidHandler.drain((damage - getDamage(itemStack)) * USAGE, true);
         }
     }
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<recipes>
+
+    <recipe type="shapeless">
+        <condition type="mod">thaumcraft</condition>
+        <condition type="config">veined_scribing_tools</condition>
+        <input>
+            <item>minecraft:glass_bottle</item>
+            <item>minecraft:feather</item>
+            <item meta="1">evilcraft:blood_orb</item>
+        </input>
+        <output>
+            <item>evilcraft:veined_scribing_tools</item>
+        </output>
+    </recipe>
+
+    <recipe type="shapeless">
+        <condition type="mod">thaumcraft</condition>
+        <condition type="config">veined_scribing_tools</condition>
+        <input>
+            <item>thaumcraft:phial</item>
+            <item>minecraft:feather</item>
+            <item meta="1">evilcraft:blood_orb</item>
+        </input>
+        <output>
+            <item>evilcraft:veined_scribing_tools</item>
+        </output>
+    </recipe>
+
+</recipes>

@@ -2,8 +2,8 @@ package org.cyclops.evilcraftcompat.modcompat.thaumcraft;
 
 import org.cyclops.cyclopscore.config.ConfigHandler;
 import org.cyclops.cyclopscore.modcompat.IModCompat;
-import org.cyclops.evilcraft.EvilCraft;
-import org.cyclops.evilcraft.Reference;
+import org.cyclops.evilcraftcompat.EvilCraftCompat;
+import org.cyclops.evilcraftcompat.Reference;
 
 /**
  * Compatibility plugin for Thaumcraft.
@@ -20,9 +20,8 @@ public class ThaumcraftModCompat implements IModCompat {
     @Override
     public void onInit(Step step) {
         if(step == Step.PREINIT) {
-            ConfigHandler configs = EvilCraft._instance.getConfigHandler();
+            ConfigHandler configs = EvilCraftCompat._instance.getConfigHandler();
             configs.add(new VeinedScribingToolsConfig());
-            configs.add(new BloodWandCapConfig());
         } else if(step == Step.INIT) {
             Thaumcraft.register();
     	}
@@ -35,7 +34,7 @@ public class ThaumcraftModCompat implements IModCompat {
 
 	@Override
 	public String getComment() {
-		return "Adds Thaumcraft aspects to EvilCraft items and blocks, a new Blood Wand Cap, Vein Scribing Tools and extra Loot Bag items.";
+		return "Adds Thaumcraft aspects to EvilCraft items and blocks, Veined Scribing Tools and extra Loot Bag items.";
 	}
 
 }

@@ -38,6 +38,7 @@ public class Reference {
     public static final String MOD_FORESTRY = "forestry";
     public static final String MOD_CRAFTTWEAKER = "crafttweaker";
     public static final String MOD_ENDERIO = "enderio";
+    public static final String MOD_THAUMCRAFT = "thaumcraft";
     
     // Dependencies
     public static final String MOD_DEPENDENCIES =

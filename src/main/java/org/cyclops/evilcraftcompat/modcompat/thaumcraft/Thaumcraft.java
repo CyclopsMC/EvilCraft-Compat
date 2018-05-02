@@ -1,12 +1,10 @@
 package org.cyclops.evilcraftcompat.modcompat.thaumcraft;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import org.cyclops.cyclopscore.config.extendedconfig.BlockConfig;
 import org.cyclops.cyclopscore.config.extendedconfig.ItemConfig;
 import org.cyclops.cyclopscore.config.extendedconfig.MobConfig;
 import org.cyclops.evilcraft.Configs;
-import org.cyclops.evilcraft.Reference;
 import org.cyclops.evilcraft.block.*;
 import org.cyclops.evilcraft.entity.monster.NetherfishConfig;
 import org.cyclops.evilcraft.entity.monster.PoisonousLibelleConfig;
@@ -15,7 +13,6 @@ import org.cyclops.evilcraft.item.*;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.wands.WandCap;
 
 /**
  * @author rubensworks
@@ -24,14 +21,6 @@ public class Thaumcraft {
 
     public static void register() {
         registerAspects();
-
-        if(Configs.isEnabled(BloodWandCapConfig.class)) {
-            WandCap bloodWandCap = new WandCap("blood", 0.95F, 1, new ItemStack(BloodWandCapConfig._instance.getItemInstance()), 3, new ResourceLocation(Reference.MOD_ID, "models/wand_cap_blood")) {
-                public String getResearch() {
-                    return "CAP_gold";
-                }
-            };
-        }
 
         if(Configs.isEnabled(DarkGemConfig.class)) {
             ThaumcraftApi.addLootBagItem(new ItemStack(DarkGem.getInstance()), 100, 0, 1, 2);
@@ -60,7 +49,6 @@ public class Thaumcraft {
         AspectList bloodLists = new AspectList().add(Aspect.ENERGY, 2).add(Aspect.LIFE, 4);
         registerObjectTagSafe(FluidBlockBloodConfig._instance, bloodLists.copy());
         registerObjectTagSafe(HardenedBloodConfig._instance, bloodLists.copy());
-        registerObjectTagSafe(BucketBloodConfig._instance, bloodLists.copy().add(Aspect.METAL, 3));
         registerObjectTagSafe(HardenedBloodShardConfig._instance, new AspectList().add(Aspect.LIFE, 1));
         registerObjectTagSafe(BloodStainedBlockConfig._instance, bloodLists.copy());
         registerObjectTagSafe(BloodyCobblestoneConfig._instance, bloodLists.copy().add(Aspect.EARTH, 1).add(Aspect.ENTROPY, 1));
@@ -74,7 +62,6 @@ public class Thaumcraft {
 
         // Poison
         registerObjectTagSafe(FluidBlockPoisonConfig._instance, new AspectList().add(Aspect.EARTH, 4));
-        registerObjectTagSafe(BucketPoisonConfig._instance, new AspectList().add(Aspect.EARTH, 4).add(Aspect.METAL, 3));
         registerObjectTagSafe(PoisonSacConfig._instance, new AspectList().add(Aspect.MOTION, 4).add(Aspect.EARTH, 2));
 
         // Undead tree
