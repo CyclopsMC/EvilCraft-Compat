@@ -44,6 +44,7 @@ public class Reference {
     public static final String MOD_DEPENDENCIES =
             "required-after:" + MOD_FORGE       + "@[" + MOD_FORGE_VERSION_MIN       + ",);" +
             "required-after:" + MOD_CYCLOPSCORE + "@[" + MOD_CYCLOPSCORE_VERSION_MIN + ",);" +
+            "after:" + MOD_THAUMCRAFT + ";" +
             "after:" + MOD_FORESTRY + "@[5.8.0.241,);" +
             "after:" + MOD_EVILCRAFT;
 }
