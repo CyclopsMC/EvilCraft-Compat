@@ -36,6 +36,11 @@ public class BoundBloodDropConfig extends ItemConfig {
      */
     @ConfigurableProperty(category = ConfigurableTypeCategory.WORLDGENERATION, comment = "The amount of ticks the server should wait before sending a soul network update. (only for servers)")
     public static int maxUpdateTicks = 40;
+    /**
+     * If held buckets should be autofilled when enabled.
+     */
+    @ConfigurableProperty(category = ConfigurableTypeCategory.ITEM, comment = "If held buckets should be autofilled when enabled.", isCommandable = true)
+    public static boolean autoFillBuckets = false;
 
     /**
      * Make a new instance.

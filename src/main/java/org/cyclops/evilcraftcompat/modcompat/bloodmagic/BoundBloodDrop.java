@@ -111,7 +111,7 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
     @Override
     public void onUpdate(ItemStack itemStack, World world, Entity entity, int par4, boolean par5) {
     	if(ItemHelpers.isActivated(itemStack)) {
-    		ItemHelpers.updateAutoFill(FluidUtil.getFluidHandler(itemStack), world, entity);
+    		ItemHelpers.updateAutoFill(FluidUtil.getFluidHandler(itemStack), world, entity, BoundBloodDropConfig.autoFillBuckets);
     	}
         super.onUpdate(itemStack, world, entity, par4, par5);
     }
