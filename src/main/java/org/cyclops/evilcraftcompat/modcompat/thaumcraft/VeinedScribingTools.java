@@ -5,6 +5,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import org.cyclops.cyclopscore.config.configurable.ConfigurableDamageIndicatedItemFluidContainer;
 import org.cyclops.cyclopscore.config.extendedconfig.ExtendedConfig;
 import org.cyclops.cyclopscore.config.extendedconfig.ItemConfig;
@@ -40,7 +41,13 @@ public class VeinedScribingTools extends ConfigurableDamageIndicatedItemFluidCon
 
     @Override
     public int getDamage(ItemStack itemStack) {
-        FluidStack fluidStack = FluidUtil.getFluidContained(itemStack);
+        FluidStack fluidStack = null;
+        if (!itemStack.isEmpty()) {
+            IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(itemStack);
+            if (fluidHandler != null) {
+                fluidStack = fluidHandler.drain(Integer.MAX_VALUE, false);
+            }
+        }
         if(fluidStack == null) return 0;
         return (CAPACITY - fluidStack.amount) / USAGE;
     }
