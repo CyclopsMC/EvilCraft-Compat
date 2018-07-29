@@ -22,6 +22,8 @@ public class UpdateSoulNetworkCachePacket extends PacketCodec {
 	
 	@CodecField
 	private Map<String, Integer> playerEssences = Maps.newHashMap();
+	@CodecField
+	private Map<String, Integer> playerEssencesMax = Maps.newHashMap();
 
 	/**
 	 * Creates a packet with no content
@@ -39,8 +41,9 @@ public class UpdateSoulNetworkCachePacket extends PacketCodec {
 	 * Creates a packet which contains the player names and amount of essence.
 	 * @param playerEssences A map of players with their essence.
 	 */
-	public UpdateSoulNetworkCachePacket(Map<String, Integer> playerEssences) {
+	public UpdateSoulNetworkCachePacket(Map<String, Integer> playerEssences, Map<String, Integer> playerEssencesMax) {
 		this.playerEssences = playerEssences;
+		this.playerEssencesMax = playerEssencesMax;
 	}
 
 	@Override
@@ -48,6 +51,9 @@ public class UpdateSoulNetworkCachePacket extends PacketCodec {
 	public void actionClient(World world, EntityPlayer player) {
 		for(Map.Entry<String, Integer> entry : playerEssences.entrySet()) {
 			ClientSoulNetworkHandler.getInstance().setCurrentEssence(entry.getKey(), entry.getValue());
+		}
+		for(Map.Entry<String, Integer> entry : playerEssencesMax.entrySet()) {
+			ClientSoulNetworkHandler.getInstance().setMaxEssence(entry.getKey(), entry.getValue());
 		}
 	}    
 

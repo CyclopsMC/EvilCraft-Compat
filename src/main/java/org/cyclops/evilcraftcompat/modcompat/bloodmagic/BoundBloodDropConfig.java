@@ -26,12 +26,6 @@ public class BoundBloodDropConfig extends ItemConfig {
     public static org.cyclops.evilcraftcompat.modcompat.bloodmagic.BoundBloodDropConfig _instance;
 
     /**
-     * The maximum capacity in (Blood) mB that can be filled.
-     */
-    @ConfigurableProperty(category = ConfigurableTypeCategory.ITEM, comment = "The maximum capacity in (Blood) mB that can be filled.", isCommandable = true)
-    public static int maxCapacity = 250000;
-
-    /**
      * Max update frequency
      */
     @ConfigurableProperty(category = ConfigurableTypeCategory.WORLDGENERATION, comment = "The amount of ticks the server should wait before sending a soul network update. (only for servers)")

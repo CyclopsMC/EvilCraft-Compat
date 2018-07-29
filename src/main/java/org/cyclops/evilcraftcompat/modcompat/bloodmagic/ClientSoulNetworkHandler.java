@@ -1,5 +1,6 @@
 package org.cyclops.evilcraftcompat.modcompat.bloodmagic;
 
+import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -24,7 +25,8 @@ import java.util.UUID;
 public class ClientSoulNetworkHandler {
 
 	private static org.cyclops.evilcraftcompat.modcompat.bloodmagic.ClientSoulNetworkHandler _instance = null;
-	private Map<String, Integer> PLAYER_CACHE = Maps.newHashMap();
+	private Map<String, Integer> PLAYER_CONTENTS_CACHE = Maps.newHashMap();
+	private Map<String, Integer> PLAYER_MAX_CACHE = Maps.newHashMap();
 	private Set<String> UPDATE_PLAYERS = Sets.newHashSet();
 	
 	private ClientSoulNetworkHandler() {
@@ -35,7 +37,8 @@ public class ClientSoulNetworkHandler {
 	 * Reset the instance.
 	 */
 	public static void reset() {
-		getInstance().PLAYER_CACHE = Maps.newHashMap();
+		getInstance().PLAYER_CONTENTS_CACHE = Maps.newHashMap();
+		getInstance().PLAYER_MAX_CACHE = Maps.newHashMap();
 	}
 	
 	/**
@@ -57,7 +60,7 @@ public class ClientSoulNetworkHandler {
 	 */
 	public int getCurrentEssence(UUID uuid) {
 		if(MinecraftHelpers.isClientSide()) {
-			Integer ret = PLAYER_CACHE.get(uuid.toString());
+			Integer ret = PLAYER_CONTENTS_CACHE.get(uuid.toString());
 			if(ret == null) {
 				EvilCraft._instance.getPacketHandler().sendToServer(new RequestSoulNetworkUpdatesPacket(uuid.toString()));
 				return 0;
@@ -74,7 +77,36 @@ public class ClientSoulNetworkHandler {
 	 * @param currentEssence The essence.
 	 */
 	public void setCurrentEssence(String uuid, int currentEssence) {
-		PLAYER_CACHE.put(uuid, currentEssence);
+		PLAYER_CONTENTS_CACHE.put(uuid, currentEssence);
+	}
+
+	/**
+	 * Get the cached current essence.
+	 * Clients will automatically send a request packet to the server to stay updated for this player's essence.
+	 * Servers will always delegate to the SoulNetworkHandler.
+	 * @param uuid The owner uuid.
+	 * @return The essence.
+	 */
+	public int getMaxEssence(UUID uuid) {
+		if(MinecraftHelpers.isClientSide()) {
+			Integer ret = PLAYER_MAX_CACHE.get(uuid.toString());
+			if(ret == null) {
+				EvilCraft._instance.getPacketHandler().sendToServer(new RequestSoulNetworkUpdatesPacket(uuid.toString()));
+				return 0;
+			}
+			return ret;
+		} else {
+			return NetworkHelper.getMaximumForTier(NetworkHelper.getSoulNetwork(uuid).getOrbTier());
+		}
+	}
+
+	/**
+	 * Set the essence for the player.
+	 * @param uuid The player uuid.
+	 * @param currentEssence The essence.
+	 */
+	public void setMaxEssence(String uuid, int currentEssence) {
+		PLAYER_MAX_CACHE.put(uuid, currentEssence);
 	}
 	
 	/**
@@ -96,20 +128,28 @@ public class ClientSoulNetworkHandler {
 				FMLCommonHandler.instance().getMinecraftServerInstance().worlds[0],
 				BoundBloodDropConfig.maxUpdateTicks)) {
         	Map<String, Integer> toSend = Maps.newHashMap();
+			Map<String, Integer> toSendMax = Maps.newHashMap();
         	for(String uuid : UPDATE_PLAYERS) {
-        		int essence = NetworkHelper.getSoulNetwork(uuid).getCurrentEssence();
-        		Integer found = PLAYER_CACHE.get(uuid);
+				SoulNetwork soulNetwork = NetworkHelper.getSoulNetwork(uuid);
+        		int essence = soulNetwork.getCurrentEssence();
+				int max = NetworkHelper.getMaximumForTier(soulNetwork.getOrbTier());
+        		Integer found = PLAYER_CONTENTS_CACHE.get(uuid);
         		if(found == null || essence != found) {
         			toSend.put(uuid, essence);
         			setCurrentEssence(uuid, essence);
         		}
+				Integer foundMax = PLAYER_MAX_CACHE.get(uuid);
+				if(foundMax == null || max != foundMax) {
+					toSendMax.put(uuid, max);
+					setMaxEssence(uuid, max);
+				}
         	}
-        	sendUpdates(toSend);
+        	sendUpdates(toSend, toSendMax);
         }
     }
     
-    private void sendUpdates(Map<String, Integer> toSend) {
-    	EvilCraft._instance.getPacketHandler().sendToAll(new UpdateSoulNetworkCachePacket(toSend));
+    private void sendUpdates(Map<String, Integer> toSendContents, Map<String, Integer> toSendMax) {
+    	EvilCraft._instance.getPacketHandler().sendToAll(new UpdateSoulNetworkCachePacket(toSendContents, toSendMax));
 	}
 	
     /**

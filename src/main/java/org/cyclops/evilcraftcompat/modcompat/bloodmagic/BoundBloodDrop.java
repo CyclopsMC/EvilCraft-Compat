@@ -25,6 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.cyclops.cyclopscore.config.configurable.ConfigurableDamageIndicatedItemFluidContainer;
 import org.cyclops.cyclopscore.config.extendedconfig.ExtendedConfig;
 import org.cyclops.cyclopscore.config.extendedconfig.ItemConfig;
+import org.cyclops.cyclopscore.helper.FluidHelpers;
 import org.cyclops.cyclopscore.helper.ItemStackHelpers;
 import org.cyclops.cyclopscore.helper.L10NHelpers;
 import org.cyclops.cyclopscore.helper.MinecraftHelpers;
@@ -66,6 +67,10 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
 
     private static int getCurrentEssence(UUID uuid) {
     	return ClientSoulNetworkHandler.getInstance().getCurrentEssence(uuid);
+    }
+
+    private static int getMaxEssence(UUID uuid) {
+        return ClientSoulNetworkHandler.getInstance().getMaxEssence(uuid);
     }
 
     @Override
@@ -128,11 +133,25 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
             super(container, capacity, Blood.getInstance());
         }
 
+        @Nullable
+        protected UUID getUuid() {
+            Binding binding = getBinding();
+            if (binding == null) {
+                return null;
+            }
+            return binding.getOwnerId();
+        }
+
         @Override
         public int getCapacity() {
-            FluidStack contents = FluidUtil.getFluidContained(container);
-            int contentsAmount = contents == null ? 0 : contents.amount;
-            return Math.max(contentsAmount, BoundBloodDropConfig.maxCapacity);
+            UUID uuid = getUuid();
+            if (uuid == null) {
+                return 0;
+            }
+            if (MinecraftHelpers.isClientSide()) {
+                return getMaxEssence(uuid);
+            }
+            return NetworkHelper.getMaximumForTier(NetworkHelper.getSoulNetwork(uuid).getOrbTier());
         }
 
         @Nullable
@@ -143,30 +162,23 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
         @Override
         public int fill(FluidStack resource, boolean doFill) {
             doFill = shouldDoFill(resource, doFill);
-            Binding binding = getBinding();
-            if (binding == null) {
-                return 0;
-            }
-            UUID uuid = binding.getOwnerId();
+            UUID uuid = getUuid();
             if (uuid == null) {
                 return 0;
             }
             int essence = getCurrentEssence(uuid);
             FluidStack essenceFluid = BloodFluidConverter.getInstance().convertReverse(BlockLifeEssence.getLifeEssence(), resource);
-            int filled = essenceFluid == null ? 0 : essenceFluid.amount;
+            int maxFill = Math.max(0, getCapacity() - essence);
+            int filled = Math.min(maxFill, essenceFluid == null ? 0 : essenceFluid.amount);
             if(doFill && !MinecraftHelpers.isClientSide()) {
                 NetworkHelper.getSoulNetwork(uuid).setCurrentEssence(essence + filled);
             }
-            return filled;
+            return FluidHelpers.getAmount(BloodFluidConverter.getInstance().convert(new FluidStack(BlockLifeEssence.getLifeEssence(), filled)));
         }
 
         @Override
         public FluidStack drain(int maxDrain, boolean doDrain) {
-            Binding binding = getBinding();
-            if (binding == null) {
-                return null;
-            }
-            UUID uuid = binding.getOwnerId();
+            UUID uuid = getUuid();
             if(uuid == null) {
                 return null;
             }
