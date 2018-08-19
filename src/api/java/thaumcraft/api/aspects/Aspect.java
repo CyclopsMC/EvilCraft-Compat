@@ -1,13 +1,14 @@
 package thaumcraft.api.aspects;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
-import org.apache.commons.lang3.text.WordUtils;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
+
+import org.apache.commons.lang3.text.WordUtils;
 
 public class Aspect {
 	
@@ -32,7 +33,17 @@ public class Aspect {
 	 * @param blend GL11 blendmode (1 or 771). Used for rendering nodes. Default is 1
 	 */
 	public Aspect(String tag, int color, Aspect[] components, ResourceLocation image, int blend) {
-
+		if (aspects.containsKey(tag)) throw new IllegalArgumentException(tag+" already registered!");
+		this.tag = tag;
+		this.components = components;
+		this.color = color;
+		this.image = image;
+		this.blend = blend;
+		aspects.put(tag, this);
+		if (components!=null) {
+			int h = (components[0].getTag()+components[1].getTag()).hashCode();
+			mixList.put(h, this);
+		}
 	}
 	
 	/**

@@ -1,11 +1,11 @@
 package thaumcraft.api.aspects;
 
+import java.io.Serializable;
+import java.util.LinkedHashMap;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-
-import java.io.Serializable;
-import java.util.LinkedHashMap;
 
 public class AspectList implements Serializable {
 	
@@ -14,10 +14,16 @@ public class AspectList implements Serializable {
 	
 	/**
 	 * this creates a new aspect list with preloaded values based off the aspects of the given item.
-	 * @param the itemstack of the given item
+	 * @param stack the itemstack of the given item
 	 */
 	public AspectList(ItemStack stack) {
-
+		try {
+			AspectList temp = AspectHelper.getObjectAspects(stack);
+			if (temp!=null)
+			for (Aspect tag:temp.getAspects()) {
+				add(tag,temp.getAmount(tag));
+			}
+		} catch (Exception e) {}
 	}
 	
 	public AspectList() {

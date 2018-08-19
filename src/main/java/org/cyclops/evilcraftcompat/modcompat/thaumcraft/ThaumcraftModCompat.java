@@ -1,5 +1,6 @@
 package org.cyclops.evilcraftcompat.modcompat.thaumcraft;
 
+import net.minecraftforge.common.MinecraftForge;
 import org.cyclops.cyclopscore.config.ConfigHandler;
 import org.cyclops.cyclopscore.modcompat.IModCompat;
 import org.cyclops.evilcraftcompat.EvilCraftCompat;
@@ -23,7 +24,7 @@ public class ThaumcraftModCompat implements IModCompat {
             ConfigHandler configs = EvilCraftCompat._instance.getConfigHandler();
             configs.add(new VeinedScribingToolsConfig());
         } else if(step == Step.INIT) {
-            Thaumcraft.register();
+            MinecraftForge.EVENT_BUS.register(new EvilCraftThaumcraftAspects());
     	}
     }
 
