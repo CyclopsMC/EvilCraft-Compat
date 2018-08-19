@@ -17,13 +17,7 @@ public class AspectList implements Serializable {
 	 * @param stack the itemstack of the given item
 	 */
 	public AspectList(ItemStack stack) {
-		try {
-			AspectList temp = AspectHelper.getObjectAspects(stack);
-			if (temp!=null)
-			for (Aspect tag:temp.getAspects()) {
-				add(tag,temp.getAmount(tag));
-			}
-		} catch (Exception e) {}
+
 	}
 	
 	public AspectList() {
