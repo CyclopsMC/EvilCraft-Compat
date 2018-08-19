@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -114,8 +115,10 @@ public class ClientSoulNetworkHandler {
 	 * @param uuid Player uuid
 	 */
 	//@SideOnly(Side.SERVER)
-	public void addUpdatePlayer(String uuid) {
+	public void addUpdatePlayer(EntityPlayerMP player, String uuid) {
 		UPDATE_PLAYERS.add(uuid);
+		EvilCraft._instance.getPacketHandler().sendToPlayer(
+				new UpdateSoulNetworkCachePacket(PLAYER_CONTENTS_CACHE, PLAYER_MAX_CACHE), player);
 	}
 	
 	/**
@@ -149,7 +152,9 @@ public class ClientSoulNetworkHandler {
     }
     
     private void sendUpdates(Map<String, Integer> toSendContents, Map<String, Integer> toSendMax) {
-    	EvilCraft._instance.getPacketHandler().sendToAll(new UpdateSoulNetworkCachePacket(toSendContents, toSendMax));
+    	if (!toSendContents.isEmpty() || !toSendMax.isEmpty()) {
+			EvilCraft._instance.getPacketHandler().sendToAll(new UpdateSoulNetworkCachePacket(toSendContents, toSendMax));
+		}
 	}
 	
     /**

@@ -48,6 +48,6 @@ public class RequestSoulNetworkUpdatesPacket extends PacketCodec {
 
 	@Override
 	public void actionServer(World world, EntityPlayerMP player) {
-		ClientSoulNetworkHandler.getInstance().addUpdatePlayer(this.uuid);
+		ClientSoulNetworkHandler.getInstance().addUpdatePlayer(player, this.uuid);
 	}
 }
