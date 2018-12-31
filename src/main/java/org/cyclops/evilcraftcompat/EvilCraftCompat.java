@@ -24,6 +24,7 @@ import org.cyclops.evilcraft.core.tileentity.TickingTankInventoryTileEntity;
 import org.cyclops.evilcraft.infobook.OriginsOfDarknessBook;
 import org.cyclops.evilcraft.tileentity.TileEnvironmentalAccumulator;
 import org.cyclops.evilcraftcompat.modcompat.bloodmagic.BloodMagicModCompat;
+import org.cyclops.evilcraftcompat.modcompat.capabilities.CommonCapabilitiesModCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerEnvirAccTileCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerWorkingTileCompat;
 import org.cyclops.evilcraftcompat.modcompat.crafttweaker.CraftTweakerModCompat;
@@ -83,6 +84,7 @@ public class EvilCraftCompat extends ModBaseVersionable {
         modCompatLoader.addModCompat(new ThermalExpansionModCompat());
         modCompatLoader.addModCompat(new CraftTweakerModCompat());
         modCompatLoader.addModCompat(new ThaumcraftModCompat());
+        modCompatLoader.addModCompat(new CommonCapabilitiesModCompat());
 
         // Capabilities
         getCapabilityConstructorRegistry().registerTile(TickingTankInventoryTileEntity.class, new WorkerWorkingTileCompat());
