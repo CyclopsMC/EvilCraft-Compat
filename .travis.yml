@@ -38,4 +38,4 @@ deploy:
     on:
       all_branches: true
       repo: CyclopsMC/EvilCraft-Compat
-      condition: "$TRAVIS_BRANCH =~ ^(master|release).*$"
+      condition: "$TRAVIS_BRANCH =~ ^(master|release|feature-).*$"
