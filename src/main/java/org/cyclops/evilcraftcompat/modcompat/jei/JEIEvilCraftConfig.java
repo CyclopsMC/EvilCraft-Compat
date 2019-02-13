@@ -13,6 +13,7 @@ import org.cyclops.evilcraft.block.*;
 import org.cyclops.evilcraft.client.gui.container.GuiBloodInfuser;
 import org.cyclops.evilcraft.client.gui.container.GuiExaltedCrafter;
 import org.cyclops.evilcraft.client.gui.container.GuiSanguinaryEnvironmentalAccumulator;
+import org.cyclops.evilcraft.core.client.gui.container.GuiWorking;
 import org.cyclops.evilcraft.core.recipe.DisplayStandRecipe;
 import org.cyclops.evilcraft.item.*;
 import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeCategory;
@@ -74,7 +75,7 @@ public class JEIEvilCraftConfig implements IModPlugin {
             if (Configs.isEnabled(BloodInfuserConfig.class)) {
                 registry.addRecipes(BloodInfuserRecipeJEI.getAllRecipes(), BloodInfuserRecipeJEI.CATEGORY);
                 registry.addRecipeClickArea(GuiBloodInfuser.class,
-                        GuiBloodInfuser.PROGRESSTARGETX, GuiBloodInfuser.PROGRESSTARGETY,
+                        GuiWorking.UPGRADES_OFFSET_X + GuiBloodInfuser.PROGRESSTARGETX, GuiBloodInfuser.PROGRESSTARGETY,
                         GuiBloodInfuser.PROGRESSWIDTH, GuiBloodInfuser.PROGRESSHEIGHT,
                         BloodInfuserRecipeJEI.CATEGORY);
                 registry.getRecipeTransferRegistry().addRecipeTransferHandler(new BloodInfuserRecipeTransferInfo());
