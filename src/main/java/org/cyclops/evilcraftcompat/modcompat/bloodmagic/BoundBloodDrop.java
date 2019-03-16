@@ -91,14 +91,14 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
     public void addInformation(ItemStack itemStack, World world, List<String> list, ITooltipFlag flag) {
         super.addInformation(itemStack, world, list, flag);
         L10NHelpers.addStatusInfo(list, ItemHelpers.isActivated(itemStack),
-                getUnlocalizedName() + ".info.auto_supply");
+                getTranslationKey() + ".info.auto_supply");
         Binding binding = getBinding(itemStack);
         if(binding != null) {
         	String owner = binding.getOwnerName();
         	if(owner == null || owner.isEmpty()) {
-        		owner = TextFormatting.ITALIC + L10NHelpers.localize(getUnlocalizedName() + ".info.current_owner.none");
+        		owner = TextFormatting.ITALIC + L10NHelpers.localize(getTranslationKey() + ".info.current_owner.none");
         	}
-        	list.add(L10NHelpers.localize(getUnlocalizedName() + ".info.current_owner", owner));
+        	list.add(L10NHelpers.localize(getTranslationKey() + ".info.current_owner", owner));
         }
     }
 

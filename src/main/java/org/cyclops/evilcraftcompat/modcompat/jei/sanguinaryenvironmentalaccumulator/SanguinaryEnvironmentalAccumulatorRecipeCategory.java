@@ -54,7 +54,7 @@ public class SanguinaryEnvironmentalAccumulatorRecipeCategory extends CommonEnvi
     @Nonnull
     @Override
     public String getTitle() {
-        return L10NHelpers.localize(SanguinaryEnvironmentalAccumulator.getInstance().getUnlocalizedName() + ".name");
+        return L10NHelpers.localize(SanguinaryEnvironmentalAccumulator.getInstance().getTranslationKey() + ".name");
     }
 
     @Nonnull

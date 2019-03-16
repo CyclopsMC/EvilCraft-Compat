@@ -55,7 +55,7 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory {
     @Nonnull
     @Override
     public String getTitle() {
-        return L10NHelpers.localize(BloodInfuser.getInstance().getUnlocalizedName() + ".name");
+        return L10NHelpers.localize(BloodInfuser.getInstance().getTranslationKey() + ".name");
     }
 
     @Override

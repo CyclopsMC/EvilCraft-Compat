@@ -16,6 +16,6 @@ public class SubtypeInterpreterActivatableFluidContainer implements ISubtypeRegi
         return "";
         /*FluidStack fluidStack = FluidUtil.getFluidContained(itemStack);
         if (fluidStack.amount == 0) fluidStack = null;
-        return (ItemHelpers.isActivated(itemStack) ? "true" : "false") + "::" + (fluidStack != null ? fluidStack.getFluid().getUnlocalizedName() : "none");*/
+        return (ItemHelpers.isActivated(itemStack) ? "true" : "false") + "::" + (fluidStack != null ? fluidStack.getFluid().getTranslationKey() : "none");*/
     }
 }

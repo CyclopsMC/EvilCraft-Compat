@@ -36,7 +36,7 @@ public class GenericBlockInfoDataProvider implements IWailaDataProvider {
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         if(accessor.getBlock() instanceof IConfigurable && config.getConfig(Waila.getBlockInfoConfigID())) {
-            L10NHelpers.addOptionalInfo(currenttip, accessor.getBlock().getUnlocalizedName());
+            L10NHelpers.addOptionalInfo(currenttip, accessor.getBlock().getTranslationKey());
         }
         return currenttip;
     }

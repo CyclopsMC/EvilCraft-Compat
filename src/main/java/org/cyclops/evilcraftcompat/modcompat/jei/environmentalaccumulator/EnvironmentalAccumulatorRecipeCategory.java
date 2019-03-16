@@ -47,7 +47,7 @@ public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalA
     @Nonnull
     @Override
     public String getTitle() {
-        return L10NHelpers.localize(EnvironmentalAccumulator.getInstance().getUnlocalizedName() + ".name");
+        return L10NHelpers.localize(EnvironmentalAccumulator.getInstance().getTranslationKey() + ".name");
     }
 
     @Nonnull
