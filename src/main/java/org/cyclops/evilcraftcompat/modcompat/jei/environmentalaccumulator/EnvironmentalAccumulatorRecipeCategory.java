@@ -6,15 +6,11 @@ import mezz.jei.api.gui.IDrawableAnimated;
 import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.cyclops.cyclopscore.helper.L10NHelpers;
 import org.cyclops.evilcraft.block.EnvironmentalAccumulator;
-import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.CommonEnvironmentalAccumulatorRecipeCategory;
-import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeHandler;
-import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEIBase;
 
 import javax.annotation.Nonnull;
 
@@ -63,15 +59,12 @@ public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalA
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
-        super.setRecipe(recipeLayout, recipeWrapper, ingredients);
+    public void setRecipe(IRecipeLayout recipeLayout, EnvironmentalAccumulatorRecipeJEIBase recipe, IIngredients ingredients) {
+        super.setRecipe(recipeLayout, recipe, ingredients);
         recipeLayout.getItemStacks().init(INPUT_SLOT, true, 1, 27);
         recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 75, 27);
 
-        if(recipeWrapper instanceof EnvironmentalAccumulatorRecipeJEIBase) {
-            EnvironmentalAccumulatorRecipeJEIBase recipe = (EnvironmentalAccumulatorRecipeJEIBase) recipeWrapper;
-            recipeLayout.getItemStacks().set(INPUT_SLOT, recipe.getInput());
-            recipeLayout.getItemStacks().set(OUTPUT_SLOT, recipe.getOutput());
-        }
+        recipeLayout.getItemStacks().set(INPUT_SLOT, recipe.getInput());
+        recipeLayout.getItemStacks().set(OUTPUT_SLOT, recipe.getOutput());
     }
 }

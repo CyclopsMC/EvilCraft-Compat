@@ -7,13 +7,11 @@ import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
-import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.cyclops.evilcraft.Reference;
 import org.cyclops.evilcraft.core.weather.WeatherType;
-import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEI;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -22,13 +20,13 @@ import java.util.Map;
  * Category for the Envir Acc recipes.
  * @author rubensworks
  */
-public abstract class CommonEnvironmentalAccumulatorRecipeCategory implements IRecipeCategory {
+public abstract class CommonEnvironmentalAccumulatorRecipeCategory implements IRecipeCategory<EnvironmentalAccumulatorRecipeJEIBase> {
 
     private final Map<WeatherType, IDrawableStatic> weatherIcons;
     private final Pair<Integer, Integer> weatherInPos;
     private final Pair<Integer, Integer> weatherOutPos;
 
-    private EnvironmentalAccumulatorRecipeJEI lastRecipe = null;
+    private EnvironmentalAccumulatorRecipeJEIBase lastRecipe = null;
 
     public CommonEnvironmentalAccumulatorRecipeCategory(IGuiHelper guiHelper, Pair<Integer, Integer> weatherInPos, Pair<Integer, Integer> weatherOutPos) {
         this.weatherInPos = weatherInPos;
@@ -64,12 +62,7 @@ public abstract class CommonEnvironmentalAccumulatorRecipeCategory implements IR
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
-        if(recipeWrapper instanceof EnvironmentalAccumulatorRecipeJEI) {
-            EnvironmentalAccumulatorRecipeJEI recipe = (EnvironmentalAccumulatorRecipeJEI) recipeWrapper;
-            this.lastRecipe = recipe;
-        } else {
-            this.lastRecipe = null;
-        }
+    public void setRecipe(IRecipeLayout recipeLayout, EnvironmentalAccumulatorRecipeJEIBase recipe, IIngredients ingredients) {
+        this.lastRecipe = recipe;
     }
 }

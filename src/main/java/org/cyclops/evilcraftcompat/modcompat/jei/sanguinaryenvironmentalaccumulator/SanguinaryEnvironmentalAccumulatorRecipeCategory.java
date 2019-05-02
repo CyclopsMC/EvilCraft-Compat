@@ -6,7 +6,6 @@ import mezz.jei.api.gui.IDrawableAnimated;
 import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
@@ -70,20 +69,17 @@ public class SanguinaryEnvironmentalAccumulatorRecipeCategory extends CommonEnvi
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
-        super.setRecipe(recipeLayout, recipeWrapper, ingredients);
+    public void setRecipe(IRecipeLayout recipeLayout, EnvironmentalAccumulatorRecipeJEIBase recipe, IIngredients ingredients) {
+        super.setRecipe(recipeLayout, recipe, ingredients);
         recipeLayout.getItemStacks().init(INPUT_SLOT, true, 41, 27);
         recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 95, 27);
 
-        if(recipeWrapper instanceof EnvironmentalAccumulatorRecipeJEIBase) {
-            EnvironmentalAccumulatorRecipeJEIBase recipe = (EnvironmentalAccumulatorRecipeJEIBase) recipeWrapper;
-            recipeLayout.getItemStacks().set(INPUT_SLOT, recipe.getInput());
-            recipeLayout.getItemStacks().set(OUTPUT_SLOT, recipe.getOutput());
+        recipeLayout.getItemStacks().set(INPUT_SLOT, recipe.getInput());
+        recipeLayout.getItemStacks().set(OUTPUT_SLOT, recipe.getOutput());
 
-            FluidStack fluidStack = new FluidStack(TileSanguinaryEnvironmentalAccumulator.ACCEPTED_FLUID, AccumulateItemTickAction.getUsage(recipe.getProperties()));
-            recipeLayout.getFluidStacks().init(FLUID_SLOT, true, 6, 6,
-                    GuiBloodInfuser.TANKWIDTH, GuiBloodInfuser.TANKHEIGHT, fluidStack == null ? 0 : fluidStack.amount, true, tankOverlay);
-            recipeLayout.getFluidStacks().set(FLUID_SLOT, fluidStack);
-        }
+        FluidStack fluidStack = new FluidStack(TileSanguinaryEnvironmentalAccumulator.ACCEPTED_FLUID, AccumulateItemTickAction.getUsage(recipe.getProperties()));
+        recipeLayout.getFluidStacks().init(FLUID_SLOT, true, 6, 6,
+                GuiBloodInfuser.TANKWIDTH, GuiBloodInfuser.TANKHEIGHT, fluidStack == null ? 0 : fluidStack.amount, true, tankOverlay);
+        recipeLayout.getFluidStacks().set(FLUID_SLOT, fluidStack);
     }
 }

@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
  * Category for the Blood Infuser recipes.
  * @author rubensworks
  */
-public class BloodInfuserRecipeCategory implements IRecipeCategory {
+public class BloodInfuserRecipeCategory implements IRecipeCategory<BloodInfuserRecipeJEI> {
 
     private static final int INPUT_SLOT = 0;
     private static final int UPGRADE_SLOT = 1;
@@ -92,20 +92,17 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory {
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, BloodInfuserRecipeJEI recipe, IIngredients ingredients) {
         recipeLayout.getItemStacks().init(INPUT_SLOT, true, 41, 27);
         recipeLayout.getItemStacks().init(UPGRADE_SLOT, false, 41, 7);
         recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 95, 27);
 
-        if(recipeWrapper instanceof org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeJEI) {
-            org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeJEI recipe = (BloodInfuserRecipeJEI) recipeWrapper;
-            recipeLayout.getItemStacks().set(INPUT_SLOT, recipe.getInput());
-            recipeLayout.getItemStacks().set(UPGRADE_SLOT, getPromise(recipe));
-            recipeLayout.getItemStacks().set(OUTPUT_SLOT, recipe.getOutput());
+        recipeLayout.getItemStacks().set(INPUT_SLOT, recipe.getInput());
+        recipeLayout.getItemStacks().set(UPGRADE_SLOT, getPromise(recipe));
+        recipeLayout.getItemStacks().set(OUTPUT_SLOT, recipe.getOutput());
 
-            recipeLayout.getFluidStacks().init(FLUID_SLOT, true, 6, 6,
-                    GuiBloodInfuser.TANKWIDTH, GuiBloodInfuser.TANKHEIGHT, getMaxTankSize(recipe), true, tankOverlay);
-            recipeLayout.getFluidStacks().set(FLUID_SLOT, recipe.getFluidStack());
-        }
+        recipeLayout.getFluidStacks().init(FLUID_SLOT, true, 6, 6,
+                GuiBloodInfuser.TANKWIDTH, GuiBloodInfuser.TANKHEIGHT, getMaxTankSize(recipe), true, tankOverlay);
+        recipeLayout.getFluidStacks().set(FLUID_SLOT, recipe.getFluidStack());
     }
 }
