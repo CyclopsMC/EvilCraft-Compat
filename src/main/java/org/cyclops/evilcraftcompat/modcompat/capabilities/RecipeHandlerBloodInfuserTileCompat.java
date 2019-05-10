@@ -60,8 +60,8 @@ public class RecipeHandlerBloodInfuserTileCompat extends SimpleCapabilityConstru
         @Override
         protected IngredientFluidStackAndTierRecipeComponent inputIngredientsToRecipeInput(IMixedIngredients inputIngredients) {
             return new IngredientFluidStackAndTierRecipeComponent(
-                    Iterables.getFirst(inputIngredients.getInstances(IngredientComponent.ITEMSTACK), ItemStack.EMPTY),
-                    Iterables.getFirst(inputIngredients.getInstances(IngredientComponent.FLUIDSTACK), null),
+                    inputIngredients.getFirstNonEmpty(IngredientComponent.ITEMSTACK),
+                    inputIngredients.getFirstNonEmpty(IngredientComponent.FLUIDSTACK),
                     host.getTier()
             );
         }
