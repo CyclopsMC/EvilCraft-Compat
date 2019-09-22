@@ -70,7 +70,7 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
     }
 
     private static int getMaxEssence(UUID uuid) {
-        return ClientSoulNetworkHandler.getInstance().getMaxEssence(uuid);
+        return Math.max(getCurrentEssence(uuid), ClientSoulNetworkHandler.getInstance().getMaxEssence(uuid));
     }
 
     @Override
