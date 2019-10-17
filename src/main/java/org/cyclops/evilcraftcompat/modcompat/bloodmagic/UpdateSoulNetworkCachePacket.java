@@ -40,6 +40,7 @@ public class UpdateSoulNetworkCachePacket extends PacketCodec {
 	/**
 	 * Creates a packet which contains the player names and amount of essence.
 	 * @param playerEssences A map of players with their essence.
+	 * @param playerEssencesMax A map of players with their max essence.
 	 */
 	public UpdateSoulNetworkCachePacket(Map<String, Integer> playerEssences, Map<String, Integer> playerEssencesMax) {
 		this.playerEssences = playerEssences;

@@ -112,6 +112,7 @@ public class ClientSoulNetworkHandler {
 	
 	/**
 	 * Add the given player to the server list of essence watchers.
+	 * @param player The player.
 	 * @param uuid Player uuid
 	 */
 	//@SideOnly(Side.SERVER)
