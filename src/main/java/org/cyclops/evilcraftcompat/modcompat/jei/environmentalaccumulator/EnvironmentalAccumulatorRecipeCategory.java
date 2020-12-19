@@ -1,16 +1,18 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator;
 
-import mezz.jei.api.IGuiHelper;
-import mezz.jei.api.gui.IDrawable;
-import mezz.jei.api.gui.IDrawableAnimated;
-import mezz.jei.api.gui.IDrawableStatic;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
+import mezz.jei.api.gui.drawable.IDrawableStatic;
+import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
-import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
 import org.apache.commons.lang3.tuple.Pair;
-import org.cyclops.cyclopscore.helper.L10NHelpers;
-import org.cyclops.evilcraft.block.EnvironmentalAccumulator;
+import org.cyclops.evilcraft.RegistryEntries;
+import org.cyclops.evilcraftcompat.Reference;
 
 import javax.annotation.Nonnull;
 
@@ -18,32 +20,41 @@ import javax.annotation.Nonnull;
  * Category for the Envir Acc recipes.
  * @author rubensworks
  */
-public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalAccumulatorRecipeCategory {
+public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalAccumulatorRecipeCategory<EnvironmentalAccumulatorRecipeJEI> {
+
+    public static final ResourceLocation NAME = new ResourceLocation(Reference.MOD_ID, "environmental_accumulator");
 
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
 
     private final IDrawable background;
+    private final IDrawable icon;
     private final IDrawableAnimated arrow;
 
     public EnvironmentalAccumulatorRecipeCategory(IGuiHelper guiHelper) {
         super(guiHelper, Pair.of(2, 8), Pair.of(76, 8));
-        ResourceLocation resourceLocation = new ResourceLocation(org.cyclops.evilcraft.Reference.MOD_ID + ":" + EnvironmentalAccumulator.getInstance().getGuiTexture("_jei"));
+        ResourceLocation resourceLocation = new ResourceLocation(Reference.MOD_ID, Reference.TEXTURE_PATH_GUI + "environmental_accumulator_gui_jei.png");
         this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 94, 54);
+        this.icon = guiHelper.createDrawableIngredient(new ItemStack(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR));
         IDrawableStatic arrowDrawable = guiHelper.createDrawable(resourceLocation, 94, 0, 5, 34);
         this.arrow = guiHelper.createAnimatedDrawable(arrowDrawable, 200, IDrawableAnimated.StartDirection.BOTTOM, false);
     }
 
     @Nonnull
     @Override
-    public String getUid() {
-        return EnvironmentalAccumulatorRecipeJEI.CATEGORY;
+    public ResourceLocation getUid() {
+        return NAME;
+    }
+
+    @Override
+    public Class<? extends EnvironmentalAccumulatorRecipeJEI> getRecipeClass() {
+        return EnvironmentalAccumulatorRecipeJEI.class;
     }
 
     @Nonnull
     @Override
     public String getTitle() {
-        return L10NHelpers.localize(EnvironmentalAccumulator.getInstance().getTranslationKey() + ".name");
+        return new TranslationTextComponent(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR.getTranslationKey()).getString();
     }
 
     @Nonnull
@@ -53,18 +64,29 @@ public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalA
     }
 
     @Override
-    public void drawExtras(Minecraft minecraft) {
-        super.drawExtras(minecraft);
-        arrow.draw(minecraft, 44, 0);
+    public IDrawable getIcon() {
+        return icon;
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, EnvironmentalAccumulatorRecipeJEIBase recipe, IIngredients ingredients) {
+    public void setIngredients(EnvironmentalAccumulatorRecipeJEI recipe, IIngredients ingredients) {
+        ingredients.setInputs(VanillaTypes.ITEM, recipe.getInputItems());
+        ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutputItem());
+    }
+
+    @Override
+    public void setRecipe(IRecipeLayout recipeLayout, EnvironmentalAccumulatorRecipeJEI recipe, IIngredients ingredients) {
         super.setRecipe(recipeLayout, recipe, ingredients);
         recipeLayout.getItemStacks().init(INPUT_SLOT, true, 1, 27);
         recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 75, 27);
 
-        recipeLayout.getItemStacks().set(INPUT_SLOT, recipe.getInput());
-        recipeLayout.getItemStacks().set(OUTPUT_SLOT, recipe.getOutput());
+        recipeLayout.getItemStacks().set(INPUT_SLOT, recipe.getInputItems());
+        recipeLayout.getItemStacks().set(OUTPUT_SLOT, recipe.getOutputItem());
+    }
+
+    @Override
+    public void draw(EnvironmentalAccumulatorRecipeJEI recipe, double mouseX, double mouseY) {
+        super.draw(recipe, mouseX, mouseY);
+        arrow.draw(44, 0);
     }
 }

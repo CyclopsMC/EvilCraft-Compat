@@ -1,32 +1,27 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator;
 
-import lombok.EqualsAndHashCode;
-
 import com.google.common.base.Function;
-import com.google.common.collect.Lists;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.cyclops.cyclopscore.recipe.custom.api.IRecipe;
-import org.cyclops.evilcraft.Reference;
-import org.cyclops.evilcraft.block.EnvironmentalAccumulator;
-import org.cyclops.evilcraft.core.recipe.custom.EnvironmentalAccumulatorRecipeComponent;
-import org.cyclops.evilcraft.core.recipe.custom.EnvironmentalAccumulatorRecipeProperties;
-import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEIBase;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Maps;
+import net.minecraft.item.crafting.IRecipe;
+import org.cyclops.cyclopscore.helper.CraftingHelpers;
+import org.cyclops.cyclopscore.modcompat.jei.RecipeRegistryJeiRecipeWrapper;
+import org.cyclops.evilcraft.core.recipe.type.RecipeEnvironmentalAccumulator;
+import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.CommonEnvironmentalAccumulatorRecipeJEI;
 
 import javax.annotation.Nullable;
-import java.util.List;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * Recipe wrapper for Sanguinary Envir Acc recipes
  * @author rubensworks
  */
-@EqualsAndHashCode(callSuper = false)
-@Data
-public class SanguinaryEnvironmentalAccumulatorRecipeJEI extends EnvironmentalAccumulatorRecipeJEIBase<SanguinaryEnvironmentalAccumulatorRecipeJEI> {
+public class SanguinaryEnvironmentalAccumulatorRecipeJEI extends CommonEnvironmentalAccumulatorRecipeJEI<SanguinaryEnvironmentalAccumulatorRecipeJEI> {
 
-    public static final String CATEGORY = Reference.MOD_ID + ":sanguinaryEnvironmentalAccumulator";
+    private static final Map<IRecipe<?>, SanguinaryEnvironmentalAccumulatorRecipeJEI> RECIPE_WRAPPERS_2 = Maps.newIdentityHashMap();
 
-    public SanguinaryEnvironmentalAccumulatorRecipeJEI(IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties> recipe) {
+    public SanguinaryEnvironmentalAccumulatorRecipeJEI(RecipeEnvironmentalAccumulator recipe) {
         super(recipe);
     }
 
@@ -35,11 +30,25 @@ public class SanguinaryEnvironmentalAccumulatorRecipeJEI extends EnvironmentalAc
     }
 
     @Override
-    protected SanguinaryEnvironmentalAccumulatorRecipeJEI newInstance(IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties> input) {
+    protected SanguinaryEnvironmentalAccumulatorRecipeJEI newInstance(RecipeEnvironmentalAccumulator input) {
         return new SanguinaryEnvironmentalAccumulatorRecipeJEI(input);
     }
 
-    public static List<SanguinaryEnvironmentalAccumulatorRecipeJEI> getAllSanguinaryRecipes() {
+    public static Collection<SanguinaryEnvironmentalAccumulatorRecipeJEI> getAllRecipes() {
         return new SanguinaryEnvironmentalAccumulatorRecipeJEI().createAllRecipes();
+    }
+
+    // Needed because the RECIPE_WRAPPERS would otherwise just return the envir acc instances, and fail
+    public Collection<SanguinaryEnvironmentalAccumulatorRecipeJEI> createAllRecipes() {
+        return Collections2.transform(CraftingHelpers.getClientRecipes(this.getRecipeType()), new Function<RecipeEnvironmentalAccumulator, SanguinaryEnvironmentalAccumulatorRecipeJEI>() {
+            @Nullable
+            public SanguinaryEnvironmentalAccumulatorRecipeJEI apply(RecipeEnvironmentalAccumulator input) {
+                if (!RECIPE_WRAPPERS_2.containsKey(input)) {
+                    RECIPE_WRAPPERS_2.put(input, SanguinaryEnvironmentalAccumulatorRecipeJEI.this.newInstance(input));
+                }
+
+                return RECIPE_WRAPPERS_2.get(input);
+            }
+        });
     }
 }

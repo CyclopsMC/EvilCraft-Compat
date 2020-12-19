@@ -1,6 +1,6 @@
 ## EvilCraftCompat
 
-[![Build Status](https://travis-ci.org/CyclopsMC/EvilCraft-Compat.svg?branch=master-1.12)](https://travis-ci.org/CyclopsMC/EvilCraft-Compat)
+[![Build Status](https://travis-ci.org/CyclopsMC/EvilCraft-Compat.svg)](https://travis-ci.org/CyclopsMC/EvilCraft-Compat)
 [![Download](https://img.shields.io/maven-metadata/v/https/oss.jfrog.org/artifactory/simple/libs-release/org/cyclops/evilcraftcompat/EvilCraftCompat/maven-metadata.xml.svg) ](https://oss.jfrog.org/artifactory/simple/libs-release/org/cyclops/evilcraftcompat/EvilCraftCompat/)
 
 [EvilCraft](https://github.com/CyclopsMC/EvilCraft) compatibility with other mods.

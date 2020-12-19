@@ -1,32 +1,29 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator;
 
 import com.google.common.collect.Maps;
-import mezz.jei.api.IGuiHelper;
-import mezz.jei.api.gui.IDrawable;
-import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.drawable.IDrawableStatic;
+import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.IRecipeCategory;
-import net.minecraft.client.Minecraft;
+import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.cyclops.evilcraft.Reference;
 import org.cyclops.evilcraft.core.weather.WeatherType;
 
-import javax.annotation.Nullable;
 import java.util.Map;
 
 /**
  * Category for the Envir Acc recipes.
  * @author rubensworks
  */
-public abstract class CommonEnvironmentalAccumulatorRecipeCategory implements IRecipeCategory<EnvironmentalAccumulatorRecipeJEIBase> {
+public abstract class CommonEnvironmentalAccumulatorRecipeCategory<T extends CommonEnvironmentalAccumulatorRecipeJEI<T>> implements IRecipeCategory<T> {
 
     private final Map<WeatherType, IDrawableStatic> weatherIcons;
     private final Pair<Integer, Integer> weatherInPos;
     private final Pair<Integer, Integer> weatherOutPos;
 
-    private EnvironmentalAccumulatorRecipeJEIBase lastRecipe = null;
+    private T lastRecipe = null;
 
     public CommonEnvironmentalAccumulatorRecipeCategory(IGuiHelper guiHelper, Pair<Integer, Integer> weatherInPos, Pair<Integer, Integer> weatherOutPos) {
         this.weatherInPos = weatherInPos;
@@ -39,30 +36,19 @@ public abstract class CommonEnvironmentalAccumulatorRecipeCategory implements IR
     }
 
     @Override
-    public String getModName() {
-        return Reference.MOD_NAME;
-    }
-
-    @Nullable
-    @Override
-    public IDrawable getIcon() {
-        return null;
-    }
-
-    @Override
-    public void drawExtras(Minecraft minecraft) {
+    public void draw(T recipe, double mouseX, double mouseY) {
         if(lastRecipe != null) {
             if(lastRecipe.getInputWeather() != WeatherType.ANY) {
-                weatherIcons.get(lastRecipe.getInputWeather()).draw(minecraft, weatherInPos.getLeft(), weatherInPos.getRight());
+                weatherIcons.get(lastRecipe.getInputWeather()).draw(weatherInPos.getLeft(), weatherInPos.getRight());
             }
             if(lastRecipe.getOutputWeather() != WeatherType.ANY) {
-                weatherIcons.get(lastRecipe.getOutputWeather()).draw(minecraft, weatherOutPos.getLeft(), weatherOutPos.getRight());
+                weatherIcons.get(lastRecipe.getOutputWeather()).draw(weatherOutPos.getLeft(), weatherOutPos.getRight());
             }
         }
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, EnvironmentalAccumulatorRecipeJEIBase recipe, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, T recipe, IIngredients ingredients) {
         this.lastRecipe = recipe;
     }
 }

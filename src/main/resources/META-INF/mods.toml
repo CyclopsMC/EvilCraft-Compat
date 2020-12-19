@@ -1,0 +1,37 @@
+modLoader="javafml"
+loaderVersion="[31.2,)"
+issueTrackerURL="https://github.com/CyclopsMC/EvilCraft/issues"
+[[mods]]
+modId="evilcraftcompat"
+version="${file.jarVersion}"
+displayName="EvilCraft-Compat"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/evilcraft"
+logoFile="logo.png"
+authors="rubensworks (aka kroeser)"
+description='''
+EvilCraft compatibility with other mods.
+'''
+[[dependencies.evilcraftcompat]]
+    modId="evilcraft"
+    mandatory=true
+    versionRange="[1.0.0,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.evilcraftcompat]]
+    modId="cyclopscore"
+    mandatory=true
+    versionRange="[1.8.3,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.evilcraftcompat]]
+    modId="forge"
+    mandatory=true
+    versionRange="[31.2,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.evilcraftcompat]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.15.2]"
+    ordering="NONE"
+    side="BOTH"

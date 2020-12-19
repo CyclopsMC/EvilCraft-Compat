@@ -1,21 +1,21 @@
 package org.cyclops.evilcraftcompat.modcompat.jei;
 
-import mezz.jei.api.ISubtypeRegistry;
+import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import org.cyclops.evilcraft.core.helper.ItemHelpers;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * @author rubensworks
  */
-public class SubtypeInterpreterActivatableFluidContainer implements ISubtypeRegistry.ISubtypeInterpreter {
+public class SubtypeInterpreterActivatableFluidContainer implements ISubtypeInterpreter {
 
     @Override
     public String apply(@Nonnull ItemStack itemStack) {
-        return "";
-        /*FluidStack fluidStack = FluidUtil.getFluidContained(itemStack);
-        if (fluidStack.amount == 0) fluidStack = null;
-        return (ItemHelpers.isActivated(itemStack) ? "true" : "false") + "::" + (fluidStack != null ? fluidStack.getFluid().getTranslationKey() : "none");*/
+        FluidStack fluidStack = FluidUtil.getFluidContained(itemStack).orElse(FluidStack.EMPTY);
+        return (ItemHelpers.isActivated(itemStack) ? "true" : "false") + "::" + (!fluidStack.isEmpty() ? fluidStack.getFluid().getRegistryName() : "none");
     }
 }

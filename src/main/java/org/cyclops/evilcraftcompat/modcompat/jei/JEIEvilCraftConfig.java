@@ -1,129 +1,131 @@
 package org.cyclops.evilcraftcompat.modcompat.jei;
 
-import mezz.jei.api.*;
-import mezz.jei.api.ingredients.IModIngredientRegistration;
-import mezz.jei.api.recipe.IRecipeCategoryRegistration;
-import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
-import net.minecraft.creativetab.CreativeTabs;
+import mezz.jei.api.IModPlugin;
+import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaRecipeCategoryUid;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
+import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
+import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import org.cyclops.evilcraft.Configs;
-import org.cyclops.evilcraft.block.*;
-import org.cyclops.evilcraft.client.gui.container.GuiBloodInfuser;
-import org.cyclops.evilcraft.client.gui.container.GuiExaltedCrafter;
-import org.cyclops.evilcraft.client.gui.container.GuiSanguinaryEnvironmentalAccumulator;
-import org.cyclops.evilcraft.core.client.gui.container.GuiWorking;
-import org.cyclops.evilcraft.core.recipe.DisplayStandRecipe;
-import org.cyclops.evilcraft.item.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ObjectHolder;
+import org.cyclops.evilcraft.RegistryEntries;
+import org.cyclops.evilcraft.client.gui.container.ContainerScreenBloodInfuser;
+import org.cyclops.evilcraft.client.gui.container.ContainerScreenExaltedCrafter;
+import org.cyclops.evilcraft.client.gui.container.ContainerScreenSanguinaryEnvironmentalAccumulator;
+import org.cyclops.evilcraft.core.client.gui.container.ContainerScreenTileWorking;
+import org.cyclops.evilcraft.core.tileentity.TileWorking;
+import org.cyclops.evilcraft.inventory.container.ContainerBloodInfuser;
+import org.cyclops.evilcraft.inventory.container.ContainerExaltedCrafter;
+import org.cyclops.evilcraft.inventory.container.ContainerSanguinaryEnvironmentalAccumulator;
+import org.cyclops.evilcraft.tileentity.TileBloodInfuser;
+import org.cyclops.evilcraft.tileentity.TileSanguinaryEnvironmentalAccumulator;
+import org.cyclops.evilcraftcompat.Reference;
 import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeCategory;
 import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeJEI;
-import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeTransferInfo;
-import org.cyclops.evilcraftcompat.modcompat.jei.displaystand.DisplayStandRecipeJEI;
 import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeCategory;
 import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEI;
-import org.cyclops.evilcraftcompat.modcompat.jei.exaltedcrafter.ExaltedCrafterRecipeTransferInfo;
 import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeCategory;
 import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeJEI;
-import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeTransferInfo;
-
-import javax.annotation.Nonnull;
 
 /**
  * Helper for registering JEI manager.
  * @author rubensworks
  *
  */
-@JEIPlugin
+@JeiPlugin
 public class JEIEvilCraftConfig implements IModPlugin {
 
-    public static IJeiHelpers JEI_HELPER;
+    @ObjectHolder("evilcraft:invigorating_pendant")
+    public static final Item ITEM_INVIGORATING_PENDANT = null;
+    @ObjectHolder("evilcraft:primed_pendant")
+    public static final Item ITEM_PRIMED_PENDANT = null;
+    @ObjectHolder("evilcraft:kineticator")
+    public static final Item ITEM_KINETICATOR = null;
+    @ObjectHolder("evilcraft:kineticator_repelling")
+    public static final Item ITEM_KINETICATOR_REPELLING = null;
+    @ObjectHolder("evilcraft:mace_of_destruction")
+    public static final Item ITEM_MACE_OF_DESTRUCTION = null;
+    @ObjectHolder("evilcraft:necromancer_staff")
+    public static final Item ITEM_NECROMANCER_STAFF = null;
+    @ObjectHolder("evilcraft:flesh_rejuvenated")
+    public static final Item ITEM_FLESH_REJUVENATED = null;
 
     @Override
-    public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
-        org.cyclops.evilcraftcompat.modcompat.jei.SubtypeInterpreterActivatableFluidContainer subtypeInterpreter = new SubtypeInterpreterActivatableFluidContainer();
-        if (Configs.isEnabled(BloodExtractorConfig.class)) subtypeRegistry.registerSubtypeInterpreter(BloodExtractor.getInstance(), subtypeInterpreter);
-        if (Configs.isEnabled(BloodPearlOfTeleportationConfig.class)) subtypeRegistry.registerSubtypeInterpreter(BloodPearlOfTeleportation.getInstance(), subtypeInterpreter);
-        if (Configs.isEnabled(DarkTankConfig.class)) subtypeRegistry.registerSubtypeInterpreter(Item.getItemFromBlock(DarkTank.getInstance()), subtypeInterpreter);
-        if (Configs.isEnabled(InvigoratingPendantConfig.class)) subtypeRegistry.registerSubtypeInterpreter(InvigoratingPendant.getInstance(), subtypeInterpreter);
-        if (Configs.isEnabled(PrimedPendantConfig.class)) subtypeRegistry.registerSubtypeInterpreter(PrimedPendant.getInstance(), subtypeInterpreter);
-        if (Configs.isEnabled(KineticatorConfig.class)) subtypeRegistry.registerSubtypeInterpreter(Kineticator.getInstance(), subtypeInterpreter);
-        if (Configs.isEnabled(MaceOfDistortionConfig.class)) subtypeRegistry.registerSubtypeInterpreter(MaceOfDistortion.getInstance(), subtypeInterpreter);
-        if (Configs.isEnabled(MaceOfDestructionConfig.class)) subtypeRegistry.registerSubtypeInterpreter(MaceOfDestruction.getInstance(), subtypeInterpreter);
-        if (Configs.isEnabled(NecromancerStaffConfig.class)) subtypeRegistry.registerSubtypeInterpreter(NecromancerStaff.getInstance(), subtypeInterpreter);
-        if (Configs.isEnabled(RejuvenatedFleshConfig.class)) subtypeRegistry.registerSubtypeInterpreter(RejuvenatedFlesh.getInstance(), subtypeInterpreter);
-        if (Configs.isEnabled(EntangledChaliceConfig.class)) subtypeRegistry.registerSubtypeInterpreter(Item.getItemFromBlock(EntangledChalice.getInstance()), subtypeInterpreter);
-    }
-
-    @Override
-    public void registerIngredients(IModIngredientRegistration registry) {
-
+    public void registerItemSubtypes(ISubtypeRegistration subtypeRegistry) {
+        SubtypeInterpreterActivatableFluidContainer subtypeInterpreter = new SubtypeInterpreterActivatableFluidContainer();
+        subtypeRegistry.registerSubtypeInterpreter(RegistryEntries.ITEM_BLOOD_EXTRACTOR, subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(RegistryEntries.ITEM_BLOOD_PEARL_OF_TELEPORTATION, subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(RegistryEntries.ITEM_DARK_TANK, subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(ITEM_INVIGORATING_PENDANT, subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(ITEM_PRIMED_PENDANT, subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(ITEM_KINETICATOR, subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(ITEM_KINETICATOR_REPELLING, subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(RegistryEntries.ITEM_MACE_OF_DISTORTION, subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(ITEM_MACE_OF_DESTRUCTION, subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(ITEM_NECROMANCER_STAFF, subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(ITEM_FLESH_REJUVENATED, subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(RegistryEntries.ITEM_ENTANGLED_CHALICE, subtypeInterpreter);
     }
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
-        if (Configs.isEnabled(BloodInfuserConfig.class)) registry.addRecipeCategories(new BloodInfuserRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-        if (Configs.isEnabled(EnvironmentalAccumulatorConfig.class)) registry.addRecipeCategories(new EnvironmentalAccumulatorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-        if (Configs.isEnabled(SanguinaryEnvironmentalAccumulatorConfig.class)) registry.addRecipeCategories(new SanguinaryEnvironmentalAccumulatorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new BloodInfuserRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new EnvironmentalAccumulatorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new SanguinaryEnvironmentalAccumulatorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
-    public void register(@Nonnull IModRegistry registry) {
-        JEI_HELPER = registry.getJeiHelpers();
-        if(JEIModCompat.canBeUsed) {
-            // Blood Infuser
-            if (Configs.isEnabled(BloodInfuserConfig.class)) {
-                registry.addRecipes(BloodInfuserRecipeJEI.getAllRecipes(), BloodInfuserRecipeJEI.CATEGORY);
-                registry.addRecipeClickArea(GuiBloodInfuser.class,
-                        GuiWorking.UPGRADES_OFFSET_X + GuiBloodInfuser.PROGRESSTARGETX, GuiBloodInfuser.PROGRESSTARGETY,
-                        GuiBloodInfuser.PROGRESSWIDTH, GuiBloodInfuser.PROGRESSHEIGHT,
-                        BloodInfuserRecipeJEI.CATEGORY);
-                registry.getRecipeTransferRegistry().addRecipeTransferHandler(new BloodInfuserRecipeTransferInfo());
-                registry.addRecipeCatalyst(new ItemStack(BloodInfuser.getInstance()), BloodInfuserRecipeJEI.CATEGORY);
-            }
-
-            // Envir Acc
-            if (Configs.isEnabled(EnvironmentalAccumulatorConfig.class)) {
-                registry.addRecipes(EnvironmentalAccumulatorRecipeJEI.getAllRecipes(), EnvironmentalAccumulatorRecipeJEI.CATEGORY);
-                registry.addRecipeCatalyst(new ItemStack(EnvironmentalAccumulator.getInstance()), EnvironmentalAccumulatorRecipeJEI.CATEGORY);
-            }
-
-            // Sanguinary Envir Acc
-            if (Configs.isEnabled(SanguinaryEnvironmentalAccumulatorConfig.class)) {
-                registry.addRecipes(SanguinaryEnvironmentalAccumulatorRecipeJEI.getAllSanguinaryRecipes(), SanguinaryEnvironmentalAccumulatorRecipeJEI.CATEGORY);
-                registry.addRecipeClickArea(GuiSanguinaryEnvironmentalAccumulator.class, GuiSanguinaryEnvironmentalAccumulator.PROGRESSTARGETX,
-                        GuiSanguinaryEnvironmentalAccumulator.PROGRESSTARGETY, GuiSanguinaryEnvironmentalAccumulator.PROGRESSWIDTH,
-                        GuiSanguinaryEnvironmentalAccumulator.PROGRESSHEIGHT, SanguinaryEnvironmentalAccumulatorRecipeJEI.CATEGORY);
-                registry.getRecipeTransferRegistry().addRecipeTransferHandler(new SanguinaryEnvironmentalAccumulatorRecipeTransferInfo());
-                registry.addRecipeCatalyst(new ItemStack(SanguinaryEnvironmentalAccumulator.getInstance()), SanguinaryEnvironmentalAccumulatorRecipeJEI.CATEGORY);
-            }
-
-            // Exalted Crafter
-            if (Configs.isEnabled(ExaltedCrafterConfig.class)) {
-                registry.addRecipeClickArea(GuiExaltedCrafter.class, 88, 32, 28, 23, VanillaRecipeCategoryUid.CRAFTING);
-                registry.getRecipeTransferRegistry().addRecipeTransferHandler(new ExaltedCrafterRecipeTransferInfo());
-                NonNullList<ItemStack> exaltedCrafters = NonNullList.create();
-                ExaltedCrafter.getInstance().getSubItems(CreativeTabs.SEARCH, exaltedCrafters);
-                for (ItemStack exaltedCrafter : exaltedCrafters) {
-                    registry.addRecipeCatalyst(exaltedCrafter, VanillaRecipeCategoryUid.CRAFTING);
-                }
-            }
-
-            // Display Stand
-            if (Configs.isEnabled(DisplayStandConfig.class)) {
-                registry.handleRecipes(DisplayStandRecipe.class,
-                        (recipe) -> new DisplayStandRecipeJEI(JEIEvilCraftConfig.JEI_HELPER, recipe),
-                        VanillaRecipeCategoryUid.CRAFTING);
-            }
-
-            // Ignore items
-            if (Configs.isEnabled(BloodStainedBlockConfig.class)) JEI_HELPER.getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(BloodStainedBlock.getInstance()));
-            if (Configs.isEnabled(InvisibleRedstoneBlockConfig.class)) JEI_HELPER.getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(InvisibleRedstoneBlock.getInstance()));
-        }
+    public void registerRecipes(IRecipeRegistration registry) {
+        registry.addRecipes(BloodInfuserRecipeJEI.getAllRecipes(), BloodInfuserRecipeCategory.NAME);
+        registry.addRecipes(EnvironmentalAccumulatorRecipeJEI.getAllRecipes(), EnvironmentalAccumulatorRecipeCategory.NAME);
+        registry.addRecipes(SanguinaryEnvironmentalAccumulatorRecipeJEI.getAllRecipes(), SanguinaryEnvironmentalAccumulatorRecipeCategory.NAME);
     }
 
     @Override
-    public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime) {
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registry) {
+        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_BLOOD_INFUSER), BloodInfuserRecipeCategory.NAME);
+        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR), EnvironmentalAccumulatorRecipeCategory.NAME);
+        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR), SanguinaryEnvironmentalAccumulatorRecipeCategory.NAME);
 
+        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER_WOODEN), VanillaRecipeCategoryUid.CRAFTING);
+        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER), VanillaRecipeCategoryUid.CRAFTING);
+        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER_WOODEN_EMPOWERED), VanillaRecipeCategoryUid.CRAFTING);
+        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER_EMPOWERED), VanillaRecipeCategoryUid.CRAFTING);
+    }
+
+    @Override
+    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registry) {
+        registry.addRecipeTransferHandler(ContainerBloodInfuser.class, BloodInfuserRecipeCategory.NAME,
+                1, 1, TileBloodInfuser.SLOTS + TileWorking.INVENTORY_SIZE_UPGRADES, 36);
+        registry.addRecipeTransferHandler(ContainerSanguinaryEnvironmentalAccumulator.class, SanguinaryEnvironmentalAccumulatorRecipeCategory.NAME,
+                0, 1, TileSanguinaryEnvironmentalAccumulator.SLOTS + TileWorking.INVENTORY_SIZE_UPGRADES, 36);
+
+        registry.addRecipeTransferHandler(ContainerExaltedCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
+                0, 9, TileSanguinaryEnvironmentalAccumulator.SLOTS + TileWorking.INVENTORY_SIZE_UPGRADES, 27 + 36);
+    }
+
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registry) {
+        registry.addRecipeClickArea(ContainerScreenBloodInfuser.class,
+                ContainerScreenTileWorking.UPGRADES_OFFSET_X + ContainerScreenBloodInfuser.PROGRESSTARGETX, ContainerScreenBloodInfuser.PROGRESSTARGETY,
+                ContainerScreenBloodInfuser.PROGRESSWIDTH, ContainerScreenBloodInfuser.PROGRESSHEIGHT,
+                BloodInfuserRecipeCategory.NAME);
+        registry.addRecipeClickArea(ContainerScreenSanguinaryEnvironmentalAccumulator.class,
+                ContainerScreenTileWorking.UPGRADES_OFFSET_X + ContainerScreenSanguinaryEnvironmentalAccumulator.PROGRESSTARGETX, ContainerScreenSanguinaryEnvironmentalAccumulator.PROGRESSTARGETY,
+                ContainerScreenSanguinaryEnvironmentalAccumulator.PROGRESSWIDTH, ContainerScreenSanguinaryEnvironmentalAccumulator.PROGRESSHEIGHT,
+                SanguinaryEnvironmentalAccumulatorRecipeCategory.NAME);
+
+        registry.addRecipeClickArea(ContainerScreenExaltedCrafter.class,
+                88, 32, 28, 23, VanillaRecipeCategoryUid.CRAFTING);
+    }
+
+    @Override
+    public ResourceLocation getPluginUid() {
+        return new ResourceLocation(Reference.MOD_ID, "main");
     }
 }
