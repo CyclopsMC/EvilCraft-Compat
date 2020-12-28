@@ -16,6 +16,7 @@ import net.minecraftforge.registries.ObjectHolder;
 import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.client.gui.container.ContainerScreenBloodInfuser;
 import org.cyclops.evilcraft.client.gui.container.ContainerScreenExaltedCrafter;
+import org.cyclops.evilcraft.client.gui.container.ContainerScreenOriginsOfDarkness;
 import org.cyclops.evilcraft.client.gui.container.ContainerScreenSanguinaryEnvironmentalAccumulator;
 import org.cyclops.evilcraft.core.client.gui.container.ContainerScreenTileWorking;
 import org.cyclops.evilcraft.core.tileentity.TileWorking;
@@ -122,6 +123,8 @@ public class JEIEvilCraftConfig implements IModPlugin {
 
         registry.addRecipeClickArea(ContainerScreenExaltedCrafter.class,
                 88, 32, 28, 23, VanillaRecipeCategoryUid.CRAFTING);
+
+        registry.addGuiScreenHandler(ContainerScreenOriginsOfDarkness.class, (screen) -> null);
     }
 
     @Override
