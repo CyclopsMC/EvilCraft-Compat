@@ -1,5 +1,6 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -110,7 +111,7 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory<BloodInfuserR
     }
 
     @Override
-    public void draw(BloodInfuserRecipeJEI recipe, double mouseX, double mouseY) {
-        arrow.draw(65, 28);
+    public void draw(BloodInfuserRecipeJEI recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+        arrow.draw(matrixStack, 65, 28);
     }
 }

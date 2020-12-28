@@ -1,5 +1,6 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -85,8 +86,8 @@ public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalA
     }
 
     @Override
-    public void draw(EnvironmentalAccumulatorRecipeJEI recipe, double mouseX, double mouseY) {
-        super.draw(recipe, mouseX, mouseY);
-        arrow.draw(44, 0);
+    public void draw(EnvironmentalAccumulatorRecipeJEI recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+        super.draw(recipe, matrixStack, mouseX, mouseY);
+        arrow.draw(matrixStack, 44, 0);
     }
 }

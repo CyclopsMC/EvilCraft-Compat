@@ -1,5 +1,6 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -84,9 +85,9 @@ public class SanguinaryEnvironmentalAccumulatorRecipeCategory extends CommonEnvi
     }
 
     @Override
-    public void draw(SanguinaryEnvironmentalAccumulatorRecipeJEI recipe, double mouseX, double mouseY) {
-        super.draw(recipe, mouseX, mouseY);
-        arrow.draw(65, 28);
+    public void draw(SanguinaryEnvironmentalAccumulatorRecipeJEI recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+        super.draw(recipe, matrixStack, mouseX, mouseY);
+        arrow.draw(matrixStack, 65, 28);
     }
 
     @Override
