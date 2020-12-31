@@ -91,7 +91,7 @@ public class JEIEvilCraftConfig implements IModPlugin {
                 0, 1, TileSanguinaryEnvironmentalAccumulator.SLOTS + TileWorking.INVENTORY_SIZE_UPGRADES, 36);
 
         registry.addRecipeTransferHandler(ContainerExaltedCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
-                0, 9, TileSanguinaryEnvironmentalAccumulator.SLOTS + TileWorking.INVENTORY_SIZE_UPGRADES, 27 + 36);
+                0, 9, 0, 27 + 36);
     }
 
     @Override
