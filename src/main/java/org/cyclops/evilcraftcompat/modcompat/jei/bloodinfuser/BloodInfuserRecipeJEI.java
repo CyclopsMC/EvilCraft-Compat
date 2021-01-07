@@ -26,6 +26,7 @@ public class BloodInfuserRecipeJEI extends RecipeRegistryJeiRecipeWrapper<IInven
     private final List<ItemStack> inputItems;
     private final ItemStack outputItem;
     private final String xpString;
+    private final int duration;
 
     public BloodInfuserRecipeJEI(RecipeBloodInfuser recipe) {
         super(RegistryEntries.RECIPETYPE_BLOOD_INFUSER, recipe);
@@ -34,6 +35,7 @@ public class BloodInfuserRecipeJEI extends RecipeRegistryJeiRecipeWrapper<IInven
         this.inputItems = Arrays.stream(recipe.getInputIngredient().getMatchingStacks()).collect(Collectors.toList());
         this.outputItem = recipe.getRecipeOutput();
         this.xpString = Translator.translateToLocalFormatted("gui.jei.category.smelting.experience", recipe.getXp());
+        this.duration = recipe.getDuration();
     }
 
     protected BloodInfuserRecipeJEI() {
@@ -43,6 +45,7 @@ public class BloodInfuserRecipeJEI extends RecipeRegistryJeiRecipeWrapper<IInven
         this.inputItems = null;
         this.outputItem = null;
         this.xpString = null;
+        this.duration = 0;
     }
 
     public FluidStack getInputFluid() {
@@ -63,6 +66,10 @@ public class BloodInfuserRecipeJEI extends RecipeRegistryJeiRecipeWrapper<IInven
 
     public String getXpString() {
         return xpString;
+    }
+
+    public int getDuration() {
+        return duration;
     }
 
     @Override

@@ -11,6 +11,9 @@ import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import org.cyclops.cyclopscore.helper.MinecraftHelpers;
 import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.client.gui.container.ContainerScreenBloodInfuser;
 import org.cyclops.evilcraft.client.gui.container.ContainerScreenExaltedCrafter;
@@ -31,6 +34,8 @@ import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.Enviro
 import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEI;
 import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeCategory;
 import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeJEI;
+
+import java.text.DecimalFormat;
 
 /**
  * Helper for registering JEI manager.
@@ -114,5 +119,10 @@ public class JEIEvilCraftConfig implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
         return new ResourceLocation(Reference.MOD_ID, "main");
+    }
+
+    public static IFormattableTextComponent getDurationSecondsTextComponent(int durationTicks) {
+        String seconds = new DecimalFormat("#.##").format((double) durationTicks / MinecraftHelpers.SECOND_IN_TICKS);
+        return new TranslationTextComponent("gui.jei.category.smelting.time.seconds", seconds);
     }
 }

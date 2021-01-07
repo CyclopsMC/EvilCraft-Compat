@@ -8,12 +8,16 @@ import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import org.apache.commons.lang3.tuple.Pair;
 import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraftcompat.Reference;
+import org.cyclops.evilcraftcompat.modcompat.jei.JEIEvilCraftConfig;
 
 import javax.annotation.Nonnull;
 
@@ -89,5 +93,11 @@ public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalA
     public void draw(EnvironmentalAccumulatorRecipeJEI recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
         super.draw(recipe, matrixStack, mouseX, mouseY);
         arrow.draw(matrixStack, 44, 0);
+
+        // Draw duration
+        FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
+        IFormattableTextComponent duration = JEIEvilCraftConfig.getDurationSecondsTextComponent(recipe.getDuration());
+        fontRenderer.func_243248_b(matrixStack, duration,
+                (background.getWidth() - fontRenderer.getStringPropertyWidth(duration)), 48, 0xFF808080);
     }
 }

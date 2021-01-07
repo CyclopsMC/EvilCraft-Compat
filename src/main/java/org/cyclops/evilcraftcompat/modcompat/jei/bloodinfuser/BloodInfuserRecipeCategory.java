@@ -9,8 +9,11 @@ import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.client.gui.container.ContainerScreenBloodInfuser;
@@ -18,6 +21,7 @@ import org.cyclops.evilcraft.core.tileentity.TileWorking;
 import org.cyclops.evilcraft.item.ItemPromise;
 import org.cyclops.evilcraft.tileentity.TileBloodInfuser;
 import org.cyclops.evilcraftcompat.Reference;
+import org.cyclops.evilcraftcompat.modcompat.jei.JEIEvilCraftConfig;
 
 import javax.annotation.Nonnull;
 
@@ -113,5 +117,11 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory<BloodInfuserR
     @Override
     public void draw(BloodInfuserRecipeJEI recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
         arrow.draw(matrixStack, 65, 28);
+
+        // Draw duration
+        FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
+        IFormattableTextComponent duration = JEIEvilCraftConfig.getDurationSecondsTextComponent(recipe.getDuration());
+        fontRenderer.func_243248_b(matrixStack, duration,
+                (background.getWidth() - fontRenderer.getStringPropertyWidth(duration)) / 2 + 12, 50, 0xFF808080);
     }
 }
