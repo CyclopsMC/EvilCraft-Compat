@@ -76,8 +76,12 @@ repositories {
         url 'https://tehnut.info/maven/'
     }*/
     maven {
-        name = "CurseForge"
-        url = "https://minecraft.curseforge.com/api/maven/"
+        name "CurseForge"
+        url "https://minecraft.curseforge.com/api/maven/"
+    }
+    maven {
+        name "Curios"
+        url "https://maven.theillusivec4.top/"
     }
 }
 
@@ -105,6 +109,9 @@ dependencies {
 
     compile fg.deobf("mezz.jei:jei-${config.jei_version}") // https://dvs1.progwml6.com/jenkins/
     //compile fg.deobf("hwyla:Hwyla-forge-${config.waila_version}") // https://www.curseforge.com/minecraft/mc-mods/hwyla/files/ https://github.com/TehNut/HWYLA and https://github.com/TehNut/temporary-maven-thing/tree/master/maven/mcp/mobius/waila/Hwyla
+
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${config.curios_version}") // https://maven.theillusivec4.top/top/theillusivec4/curios/curios-forge/
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${config.curios_version}:api")
 }
 
 minecraft {

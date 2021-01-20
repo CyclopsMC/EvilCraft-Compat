@@ -18,6 +18,7 @@ import org.cyclops.evilcraft.tileentity.TileEnvironmentalAccumulator;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.RecipeHandlerBloodInfuserTileCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerEnvirAccTileCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerWorkingTileCompat;
+import org.cyclops.evilcraftcompat.modcompat.curios.CuriosCompat;
 
 /**
  * The main mod class of this mod.
@@ -39,6 +40,7 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
     @Override
     protected void loadModCompats(ModCompatLoader modCompatLoader) {
         // Mod compats
+        modCompatLoader.addModCompat(new CuriosCompat());
         /*modCompatLoader.addModCompat(new WailaModCompat());
         modCompatLoader.addModCompat(new BloodMagicModCompat());
         modCompatLoader.addModCompat(new TConstructModCompat());

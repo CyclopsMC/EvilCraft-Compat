@@ -24,4 +24,5 @@ public class Reference {
     public static final String MOD_ENDERIO = "enderio";
     public static final String MOD_THAUMCRAFT = "thaumcraft";
     public static final String MOD_COMMONCAPABILITIES = "commoncapabilities";
+    public static final String MOD_CURIOS = "curios";
 }
