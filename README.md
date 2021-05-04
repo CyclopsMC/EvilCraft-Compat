@@ -1,7 +1,7 @@
 ## EvilCraftCompat
 
 [![Build Status](https://github.com/CyclopsMC/EvilCraft-Compat/workflows/CI/badge.svg)](https://github.com/CyclopsMC/EvilCraft-Compat/actions?query=workflow%3ACI)
-[![Download](https://img.shields.io/maven-metadata/v/https/oss.jfrog.org/artifactory/simple/libs-release/org/cyclops/evilcraftcompat/EvilCraftCompat/maven-metadata.xml.svg) ](https://oss.jfrog.org/artifactory/simple/libs-release/org/cyclops/evilcraftcompat/EvilCraftCompat/)
+[![Download](https://img.shields.io/static/v1?label=Maven&message=GitHub%20Packages&color=blue)](https://github.com/CyclopsMC/packages/packages/770046)
 
 [EvilCraft](https://github.com/CyclopsMC/EvilCraft) compatibility with other mods.
 This mod is automatically packaged with [EvilCraft](https://github.com/CyclopsMC/EvilCraft).
