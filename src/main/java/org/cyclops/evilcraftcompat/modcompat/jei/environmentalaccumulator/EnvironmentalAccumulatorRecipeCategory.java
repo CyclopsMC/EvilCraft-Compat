@@ -59,7 +59,7 @@ public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalA
     @Nonnull
     @Override
     public String getTitle() {
-        return new TranslationTextComponent(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR.getTranslationKey()).getString();
+        return new TranslationTextComponent(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR.getDescriptionId()).getString();
     }
 
     @Nonnull
@@ -95,9 +95,9 @@ public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalA
         arrow.draw(matrixStack, 44, 0);
 
         // Draw duration
-        FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
+        FontRenderer fontRenderer = Minecraft.getInstance().font;
         IFormattableTextComponent duration = JEIEvilCraftConfig.getDurationSecondsTextComponent(recipe.getDuration());
-        fontRenderer.func_243248_b(matrixStack, duration,
-                (background.getWidth() - fontRenderer.getStringPropertyWidth(duration)), 48, 0xFF808080);
+        fontRenderer.draw(matrixStack, duration,
+                (background.getWidth() - fontRenderer.width(duration)), 48, 0xFF808080);
     }
 }

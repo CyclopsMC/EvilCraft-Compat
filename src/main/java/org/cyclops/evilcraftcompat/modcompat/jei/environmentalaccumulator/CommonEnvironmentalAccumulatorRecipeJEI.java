@@ -27,7 +27,7 @@ public abstract class CommonEnvironmentalAccumulatorRecipeJEI<T extends CommonEn
 
     public CommonEnvironmentalAccumulatorRecipeJEI(RecipeEnvironmentalAccumulator recipe) {
         super(RegistryEntries.RECIPETYPE_ENVIRONMENTAL_ACCUMULATOR, recipe);
-        this.inputItems = Arrays.stream(recipe.getInputIngredient().getMatchingStacks()).collect(Collectors.toList());
+        this.inputItems = Arrays.stream(recipe.getInputIngredient().getItems()).collect(Collectors.toList());
         this.inputWeather = recipe.getInputWeather();
         this.outputItem = recipe.getOutputItem();
         this.outputWeather = recipe.getOutputWeather();

@@ -54,7 +54,7 @@ public class RecipeHandlerBloodInfuserTileCompat extends SimpleCapabilityConstru
         private final TileBloodInfuser host;
 
         public RecipeHandler(TileBloodInfuser host) {
-            super(host::getWorld, RegistryEntries.RECIPETYPE_BLOOD_INFUSER,
+            super(host::getLevel, RegistryEntries.RECIPETYPE_BLOOD_INFUSER,
                     Sets.newHashSet(IngredientComponent.ITEMSTACK, IngredientComponent.FLUIDSTACK),
                     Sets.newHashSet(IngredientComponent.ITEMSTACK));
             this.host = host;
@@ -71,7 +71,7 @@ public class RecipeHandlerBloodInfuserTileCompat extends SimpleCapabilityConstru
             IInventoryFluidTier inventory = new InventoryFluidTier(NonNullList.withSize(1, ItemStack.EMPTY), NonNullList.withSize(1, FluidStack.EMPTY),
                     host.getTileWorkingMetadata().getTier(host.getInventory()));
             if (!input.getInstances(IngredientComponent.ITEMSTACK).isEmpty()) {
-                inventory.setInventorySlotContents(0, input.getInstances(IngredientComponent.ITEMSTACK).get(0));
+                inventory.setItem(0, input.getInstances(IngredientComponent.ITEMSTACK).get(0));
             }
             if (!input.getInstances(IngredientComponent.FLUIDSTACK).isEmpty()) {
                 inventory.getFluidHandler().fill(input.getInstances(IngredientComponent.FLUIDSTACK).get(0), IFluidHandler.FluidAction.EXECUTE);
@@ -83,7 +83,7 @@ public class RecipeHandlerBloodInfuserTileCompat extends SimpleCapabilityConstru
         @Override
         protected Map<IngredientComponent<?, ?>, List<IPrototypedIngredientAlternatives<?, ?>>> getRecipeInputIngredients(RecipeBloodInfuser recipe) {
             Map<IngredientComponent<?, ?>, List<IPrototypedIngredientAlternatives<?, ?>>> inputs = Maps.newIdentityHashMap();
-            if (!recipe.getInputIngredient().hasNoMatchingItems()) {
+            if (!recipe.getInputIngredient().isEmpty()) {
                 inputs.put(IngredientComponent.ITEMSTACK, Lists.newArrayList(IngredientRecipeHelpers.getPrototypesFromIngredient(recipe.getInputIngredient())));
             }
             if (!recipe.getInputFluid().isEmpty()) {

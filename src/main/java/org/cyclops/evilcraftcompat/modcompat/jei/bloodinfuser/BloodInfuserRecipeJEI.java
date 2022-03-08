@@ -32,8 +32,8 @@ public class BloodInfuserRecipeJEI extends RecipeRegistryJeiRecipeWrapper<IInven
         super(RegistryEntries.RECIPETYPE_BLOOD_INFUSER, recipe);
         this.inputFluid = recipe.getInputFluid();
         this.inputTier = recipe.getInputTier();
-        this.inputItems = Arrays.stream(recipe.getInputIngredient().getMatchingStacks()).collect(Collectors.toList());
-        this.outputItem = recipe.getRecipeOutput();
+        this.inputItems = Arrays.stream(recipe.getInputIngredient().getItems()).collect(Collectors.toList());
+        this.outputItem = recipe.getResultItem();
         this.xpString = Translator.translateToLocalFormatted("gui.jei.category.smelting.experience", recipe.getXp());
         this.duration = recipe.getDuration();
     }

@@ -43,7 +43,7 @@ public class WorkerWorkingTileCompat extends SimpleCapabilityConstructor<IWorker
         @Override
         public boolean hasWork() {
             for(TickComponent ticker : (Collection<TickComponent>) provider.getTickers()) {
-                ItemStack itemStack = provider.getInventory().getStackInSlot(ticker.getSlot());
+                ItemStack itemStack = provider.getInventory().getItem(ticker.getSlot());
                 if(!itemStack.isEmpty()) {
                     ITickAction tickAction;
                     int actionOffset = 0;
@@ -58,7 +58,7 @@ public class WorkerWorkingTileCompat extends SimpleCapabilityConstructor<IWorker
 
         @Override
         public boolean canWork() {
-            return !provider.getWorld().isBlockPowered(provider.getPos());
+            return !provider.getLevel().hasNeighborSignal(provider.getBlockPos());
         }
     }
 }

@@ -68,7 +68,7 @@ public class SanguinaryEnvironmentalAccumulatorRecipeCategory extends CommonEnvi
     @Nonnull
     @Override
     public String getTitle() {
-        return new TranslationTextComponent(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR.getTranslationKey()).getString();
+        return new TranslationTextComponent(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR.getDescriptionId()).getString();
     }
 
     @Nonnull
@@ -94,10 +94,10 @@ public class SanguinaryEnvironmentalAccumulatorRecipeCategory extends CommonEnvi
         arrow.draw(matrixStack, 65, 28);
 
         // Draw duration
-        FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
+        FontRenderer fontRenderer = Minecraft.getInstance().font;
         IFormattableTextComponent duration = JEIEvilCraftConfig.getDurationSecondsTextComponent(recipe.getDuration());
-        fontRenderer.func_243248_b(matrixStack, duration,
-                (background.getWidth() - fontRenderer.getStringPropertyWidth(duration)) / 2 + 12, 50, 0xFF808080);
+        fontRenderer.draw(matrixStack, duration,
+                (background.getWidth() - fontRenderer.width(duration)) / 2 + 12, 50, 0xFF808080);
     }
 
     @Override
