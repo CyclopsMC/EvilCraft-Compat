@@ -21,6 +21,6 @@ out/*
 .DS_Store
 
 # Ignore files specific to dev environments
-gradle.properties
+secrets.properties
 build_number.properties
 changelog.txt
