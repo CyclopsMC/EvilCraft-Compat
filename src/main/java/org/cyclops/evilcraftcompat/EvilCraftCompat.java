@@ -1,6 +1,6 @@
 package org.cyclops.evilcraftcompat;
 
-import net.minecraft.item.ItemGroup;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.cyclops.cyclopscore.infobook.IInfoBookRegistry;
@@ -9,15 +9,15 @@ import org.cyclops.cyclopscore.modcompat.ModCompatLoader;
 import org.cyclops.cyclopscore.proxy.IClientProxy;
 import org.cyclops.cyclopscore.proxy.ICommonProxy;
 import org.cyclops.evilcraft.EvilCraft;
-import org.cyclops.evilcraft.core.tileentity.TickingTankInventoryTileEntity;
+import org.cyclops.evilcraft.blockentity.BlockEntityBloodInfuser;
+import org.cyclops.evilcraft.blockentity.BlockEntityEnvironmentalAccumulator;
+import org.cyclops.evilcraft.core.blockentity.BlockEntityTickingTankInventory;
 import org.cyclops.evilcraft.infobook.OriginsOfDarknessBook;
 import org.cyclops.evilcraft.proxy.ClientProxy;
 import org.cyclops.evilcraft.proxy.CommonProxy;
-import org.cyclops.evilcraft.tileentity.TileBloodInfuser;
-import org.cyclops.evilcraft.tileentity.TileEnvironmentalAccumulator;
-import org.cyclops.evilcraftcompat.modcompat.capabilities.RecipeHandlerBloodInfuserTileCompat;
-import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerEnvirAccTileCompat;
-import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerWorkingTileCompat;
+import org.cyclops.evilcraftcompat.modcompat.capabilities.RecipeHandlerBloodInfuserBlockEntityCompat;
+import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerEnvirAccBlockEntityCompat;
+import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerWorkingBlockEntityCompat;
 import org.cyclops.evilcraftcompat.modcompat.curios.CuriosCompat;
 
 /**
@@ -53,9 +53,9 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
         modCompatLoader.addModCompat(new ThaumcraftModCompat());*/
 
         // Capabilities
-        getCapabilityConstructorRegistry().registerTile(TickingTankInventoryTileEntity.class, new WorkerWorkingTileCompat());
-        getCapabilityConstructorRegistry().registerTile(TileEnvironmentalAccumulator.class, new WorkerEnvirAccTileCompat());
-        getCapabilityConstructorRegistry().registerTile(TileBloodInfuser.class, new RecipeHandlerBloodInfuserTileCompat());
+        getCapabilityConstructorRegistry().registerTile(BlockEntityTickingTankInventory.class, new WorkerWorkingBlockEntityCompat());
+        getCapabilityConstructorRegistry().registerTile(BlockEntityEnvironmentalAccumulator.class, new WorkerEnvirAccBlockEntityCompat());
+        getCapabilityConstructorRegistry().registerTile(BlockEntityBloodInfuser.class, new RecipeHandlerBloodInfuserBlockEntityCompat());
     }
 
     @Override
@@ -64,7 +64,7 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
 
         // Initialize info book
         EvilCraft._instance.getRegistryManager().getRegistry(IInfoBookRegistry.class)
-                .registerSection(
+                .registerSection(this,
                         OriginsOfDarknessBook.getInstance(), "info_book.evilcraft.section.main",
                         "/data/" + Reference.MOD_ID + "/info/modcompat.xml");
     }
@@ -80,7 +80,7 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
     }
 
     @Override
-    protected ItemGroup constructDefaultItemGroup() {
+    protected CreativeModeTab constructDefaultCreativeModeTab() {
         return null;
     }
 

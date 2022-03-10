@@ -6,7 +6,7 @@ import org.cyclops.commoncapabilities.api.capability.work.IWorker;
 import org.cyclops.cyclopscore.modcompat.capabilities.DefaultCapabilityProvider;
 import org.cyclops.cyclopscore.modcompat.capabilities.SimpleCapabilityConstructor;
 import org.cyclops.evilcraftcompat.Capabilities;
-import org.cyclops.evilcraft.tileentity.TileEnvironmentalAccumulator;
+import org.cyclops.evilcraft.blockentity.BlockEntityEnvironmentalAccumulator;
 
 import javax.annotation.Nullable;
 
@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
  * Compatibility for envir acc worker capabilities.
  * @author rubensworks
  */
-public class WorkerEnvirAccTileCompat extends SimpleCapabilityConstructor<IWorker, TileEnvironmentalAccumulator> {
+public class WorkerEnvirAccBlockEntityCompat extends SimpleCapabilityConstructor<IWorker, BlockEntityEnvironmentalAccumulator> {
 
     @Override
     public Capability<IWorker> getCapability() {
@@ -23,15 +23,15 @@ public class WorkerEnvirAccTileCompat extends SimpleCapabilityConstructor<IWorke
 
     @Nullable
     @Override
-    public ICapabilityProvider createProvider(TileEnvironmentalAccumulator host) {
+    public ICapabilityProvider createProvider(BlockEntityEnvironmentalAccumulator host) {
         return new DefaultCapabilityProvider<IWorker>(Capabilities.WORKER, new Worker(host));
     }
 
     public static class Worker implements IWorker {
 
-        private final TileEnvironmentalAccumulator provider;
+        private final BlockEntityEnvironmentalAccumulator provider;
 
-        public Worker(TileEnvironmentalAccumulator provider) {
+        public Worker(BlockEntityEnvironmentalAccumulator provider) {
             this.provider = provider;
         }
 

@@ -3,7 +3,7 @@ package org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumul
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Maps;
-import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.world.item.crafting.Recipe;
 import org.cyclops.cyclopscore.helper.CraftingHelpers;
 import org.cyclops.cyclopscore.modcompat.jei.RecipeRegistryJeiRecipeWrapper;
 import org.cyclops.evilcraft.core.recipe.type.RecipeEnvironmentalAccumulator;
@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class SanguinaryEnvironmentalAccumulatorRecipeJEI extends CommonEnvironmentalAccumulatorRecipeJEI<SanguinaryEnvironmentalAccumulatorRecipeJEI> {
 
-    private static final Map<IRecipe<?>, SanguinaryEnvironmentalAccumulatorRecipeJEI> RECIPE_WRAPPERS_2 = Maps.newIdentityHashMap();
+    private static final Map<Recipe<?>, SanguinaryEnvironmentalAccumulatorRecipeJEI> RECIPE_WRAPPERS_2 = Maps.newIdentityHashMap();
 
     public SanguinaryEnvironmentalAccumulatorRecipeJEI(RecipeEnvironmentalAccumulator recipe) {
         super(recipe);

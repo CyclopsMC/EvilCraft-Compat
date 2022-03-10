@@ -1,6 +1,6 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -10,16 +10,17 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.client.gui.container.ContainerScreenBloodInfuser;
-import org.cyclops.evilcraft.core.tileentity.TileWorking;
+import org.cyclops.evilcraft.core.blockentity.BlockEntityWorking;
 import org.cyclops.evilcraft.item.ItemPromise;
-import org.cyclops.evilcraft.tileentity.TileBloodInfuser;
+import org.cyclops.evilcraft.blockentity.BlockEntityBloodInfuser;
 import org.cyclops.evilcraftcompat.Reference;
 import org.cyclops.evilcraftcompat.modcompat.jei.JEIEvilCraftConfig;
 
@@ -66,8 +67,8 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory<BloodInfuserR
 
     @Nonnull
     @Override
-    public String getTitle() {
-        return new TranslationTextComponent(RegistryEntries.BLOCK_BLOOD_INFUSER.getDescriptionId()).getString();
+    public Component getTitle() {
+        return new TranslatableComponent(RegistryEntries.BLOCK_BLOOD_INFUSER.getDescriptionId());
     }
 
     @Nonnull
@@ -82,7 +83,7 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory<BloodInfuserR
     }
 
     protected int getMaxTankSize(org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeJEI bloodInfuserRecipe) {
-        return TileBloodInfuser.LIQUID_PER_SLOT * TileWorking.getTankTierMultiplier(bloodInfuserRecipe.getInputTier());
+        return BlockEntityBloodInfuser.LIQUID_PER_SLOT * BlockEntityWorking.getTankTierMultiplier(bloodInfuserRecipe.getInputTier());
     }
 
     protected ItemStack getPromise(org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeJEI bloodInfuserRecipe) {
@@ -115,12 +116,12 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory<BloodInfuserR
     }
 
     @Override
-    public void draw(BloodInfuserRecipeJEI recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+    public void draw(BloodInfuserRecipeJEI recipe, PoseStack matrixStack, double mouseX, double mouseY) {
         arrow.draw(matrixStack, 65, 28);
 
         // Draw duration
-        FontRenderer fontRenderer = Minecraft.getInstance().font;
-        IFormattableTextComponent duration = JEIEvilCraftConfig.getDurationSecondsTextComponent(recipe.getDuration());
+        Font fontRenderer = Minecraft.getInstance().font;
+        MutableComponent duration = JEIEvilCraftConfig.getDurationSecondsTextComponent(recipe.getDuration());
         fontRenderer.draw(matrixStack, duration,
                 (background.getWidth() - fontRenderer.width(duration)) / 2 + 12, 50, 0xFF808080);
     }

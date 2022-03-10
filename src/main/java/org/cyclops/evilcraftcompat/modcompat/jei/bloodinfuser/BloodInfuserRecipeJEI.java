@@ -1,8 +1,8 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser;
 
 import mezz.jei.util.Translator;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.fluids.FluidStack;
 import org.cyclops.cyclopscore.modcompat.jei.RecipeRegistryJeiRecipeWrapper;
 import org.cyclops.evilcraft.RegistryEntries;
@@ -73,7 +73,7 @@ public class BloodInfuserRecipeJEI extends RecipeRegistryJeiRecipeWrapper<IInven
     }
 
     @Override
-    protected IRecipeType<RecipeBloodInfuser> getRecipeType() {
+    protected RecipeType<RecipeBloodInfuser> getRecipeType() {
         return RegistryEntries.RECIPETYPE_BLOOD_INFUSER;
     }
 

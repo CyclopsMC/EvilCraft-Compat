@@ -1,24 +1,23 @@
 package org.cyclops.evilcraftcompat.modcompat.capabilities;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import org.cyclops.commoncapabilities.api.capability.work.IWorker;
 import org.cyclops.cyclopscore.modcompat.capabilities.DefaultCapabilityProvider;
 import org.cyclops.cyclopscore.modcompat.capabilities.SimpleCapabilityConstructor;
+import org.cyclops.evilcraft.core.blockentity.BlockEntityTickingTankInventory;
+import org.cyclops.evilcraft.core.blockentity.tickaction.ITickAction;
+import org.cyclops.evilcraft.core.blockentity.tickaction.TickComponent;
 import org.cyclops.evilcraftcompat.Capabilities;
-import org.cyclops.evilcraft.core.tileentity.TickingTankInventoryTileEntity;
-import org.cyclops.evilcraft.core.tileentity.tickaction.ITickAction;
-import org.cyclops.evilcraft.core.tileentity.tickaction.TickComponent;
 
 import javax.annotation.Nullable;
-import java.util.Collection;
 
 /**
  * Compatibility for worker capabilities.
  * @author rubensworks
  */
-public class WorkerWorkingTileCompat extends SimpleCapabilityConstructor<IWorker, TickingTankInventoryTileEntity> {
+public class WorkerWorkingBlockEntityCompat extends SimpleCapabilityConstructor<IWorker, BlockEntityTickingTankInventory> {
 
     @Override
     public Capability<IWorker> getCapability() {
@@ -27,11 +26,11 @@ public class WorkerWorkingTileCompat extends SimpleCapabilityConstructor<IWorker
 
     @Nullable
     @Override
-    public ICapabilityProvider createProvider(TickingTankInventoryTileEntity host) {
-        return new DefaultCapabilityProvider<IWorker>(Capabilities.WORKER, new Worker<TickingTankInventoryTileEntity>(host));
+    public ICapabilityProvider createProvider(BlockEntityTickingTankInventory host) {
+        return new DefaultCapabilityProvider<IWorker>(Capabilities.WORKER, new Worker<BlockEntityTickingTankInventory<?>>(host));
     }
 
-    public static class Worker<T extends TickingTankInventoryTileEntity> implements IWorker {
+    public static class Worker<T extends BlockEntityTickingTankInventory<?>> implements IWorker {
 
         private final T provider;
 
@@ -42,7 +41,7 @@ public class WorkerWorkingTileCompat extends SimpleCapabilityConstructor<IWorker
         @SuppressWarnings("unchecked")
         @Override
         public boolean hasWork() {
-            for(TickComponent ticker : (Collection<TickComponent>) provider.getTickers()) {
+            for(TickComponent ticker : provider.getTickers()) {
                 ItemStack itemStack = provider.getInventory().getItem(ticker.getSlot());
                 if(!itemStack.isEmpty()) {
                     ITickAction tickAction;

@@ -1,7 +1,7 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import org.cyclops.cyclopscore.modcompat.jei.RecipeRegistryJeiRecipeWrapper;
 import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.core.recipe.type.RecipeEnvironmentalAccumulator;
@@ -76,7 +76,7 @@ public abstract class CommonEnvironmentalAccumulatorRecipeJEI<T extends CommonEn
     }
 
     @Override
-    protected IRecipeType<RecipeEnvironmentalAccumulator> getRecipeType() {
+    protected RecipeType<RecipeEnvironmentalAccumulator> getRecipeType() {
         return RegistryEntries.RECIPETYPE_ENVIRONMENTAL_ACCUMULATOR;
     }
 

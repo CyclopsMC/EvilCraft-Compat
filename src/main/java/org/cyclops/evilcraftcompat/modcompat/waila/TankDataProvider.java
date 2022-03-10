@@ -6,14 +6,14 @@ import mcp.mobius.waila.api.IWailaDataProvider;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.blockentity.BlockEntityEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import org.cyclops.cyclopscore.helper.L10NHelpers;
 import org.cyclops.cyclopscore.item.DamageIndicatedItemComponent;
-import org.cyclops.cyclopscore.tileentity.TankInventoryTileEntity;
+import org.cyclops.cyclopscore.blockentity.TankInventoryTileEntity;
 import org.cyclops.evilcraft.Reference;
 import org.cyclops.evilcraftcompat.modcompat.waila.Waila;
 

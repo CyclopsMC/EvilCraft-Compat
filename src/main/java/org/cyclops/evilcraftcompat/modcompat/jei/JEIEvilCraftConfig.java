@@ -9,10 +9,10 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import org.cyclops.cyclopscore.helper.MinecraftHelpers;
 import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.client.gui.container.ContainerScreenBloodInfuser;
@@ -20,12 +20,12 @@ import org.cyclops.evilcraft.client.gui.container.ContainerScreenExaltedCrafter;
 import org.cyclops.evilcraft.client.gui.container.ContainerScreenOriginsOfDarkness;
 import org.cyclops.evilcraft.client.gui.container.ContainerScreenSanguinaryEnvironmentalAccumulator;
 import org.cyclops.evilcraft.core.client.gui.container.ContainerScreenTileWorking;
-import org.cyclops.evilcraft.core.tileentity.TileWorking;
+import org.cyclops.evilcraft.core.blockentity.BlockEntityWorking;
 import org.cyclops.evilcraft.inventory.container.ContainerBloodInfuser;
 import org.cyclops.evilcraft.inventory.container.ContainerExaltedCrafter;
 import org.cyclops.evilcraft.inventory.container.ContainerSanguinaryEnvironmentalAccumulator;
-import org.cyclops.evilcraft.tileentity.TileBloodInfuser;
-import org.cyclops.evilcraft.tileentity.TileSanguinaryEnvironmentalAccumulator;
+import org.cyclops.evilcraft.blockentity.BlockEntityBloodInfuser;
+import org.cyclops.evilcraft.blockentity.BlockEntitySanguinaryEnvironmentalAccumulator;
 import org.cyclops.evilcraftcompat.RegistryEntriesCompat;
 import org.cyclops.evilcraftcompat.Reference;
 import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeCategory;
@@ -91,9 +91,9 @@ public class JEIEvilCraftConfig implements IModPlugin {
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registry) {
         registry.addRecipeTransferHandler(ContainerBloodInfuser.class, BloodInfuserRecipeCategory.NAME,
-                1, 1, TileBloodInfuser.SLOTS + TileWorking.INVENTORY_SIZE_UPGRADES, 36);
+                1, 1, BlockEntityBloodInfuser.SLOTS + BlockEntityWorking.INVENTORY_SIZE_UPGRADES, 36);
         registry.addRecipeTransferHandler(ContainerSanguinaryEnvironmentalAccumulator.class, SanguinaryEnvironmentalAccumulatorRecipeCategory.NAME,
-                0, 1, TileSanguinaryEnvironmentalAccumulator.SLOTS + TileWorking.INVENTORY_SIZE_UPGRADES, 36);
+                0, 1, BlockEntitySanguinaryEnvironmentalAccumulator.SLOTS + BlockEntityWorking.INVENTORY_SIZE_UPGRADES, 36);
 
         registry.addRecipeTransferHandler(ContainerExaltedCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
                 0, 9, 10, 27 + 36);
@@ -121,8 +121,8 @@ public class JEIEvilCraftConfig implements IModPlugin {
         return new ResourceLocation(Reference.MOD_ID, "main");
     }
 
-    public static IFormattableTextComponent getDurationSecondsTextComponent(int durationTicks) {
+    public static MutableComponent getDurationSecondsTextComponent(int durationTicks) {
         String seconds = new DecimalFormat("#.##").format((double) durationTicks / MinecraftHelpers.SECOND_IN_TICKS);
-        return new TranslationTextComponent("gui.jei.category.smelting.time.seconds", seconds);
+        return new TranslatableComponent("gui.jei.category.smelting.time.seconds", seconds);
     }
 }

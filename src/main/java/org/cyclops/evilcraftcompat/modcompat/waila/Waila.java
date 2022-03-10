@@ -3,14 +3,14 @@ package org.cyclops.evilcraftcompat.modcompat.waila;
 import mcp.mobius.waila.api.IWailaRegistrar;
 import org.cyclops.cyclopscore.config.configurable.IConfigurable;
 import org.cyclops.cyclopscore.helper.L10NHelpers;
-import org.cyclops.cyclopscore.tileentity.TankInventoryTileEntity;
+import org.cyclops.cyclopscore.blockentity.TankInventoryTileEntity;
 import org.cyclops.evilcraft.Configs;
 import org.cyclops.evilcraft.Reference;
 import org.cyclops.evilcraft.block.*;
 import org.cyclops.evilcraft.entity.item.EntityBroom;
 import org.cyclops.evilcraftcompat.modcompat.waila.BroomInfoDataProvider;
 import org.cyclops.evilcraftcompat.modcompat.waila.TankDataProvider;
-import org.cyclops.evilcraft.tileentity.TileBoxOfEternalClosure;
+import org.cyclops.evilcraft.blockentity.BlockEntityBoxOfEternalClosure;
 
 /**
  * Waila support class.

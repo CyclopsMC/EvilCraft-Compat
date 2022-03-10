@@ -1,13 +1,13 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator;
 
 import com.google.common.collect.Maps;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.cyclops.evilcraft.Reference;
 import org.cyclops.evilcraft.core.weather.WeatherType;
@@ -37,7 +37,7 @@ public abstract class CommonEnvironmentalAccumulatorRecipeCategory<T extends Com
     }
 
     @Override
-    public void draw(T recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+    public void draw(T recipe, PoseStack matrixStack, double mouseX, double mouseY) {
         if(lastRecipe != null) {
             if(lastRecipe.getInputWeather() != WeatherType.ANY) {
                 weatherIcons.get(lastRecipe.getInputWeather()).draw(matrixStack, weatherInPos.getLeft(), weatherInPos.getRight());

@@ -1,7 +1,7 @@
 package org.cyclops.evilcraftcompat.modcompat.tconstruct;
 
-import net.minecraft.item.ItemStack;
-import org.cyclops.evilcraft.api.tileentity.bloodchest.IBloodChestRepairAction;
+import net.minecraft.world.item.ItemStack;
+import org.cyclops.evilcraft.api.blockentity.bloodchest.IBloodChestRepairAction;
 import org.cyclops.evilcraft.block.BloodChestConfig;
 import slimeknights.tconstruct.library.tools.ToolCore;
 import slimeknights.tconstruct.library.utils.ToolHelper;

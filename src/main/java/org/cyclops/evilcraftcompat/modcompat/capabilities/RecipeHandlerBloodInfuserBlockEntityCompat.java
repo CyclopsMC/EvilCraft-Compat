@@ -3,8 +3,8 @@ package org.cyclops.evilcraftcompat.modcompat.capabilities;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.NonNullList;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidStack;
@@ -25,7 +25,7 @@ import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.core.recipe.type.IInventoryFluidTier;
 import org.cyclops.evilcraft.core.recipe.type.InventoryFluidTier;
 import org.cyclops.evilcraft.core.recipe.type.RecipeBloodInfuser;
-import org.cyclops.evilcraft.tileentity.TileBloodInfuser;
+import org.cyclops.evilcraft.blockentity.BlockEntityBloodInfuser;
 import org.cyclops.evilcraftcompat.Capabilities;
 
 import javax.annotation.Nullable;
@@ -36,7 +36,7 @@ import java.util.Map;
  * Compatibility for blood infuser recipe handler capabilities.
  * @author rubensworks
  */
-public class RecipeHandlerBloodInfuserTileCompat extends SimpleCapabilityConstructor<IRecipeHandler, TileBloodInfuser> {
+public class RecipeHandlerBloodInfuserBlockEntityCompat extends SimpleCapabilityConstructor<IRecipeHandler, BlockEntityBloodInfuser> {
 
     @Override
     public Capability<IRecipeHandler> getCapability() {
@@ -45,15 +45,15 @@ public class RecipeHandlerBloodInfuserTileCompat extends SimpleCapabilityConstru
 
     @Nullable
     @Override
-    public ICapabilityProvider createProvider(TileBloodInfuser host) {
+    public ICapabilityProvider createProvider(BlockEntityBloodInfuser host) {
         return new DefaultCapabilityProvider<>(() -> Capabilities.RECIPE_HANDLER, new RecipeHandler(host));
     }
 
     public static class RecipeHandler extends RecipeHandlerRecipeType<IInventoryFluidTier, RecipeBloodInfuser> {
 
-        private final TileBloodInfuser host;
+        private final BlockEntityBloodInfuser host;
 
-        public RecipeHandler(TileBloodInfuser host) {
+        public RecipeHandler(BlockEntityBloodInfuser host) {
             super(host::getLevel, RegistryEntries.RECIPETYPE_BLOOD_INFUSER,
                     Sets.newHashSet(IngredientComponent.ITEMSTACK, IngredientComponent.FLUIDSTACK),
                     Sets.newHashSet(IngredientComponent.ITEMSTACK));

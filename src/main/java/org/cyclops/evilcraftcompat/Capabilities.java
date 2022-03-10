@@ -1,7 +1,8 @@
 package org.cyclops.evilcraftcompat;
 
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 import org.cyclops.commoncapabilities.api.capability.recipehandler.IRecipeHandler;
 import org.cyclops.commoncapabilities.api.capability.work.IWorker;
 
@@ -10,9 +11,6 @@ import org.cyclops.commoncapabilities.api.capability.work.IWorker;
  * @author rubensworks
  */
 public class Capabilities {
-    @CapabilityInject(IWorker.class)
-    public static Capability<IWorker> WORKER = null;
-
-    @CapabilityInject(IRecipeHandler.class)
-    public static Capability<IRecipeHandler> RECIPE_HANDLER = null;
+    public static Capability<IWorker> WORKER = CapabilityManager.get(new CapabilityToken<>(){});
+    public static Capability<IRecipeHandler> RECIPE_HANDLER = CapabilityManager.get(new CapabilityToken<>(){});
 }

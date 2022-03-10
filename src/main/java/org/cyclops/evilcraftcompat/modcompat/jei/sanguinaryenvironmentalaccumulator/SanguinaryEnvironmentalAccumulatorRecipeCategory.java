@@ -1,6 +1,6 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -9,17 +9,18 @@ import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.Pair;
 import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.client.gui.container.ContainerScreenBloodInfuser;
 import org.cyclops.evilcraft.client.gui.container.ContainerScreenSanguinaryEnvironmentalAccumulator;
-import org.cyclops.evilcraft.tileentity.tickaction.sanguinaryenvironmentalaccumulator.AccumulateItemTickAction;
+import org.cyclops.evilcraft.blockentity.tickaction.sanguinaryenvironmentalaccumulator.AccumulateItemTickAction;
 import org.cyclops.evilcraftcompat.Reference;
 import org.cyclops.evilcraftcompat.modcompat.jei.JEIEvilCraftConfig;
 import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.CommonEnvironmentalAccumulatorRecipeCategory;
@@ -67,8 +68,8 @@ public class SanguinaryEnvironmentalAccumulatorRecipeCategory extends CommonEnvi
 
     @Nonnull
     @Override
-    public String getTitle() {
-        return new TranslationTextComponent(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR.getDescriptionId()).getString();
+    public Component getTitle() {
+        return new TranslatableComponent(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR.getDescriptionId());
     }
 
     @Nonnull
@@ -89,13 +90,13 @@ public class SanguinaryEnvironmentalAccumulatorRecipeCategory extends CommonEnvi
     }
 
     @Override
-    public void draw(SanguinaryEnvironmentalAccumulatorRecipeJEI recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+    public void draw(SanguinaryEnvironmentalAccumulatorRecipeJEI recipe, PoseStack matrixStack, double mouseX, double mouseY) {
         super.draw(recipe, matrixStack, mouseX, mouseY);
         arrow.draw(matrixStack, 65, 28);
 
         // Draw duration
-        FontRenderer fontRenderer = Minecraft.getInstance().font;
-        IFormattableTextComponent duration = JEIEvilCraftConfig.getDurationSecondsTextComponent(recipe.getDuration());
+        Font fontRenderer = Minecraft.getInstance().font;
+        MutableComponent duration = JEIEvilCraftConfig.getDurationSecondsTextComponent(recipe.getDuration());
         fontRenderer.draw(matrixStack, duration,
                 (background.getWidth() - fontRenderer.width(duration)) / 2 + 12, 50, 0xFF808080);
     }

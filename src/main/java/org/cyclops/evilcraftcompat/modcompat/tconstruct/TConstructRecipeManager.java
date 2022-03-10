@@ -5,7 +5,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import org.cyclops.evilcraft.Configs;
 import org.cyclops.evilcraft.EvilCraft;
-import org.cyclops.evilcraft.api.tileentity.bloodchest.IBloodChestRepairActionRegistry;
+import org.cyclops.evilcraft.api.blockentity.bloodchest.IBloodChestRepairActionRegistry;
 import org.cyclops.evilcraft.block.HardenedBlood;
 import org.cyclops.evilcraft.block.HardenedBloodConfig;
 import org.cyclops.evilcraft.fluid.Blood;

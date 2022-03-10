@@ -6,7 +6,7 @@ import mcp.mobius.waila.api.IWailaDataProvider;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.blockentity.BlockEntityEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -14,7 +14,7 @@ import org.cyclops.cyclopscore.helper.L10NHelpers;
 import org.cyclops.evilcraft.Reference;
 import org.cyclops.evilcraft.entity.monster.VengeanceSpiritData;
 import org.cyclops.evilcraftcompat.modcompat.waila.Waila;
-import org.cyclops.evilcraft.tileentity.TileBoxOfEternalClosure;
+import org.cyclops.evilcraft.blockentity.BlockEntityBoxOfEternalClosure;
 
 import java.util.List;
 
