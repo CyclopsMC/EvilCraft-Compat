@@ -11,7 +11,6 @@ import org.cyclops.evilcraft.block.HardenedBloodConfig;
 import org.cyclops.evilcraft.fluid.Blood;
 import org.cyclops.evilcraft.fluid.BloodConfig;
 import org.cyclops.evilcraft.item.EnderTearConfig;
-import org.cyclops.evilcraftcompat.modcompat.tconstruct.TConstructToolRepairTickAction;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.smeltery.CastingRecipe;
 

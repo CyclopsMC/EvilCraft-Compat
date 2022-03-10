@@ -2,7 +2,6 @@ package org.cyclops.evilcraftcompat.modcompat.ic2;
 
 import org.cyclops.cyclopscore.modcompat.IModCompat;
 import org.cyclops.evilcraft.Reference;
-import org.cyclops.evilcraftcompat.modcompat.ic2.IC2;
 
 /**
  * Compatibility plugin for IC2.
@@ -18,19 +17,19 @@ public class IC2ModCompat implements IModCompat {
 
     @Override
     public void onInit(Step step) {
-    	if(step == Step.POSTINIT) {
+        if(step == Step.POSTINIT) {
             IC2.registerMaceratorRecipes();
         }
     }
-    
-    @Override
-	public boolean isEnabled() {
-		return true;
-	}
 
-	@Override
-	public String getComment() {
-		return "Macerator recipe for Dark Ore and Dark Gem.";
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public String getComment() {
+        return "Macerator recipe for Dark Ore and Dark Gem.";
+    }
 
 }

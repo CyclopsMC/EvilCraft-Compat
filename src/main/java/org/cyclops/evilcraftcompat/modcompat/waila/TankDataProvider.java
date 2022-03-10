@@ -6,7 +6,6 @@ import mcp.mobius.waila.api.IWailaDataProvider;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.blockentity.BlockEntityEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -15,7 +14,6 @@ import org.cyclops.cyclopscore.helper.L10NHelpers;
 import org.cyclops.cyclopscore.item.DamageIndicatedItemComponent;
 import org.cyclops.cyclopscore.blockentity.TankInventoryTileEntity;
 import org.cyclops.evilcraft.Reference;
-import org.cyclops.evilcraftcompat.modcompat.waila.Waila;
 
 import java.util.List;
 
@@ -60,5 +58,5 @@ public class TankDataProvider implements IWailaDataProvider {
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
         return tag;
     }
-    
+
 }

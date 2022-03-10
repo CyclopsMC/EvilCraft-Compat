@@ -6,15 +6,12 @@ import mcp.mobius.waila.api.IWailaDataProvider;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.blockentity.BlockEntityEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import org.cyclops.cyclopscore.helper.L10NHelpers;
 import org.cyclops.evilcraft.Reference;
 import org.cyclops.evilcraft.entity.monster.VengeanceSpiritData;
-import org.cyclops.evilcraftcompat.modcompat.waila.Waila;
-import org.cyclops.evilcraft.blockentity.BlockEntityBoxOfEternalClosure;
 
 import java.util.List;
 
@@ -39,8 +36,8 @@ public class BoxOfEternalClosureDataProvider implements IWailaDataProvider {
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         if(accessor.getTileEntity() instanceof TileBoxOfEternalClosure
-        		&& config.getConfig(Waila.getBoxOfEternalClosureConfigID(), true)) {
-        	TileBoxOfEternalClosure tile = (TileBoxOfEternalClosure) accessor.getTileEntity();
+                && config.getConfig(Waila.getBoxOfEternalClosureConfigID(), true)) {
+            TileBoxOfEternalClosure tile = (TileBoxOfEternalClosure) accessor.getTileEntity();
             if(!tile.hasSpirit()) {
                 currenttip.add(TextFormatting.ITALIC + L10NHelpers.localize("general." + Reference.MOD_ID + ".info.empty"));
             } else {

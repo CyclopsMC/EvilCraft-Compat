@@ -8,13 +8,11 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.blockentity.BlockEntityEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.cyclops.evilcraft.core.config.configurable.ConfigurableBlockWithInnerBlocks;
 import org.cyclops.evilcraft.core.config.configurable.ConfigurableBlockWithInnerBlocksExtended;
 import org.cyclops.evilcraft.core.blockentity.InnerBlocksTileEntity;
-import org.cyclops.evilcraftcompat.modcompat.waila.Waila;
 
 import java.util.List;
 
@@ -37,7 +35,7 @@ public class InnerBlockDataProvider implements IWailaDataProvider {
             return getItemStack(block.getBlockFromMeta(accessor.getMetadata()));
         }
         if(accessor.getBlock() instanceof ConfigurableBlockWithInnerBlocksExtended && config.getConfig(Waila.getInnerBlockConfigID())) {
-        	InnerBlocksTileEntity tile = (InnerBlocksTileEntity) accessor.getTileEntity();
+            InnerBlocksTileEntity tile = (InnerBlocksTileEntity) accessor.getTileEntity();
             return getItemStack(tile.getInnerBlockState());
         }
         return null;

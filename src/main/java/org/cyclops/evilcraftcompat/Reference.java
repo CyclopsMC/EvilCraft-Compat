@@ -8,13 +8,13 @@ package org.cyclops.evilcraftcompat;
  */
 @SuppressWarnings("javadoc")
 public class Reference {
-	
+
     // Mod info
     public static final String MOD_ID = "evilcraftcompat";
 
     // Paths
     public static final String TEXTURE_PATH_GUI = "textures/gui/";
-    
+
     // MOD ID's
     public static final String MOD_FORGE = "forge";
     public static final String MOD_CYCLOPSCORE = "cyclopscore";

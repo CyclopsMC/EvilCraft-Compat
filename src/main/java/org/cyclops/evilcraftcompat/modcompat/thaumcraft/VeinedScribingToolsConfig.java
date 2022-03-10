@@ -21,7 +21,7 @@ public class VeinedScribingToolsConfig extends ItemConfig {
     public VeinedScribingToolsConfig() {
         super(
             EvilCraft._instance,
-        	true,
+            true,
             "veined_scribing_tools",
             null,
             VeinedScribingTools.class
@@ -35,5 +35,5 @@ public class VeinedScribingToolsConfig extends ItemConfig {
         // This is to make the recipe work, which was registered in EC
         EvilCraft._instance.getConfigHandler().addToConfigDictionary(this);
     }
-    
+
 }

@@ -44,9 +44,9 @@ import java.util.UUID;
  *
  */
 public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContainer implements IBindable {
-    
+
     private static org.cyclops.evilcraftcompat.modcompat.bloodmagic.BoundBloodDrop _instance = null;
-    
+
     /**
      * Get the unique instance.
      * @return The instance.
@@ -66,7 +66,7 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
     }
 
     private static int getCurrentEssence(UUID uuid) {
-    	return ClientSoulNetworkHandler.getInstance().getCurrentEssence(uuid);
+        return ClientSoulNetworkHandler.getInstance().getCurrentEssence(uuid);
     }
 
     private static int getMaxEssence(UUID uuid) {
@@ -94,30 +94,30 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
                 getTranslationKey() + ".info.auto_supply");
         Binding binding = getBinding(itemStack);
         if(binding != null) {
-        	String owner = binding.getOwnerName();
-        	if(owner == null || owner.isEmpty()) {
-        		owner = TextFormatting.ITALIC + L10NHelpers.localize(getTranslationKey() + ".info.current_owner.none");
-        	}
-        	list.add(L10NHelpers.localize(getTranslationKey() + ".info.current_owner", owner));
+            String owner = binding.getOwnerName();
+            if(owner == null || owner.isEmpty()) {
+                owner = TextFormatting.ITALIC + L10NHelpers.localize(getTranslationKey() + ".info.current_owner.none");
+            }
+            list.add(L10NHelpers.localize(getTranslationKey() + ".info.current_owner", owner));
         }
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack itemStack = player.getHeldItem(hand);
-    	if(player.isSneaking()) {
+        if(player.isSneaking()) {
             if(!world.isRemote)
-            	ItemHelpers.toggleActivation(itemStack);
+                ItemHelpers.toggleActivation(itemStack);
             return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStack);
         }
         return super.onItemRightClick(world, player, hand);
     }
-    
+
     @Override
     public void onUpdate(ItemStack itemStack, World world, Entity entity, int par4, boolean par5) {
-    	if(ItemHelpers.isActivated(itemStack)) {
-    		ItemHelpers.updateAutoFill(FluidUtil.getFluidHandler(itemStack), world, entity, BoundBloodDropConfig.autoFillBuckets);
-    	}
+        if(ItemHelpers.isActivated(itemStack)) {
+            ItemHelpers.updateAutoFill(FluidUtil.getFluidHandler(itemStack), world, entity, BoundBloodDropConfig.autoFillBuckets);
+        }
         super.onUpdate(itemStack, world, entity, par4, par5);
     }
 

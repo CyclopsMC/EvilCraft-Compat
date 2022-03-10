@@ -8,9 +8,6 @@ import org.cyclops.evilcraft.Configs;
 import org.cyclops.evilcraft.Reference;
 import org.cyclops.evilcraft.block.*;
 import org.cyclops.evilcraft.entity.item.EntityBroom;
-import org.cyclops.evilcraftcompat.modcompat.waila.BroomInfoDataProvider;
-import org.cyclops.evilcraftcompat.modcompat.waila.TankDataProvider;
-import org.cyclops.evilcraft.blockentity.BlockEntityBoxOfEternalClosure;
 
 /**
  * Waila support class.
@@ -18,7 +15,7 @@ import org.cyclops.evilcraft.blockentity.BlockEntityBoxOfEternalClosure;
  *
  */
 public class Waila {
-    
+
     /**
      * Waila callback.
      * @param registrar The Waila registrar.
@@ -29,16 +26,16 @@ public class Waila {
         registrar.addConfig(Reference.MOD_NAME, getBoxOfEternalClosureConfigID(), L10NHelpers.localize("gui.waila.boxOfEternalClosureConfig"));
         registrar.addConfig(Reference.MOD_NAME, getBlockInfoConfigID(), L10NHelpers.localize("gui.waila.blockInfoConfig"));
         registrar.addConfig(Reference.MOD_NAME, getBroomInfoConfigID(), L10NHelpers.localize("gui.waila.broomInfoConfig"));
-        
+
         // Tanks
         registrar.registerBodyProvider(new TankDataProvider(), TankInventoryTileEntity.class);
-        
+
         // Inner blocks
         if(Configs.isEnabled(BloodStainedBlockConfig.class))
             registrar.registerStackProvider(new InnerBlockDataProvider(), BloodStainedBlock.class);
         if(Configs.isEnabled(NetherfishSpawnConfig.class))
             registrar.registerStackProvider(new InnerBlockDataProvider(), NetherfishSpawn.class);
-        
+
         // Box of Eternal Closure
         if(Configs.isEnabled(BoxOfEternalClosureConfig.class)) {
             BoxOfEternalClosureDataProvider dataProvider = new BoxOfEternalClosureDataProvider();
@@ -52,7 +49,7 @@ public class Waila {
         // Broom info
         registrar.registerBodyProvider(new BroomInfoDataProvider(), EntityBroom.class);
     }
-    
+
     /**
      * Config ID.
      * @return The config ID.
@@ -60,7 +57,7 @@ public class Waila {
     public static String getTankConfigID() {
         return Reference.MOD_NAME + ".tank";
     }
-    
+
     /**
      * Config ID.
      * @return The config ID.
@@ -68,7 +65,7 @@ public class Waila {
     public static String getInnerBlockConfigID() {
         return Reference.MOD_NAME + ".innerBlock";
     }
-    
+
     /**
      * Config ID.
      * @return The config ID.
@@ -76,7 +73,7 @@ public class Waila {
     public static String getBoxOfEternalClosureConfigID() {
         return Reference.MOD_NAME + ".boxOfEternalClosure";
     }
-    
+
     /**
      * Config ID.
      * @return The config ID.
@@ -92,5 +89,5 @@ public class Waila {
     public static String getBroomInfoConfigID() {
         return Reference.MOD_NAME + ".broomInfo";
     }
-    
+
 }

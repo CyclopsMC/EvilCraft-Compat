@@ -36,9 +36,9 @@ public class ThermalExpansionModCompat implements IModCompat {
 
     @Override
     public void onInit(Step step) {
-    	if(step == Step.INIT) {
-    		registerThermalExpansionRecipes();
-    	}
+        if(step == Step.INIT) {
+            registerThermalExpansionRecipes();
+        }
     }
 
     private void registerThermalExpansionRecipes() {
@@ -57,7 +57,7 @@ public class ThermalExpansionModCompat implements IModCompat {
 
         // Pulverizer dark ore
         if(Configs.isEnabled(DarkOreConfig.class) && Configs.isEnabled(DarkGemConfig.class)) {
-        	boolean crushedEnabled = Configs.isEnabled(DarkGemCrushedConfig.class);
+            boolean crushedEnabled = Configs.isEnabled(DarkGemCrushedConfig.class);
             NBTTagCompound pulverizerDarkOre = new NBTTagCompound();
             pulverizerDarkOre.setInteger("energy", 2000);
             pulverizerDarkOre.setTag("input", new ItemStack(
@@ -65,13 +65,13 @@ public class ThermalExpansionModCompat implements IModCompat {
             pulverizerDarkOre.setTag("primaryOutput", new ItemStack(
                     DarkGem.getInstance(), 2).writeToNBT(new NBTTagCompound()));
             if(crushedEnabled) {
-	            pulverizerDarkOre.setTag("secondaryOutput", new ItemStack(
+                pulverizerDarkOre.setTag("secondaryOutput", new ItemStack(
                         DarkGemCrushedConfig._instance.getItemInstance(), 1).writeToNBT(new NBTTagCompound()));
-	            pulverizerDarkOre.setInteger("secondaryChance", 30);
+                pulverizerDarkOre.setInteger("secondaryChance", 30);
             }
             FMLInterModComms.sendMessage(TE, "addpulverizerrecipe", pulverizerDarkOre);
         }
-        
+
         // Pulverizer dark ore -> crushed
         if(Configs.isEnabled(DarkGemConfig.class) && Configs.isEnabled(DarkGemCrushedConfig.class)) {
             NBTTagCompound pulverizerDarkOre = new NBTTagCompound();
@@ -140,7 +140,7 @@ public class ThermalExpansionModCompat implements IModCompat {
                 }
             }
         }
-        
+
         // Pulverize Blood-Waxed Coal
         if(Configs.isEnabled(BloodWaxedCoalConfig.class)) {
             NBTTagCompound pulverizerDustCoal = new NBTTagCompound();
@@ -165,15 +165,15 @@ public class ThermalExpansionModCompat implements IModCompat {
             }
         }
     }
-    
-    @Override
-	public boolean isEnabled() {
-		return true;
-	}
 
-	@Override
-	public String getComment() {
-		return "Sawmill, Pulverizer, Magma Crucible and Fluid Transposer recipes.";
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public String getComment() {
+        return "Sawmill, Pulverizer, Magma Crucible and Fluid Transposer recipes.";
+    }
 
 }

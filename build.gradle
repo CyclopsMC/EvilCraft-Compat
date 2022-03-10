@@ -9,6 +9,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'com.diffplug.spotless' version '5.14.3'
+}
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
@@ -264,5 +268,16 @@ sourceSets {
             exclude '**/modcompat/thermalexpansion/**'
             exclude '**/modcompat/waila/**'
         }
+    }
+}
+
+spotless {
+    java {
+        target 'src/*/java/org/cyclops/**/*.java'
+
+        endWithNewline()
+        trimTrailingWhitespace()
+        removeUnusedImports()
+        indentWithSpaces()
     }
 }

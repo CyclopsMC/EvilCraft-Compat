@@ -37,7 +37,7 @@ public class ForestryRecipeManager {
             int outputChance = 25; // Out of 100
             RecipeManagers.squeezerManager.addRecipe(time, input, fluidStack, output, outputChance);
         }
-        
+
         // Register Undead Leaves squeezer recipes.
         if(Configs.isEnabled(UndeadLeavesConfig.class)
                 && Configs.isEnabled(BloodConfig.class)
@@ -52,5 +52,5 @@ public class ForestryRecipeManager {
             RecipeManagers.squeezerManager.addRecipe(time, input, fluidStack, output, outputChance);
         }
     }
-    
+
 }

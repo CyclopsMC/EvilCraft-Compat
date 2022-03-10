@@ -2,7 +2,6 @@ package org.cyclops.evilcraftcompat.modcompat.immersiveengineering;
 
 import org.cyclops.cyclopscore.modcompat.IModCompat;
 import org.cyclops.evilcraft.Reference;
-import org.cyclops.evilcraftcompat.modcompat.immersiveengineering.ImmersiveEngineeringRecipeManager;
 
 /**
  * Compatibility plugin for Immersive Engineering.

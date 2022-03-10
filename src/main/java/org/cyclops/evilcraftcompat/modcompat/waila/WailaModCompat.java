@@ -3,7 +3,6 @@ package org.cyclops.evilcraftcompat.modcompat.waila;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import org.cyclops.cyclopscore.modcompat.IModCompat;
 import org.cyclops.evilcraft.Reference;
-import org.cyclops.evilcraftcompat.modcompat.waila.Waila;
 
 /**
  * Compatibility plugin for Waila.
@@ -19,19 +18,19 @@ public class WailaModCompat implements IModCompat {
 
     @Override
     public void onInit(Step step) {
-    	if(step == Step.INIT) {
-    		FMLInterModComms.sendMessage(getModID(), "register", Waila.class.getName() + ".callbackRegister");
-    	}
+        if(step == Step.INIT) {
+            FMLInterModComms.sendMessage(getModID(), "register", Waila.class.getName() + ".callbackRegister");
+        }
     }
 
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
-	@Override
-	public String getComment() {
-		return "WAILA tooltips on machines.";
-	}
+    @Override
+    public String getComment() {
+        return "WAILA tooltips on machines.";
+    }
 
 }

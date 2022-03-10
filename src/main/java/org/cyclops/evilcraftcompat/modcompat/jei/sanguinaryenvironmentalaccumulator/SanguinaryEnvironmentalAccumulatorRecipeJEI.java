@@ -5,7 +5,6 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Maps;
 import net.minecraft.world.item.crafting.Recipe;
 import org.cyclops.cyclopscore.helper.CraftingHelpers;
-import org.cyclops.cyclopscore.modcompat.jei.RecipeRegistryJeiRecipeWrapper;
 import org.cyclops.evilcraft.core.recipe.type.RecipeEnvironmentalAccumulator;
 import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.CommonEnvironmentalAccumulatorRecipeJEI;
 

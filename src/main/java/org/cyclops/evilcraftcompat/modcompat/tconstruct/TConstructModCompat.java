@@ -2,7 +2,6 @@ package org.cyclops.evilcraftcompat.modcompat.tconstruct;
 
 import org.cyclops.cyclopscore.modcompat.IModCompat;
 import org.cyclops.evilcraft.Reference;
-import org.cyclops.evilcraftcompat.modcompat.tconstruct.TConstructRecipeManager;
 
 /**
  * Compatibility plugin for Tinkers' Construct.

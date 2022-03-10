@@ -25,39 +25,39 @@ public class ForestryModCompat implements IModCompat {
 
     @Override
     public void onInit(Step step) {
-    	if(step == Step.INIT) {
+        if(step == Step.INIT) {
 
-	        // Add dark gem to the miner backpack.
-	        if(Configs.isEnabled(DarkGemConfig.class)) {
-	            FMLInterModComms.sendMessage(getModID(), "add-backpack-items",
-						"forestry.miner@" + Item.REGISTRY.getNameForObject(DarkGem.getInstance()).toString() + ":*");
-	        }
-	        
-	        // Add poison sac to hunter backpack.
-	        if(Configs.isEnabled(PoisonSacConfig.class)) {
-	            FMLInterModComms.sendMessage(getModID(), "add-backpack-items",
-						"forestry.hunter@" + Item.REGISTRY.getNameForObject(PoisonSacConfig._instance.getItemInstance()).toString() + ":*");
-	        }
-	        
-	        // Add undead clog to forester backpack.
-	        if(Configs.isEnabled(UndeadLogConfig.class)) {
-	            FMLInterModComms.sendMessage(getModID(), "add-backpack-items",
-						"forestry.forester@" + Block.REGISTRY.getNameForObject(UndeadLogConfig._instance.getBlockInstance()).toString() + ":*");
-	        }
+            // Add dark gem to the miner backpack.
+            if(Configs.isEnabled(DarkGemConfig.class)) {
+                FMLInterModComms.sendMessage(getModID(), "add-backpack-items",
+                        "forestry.miner@" + Item.REGISTRY.getNameForObject(DarkGem.getInstance()).toString() + ":*");
+            }
 
-			ForestryFarmManager.register();
-	        ForestryRecipeManager.register();
-    	}
+            // Add poison sac to hunter backpack.
+            if(Configs.isEnabled(PoisonSacConfig.class)) {
+                FMLInterModComms.sendMessage(getModID(), "add-backpack-items",
+                        "forestry.hunter@" + Item.REGISTRY.getNameForObject(PoisonSacConfig._instance.getItemInstance()).toString() + ":*");
+            }
+
+            // Add undead clog to forester backpack.
+            if(Configs.isEnabled(UndeadLogConfig.class)) {
+                FMLInterModComms.sendMessage(getModID(), "add-backpack-items",
+                        "forestry.forester@" + Block.REGISTRY.getNameForObject(UndeadLogConfig._instance.getBlockInstance()).toString() + ":*");
+            }
+
+            ForestryFarmManager.register();
+            ForestryRecipeManager.register();
+        }
     }
-    
-    @Override
-	public boolean isEnabled() {
-		return true;
-	}
 
-	@Override
-	public String getComment() {
-		return "Multifarm, squeezer and backpack support.";
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public String getComment() {
+        return "Multifarm, squeezer and backpack support.";
+    }
 
 }

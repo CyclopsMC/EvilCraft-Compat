@@ -25,17 +25,17 @@ public class ThaumcraftModCompat implements IModCompat {
             configs.add(new VeinedScribingToolsConfig());
         } else if(step == Step.INIT) {
             MinecraftForge.EVENT_BUS.register(new EvilCraftThaumcraftAspects());
-    	}
+        }
     }
 
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
-	@Override
-	public String getComment() {
-		return "Adds Thaumcraft aspects to EvilCraft items and blocks, Veined Scribing Tools and extra Loot Bag items.";
-	}
+    @Override
+    public String getComment() {
+        return "Adds Thaumcraft aspects to EvilCraft items and blocks, Veined Scribing Tools and extra Loot Bag items.";
+    }
 
 }

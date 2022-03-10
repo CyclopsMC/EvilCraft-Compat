@@ -7,47 +7,46 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.cyclops.cyclopscore.network.CodecField;
 import org.cyclops.cyclopscore.network.PacketCodec;
-import org.cyclops.evilcraftcompat.modcompat.bloodmagic.ClientSoulNetworkHandler;
 
 /**
  * Packet from client to server to register a player for soul network updates.
- * 
+ *
  * @author rubensworks
  *
  */
 public class RequestSoulNetworkUpdatesPacket extends PacketCodec {
-	
+
     @CodecField
-	private String uuid;
+    private String uuid;
 
-	/**
-	 * Creates a packet with no content
-	 */
-	public RequestSoulNetworkUpdatesPacket() {
-		
-	}
+    /**
+     * Creates a packet with no content
+     */
+    public RequestSoulNetworkUpdatesPacket() {
 
-	@Override
-	public boolean isAsync() {
-		return true;
-	}
+    }
 
-	/**
-	 * Creates a packet which contains the player uuid.
-	 * @param uuid The player uuid.
-	 */
-	public RequestSoulNetworkUpdatesPacket(String uuid) {
-		this.uuid = uuid;
-	}
+    @Override
+    public boolean isAsync() {
+        return true;
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void actionClient(World world, EntityPlayer player) {
-		// Do nothing
-	}
+    /**
+     * Creates a packet which contains the player uuid.
+     * @param uuid The player uuid.
+     */
+    public RequestSoulNetworkUpdatesPacket(String uuid) {
+        this.uuid = uuid;
+    }
 
-	@Override
-	public void actionServer(World world, EntityPlayerMP player) {
-		ClientSoulNetworkHandler.getInstance().addUpdatePlayer(player, this.uuid);
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void actionClient(World world, EntityPlayer player) {
+        // Do nothing
+    }
+
+    @Override
+    public void actionServer(World world, EntityPlayerMP player) {
+        ClientSoulNetworkHandler.getInstance().addUpdatePlayer(player, this.uuid);
+    }
 }
