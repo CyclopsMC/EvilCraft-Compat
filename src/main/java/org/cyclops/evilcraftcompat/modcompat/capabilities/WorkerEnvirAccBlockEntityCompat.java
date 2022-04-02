@@ -24,7 +24,7 @@ public class WorkerEnvirAccBlockEntityCompat extends SimpleCapabilityConstructor
     @Nullable
     @Override
     public ICapabilityProvider createProvider(BlockEntityEnvironmentalAccumulator host) {
-        return new DefaultCapabilityProvider<IWorker>(Capabilities.WORKER, new Worker(host));
+        return new DefaultCapabilityProvider<>(() -> Capabilities.WORKER, new Worker(host));
     }
 
     public static class Worker implements IWorker {

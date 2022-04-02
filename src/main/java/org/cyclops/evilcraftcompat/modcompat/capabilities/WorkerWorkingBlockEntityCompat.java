@@ -27,7 +27,7 @@ public class WorkerWorkingBlockEntityCompat extends SimpleCapabilityConstructor<
     @Nullable
     @Override
     public ICapabilityProvider createProvider(BlockEntityTickingTankInventory host) {
-        return new DefaultCapabilityProvider<IWorker>(Capabilities.WORKER, new Worker<BlockEntityTickingTankInventory<?>>(host));
+        return new DefaultCapabilityProvider<>(() -> Capabilities.WORKER, new Worker<BlockEntityTickingTankInventory<?>>(host));
     }
 
     public static class Worker<T extends BlockEntityTickingTankInventory<?>> implements IWorker {
