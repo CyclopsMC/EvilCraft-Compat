@@ -53,7 +53,7 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
         modCompatLoader.addModCompat(new ThaumcraftModCompat());*/
 
         // Capabilities
-        getCapabilityConstructorRegistry().registerTile(BlockEntityTickingTankInventory.class, new WorkerWorkingBlockEntityCompat());
+        getCapabilityConstructorRegistry().registerInheritableTile(BlockEntityTickingTankInventory.class, new WorkerWorkingBlockEntityCompat());
         getCapabilityConstructorRegistry().registerTile(BlockEntityEnvironmentalAccumulator.class, new WorkerEnvirAccBlockEntityCompat());
         getCapabilityConstructorRegistry().registerTile(BlockEntityBloodInfuser.class, new RecipeHandlerBloodInfuserBlockEntityCompat());
     }
