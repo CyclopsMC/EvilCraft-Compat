@@ -77,10 +77,10 @@ repositories {
         name 'Tehnut'
         url 'https://tehnut.info/maven/'
     }*/
-    maven {
+    /*maven {
         name "CurseForge"
         url "https://minecraft.curseforge.com/api/maven/"
-    }
+    }*/
     maven {
         name "Curios"
         url "https://maven.theillusivec4.top/"

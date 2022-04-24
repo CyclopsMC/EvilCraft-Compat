@@ -3,6 +3,8 @@ package org.cyclops.evilcraftcompat;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.cyclops.cyclopscore.infobook.IInfoBookRegistry;
 import org.cyclops.cyclopscore.init.ModBaseVersionable;
 import org.cyclops.cyclopscore.modcompat.ModCompatLoader;
@@ -35,6 +37,7 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
 
     public EvilCraftCompat() {
         super(Reference.MOD_ID, (instance) -> _instance = instance);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::afterSetup);
     }
 
     @Override
@@ -61,7 +64,9 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
     @Override
     protected void setup(FMLCommonSetupEvent event) {
         super.setup(event);
+    }
 
+    protected void afterSetup(FMLLoadCompleteEvent event) {
         // Initialize info book
         EvilCraft._instance.getRegistryManager().getRegistry(IInfoBookRegistry.class)
                 .registerSection(this,

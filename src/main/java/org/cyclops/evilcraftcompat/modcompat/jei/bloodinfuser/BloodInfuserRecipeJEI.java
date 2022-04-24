@@ -1,6 +1,6 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser;
 
-import mezz.jei.util.Translator;
+import mezz.jei.common.util.Translator;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.fluids.FluidStack;
