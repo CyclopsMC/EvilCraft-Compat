@@ -97,8 +97,8 @@ public class RecipeHandlerBloodInfuserBlockEntityCompat extends SimpleCapability
         @Override
         protected IMixedIngredients getRecipeOutputIngredients(RecipeBloodInfuser recipe) {
             Map<IngredientComponent<?, ?>, List<?>> outputIngredients = Maps.newIdentityHashMap();
-            if (!recipe.getOutputItem().isEmpty()) {
-                outputIngredients.put(IngredientComponent.ITEMSTACK, Lists.newArrayList(recipe.getOutputItem()));
+            if (!recipe.getOutputItemFirst().isEmpty()) {
+                outputIngredients.put(IngredientComponent.ITEMSTACK, Lists.newArrayList(recipe.getOutputItemFirst()));
             }
 
             // Validate output
