@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "evilcraft:exalted_crafter",
+    "evilcraft:exalted_crafter_wooden",
+    "evilcraft:exalted_crafter_empowered",
+    "evilcraft:exalted_crafter_wooden_empowered"
+  ]
+}
