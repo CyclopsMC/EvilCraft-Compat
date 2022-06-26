@@ -4,12 +4,13 @@ import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Maps;
 import net.minecraft.world.item.crafting.Recipe;
+import org.apache.commons.compress.utils.Lists;
 import org.cyclops.cyclopscore.helper.CraftingHelpers;
 import org.cyclops.evilcraft.core.recipe.type.RecipeEnvironmentalAccumulator;
 import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.CommonEnvironmentalAccumulatorRecipeJEI;
 
 import javax.annotation.Nullable;
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,13 +34,13 @@ public class SanguinaryEnvironmentalAccumulatorRecipeJEI extends CommonEnvironme
         return new SanguinaryEnvironmentalAccumulatorRecipeJEI(input);
     }
 
-    public static Collection<SanguinaryEnvironmentalAccumulatorRecipeJEI> getAllRecipes() {
+    public static List<SanguinaryEnvironmentalAccumulatorRecipeJEI> getAllRecipes() {
         return new SanguinaryEnvironmentalAccumulatorRecipeJEI().createAllRecipes();
     }
 
     // Needed because the RECIPE_WRAPPERS would otherwise just return the envir acc instances, and fail
-    public Collection<SanguinaryEnvironmentalAccumulatorRecipeJEI> createAllRecipes() {
-        return Collections2.transform(CraftingHelpers.getClientRecipes(this.getRecipeType()), new Function<RecipeEnvironmentalAccumulator, SanguinaryEnvironmentalAccumulatorRecipeJEI>() {
+    public List<SanguinaryEnvironmentalAccumulatorRecipeJEI> createAllRecipes() {
+        return Lists.newArrayList(Collections2.transform(CraftingHelpers.getClientRecipes(this.getRecipeType()), new Function<RecipeEnvironmentalAccumulator, SanguinaryEnvironmentalAccumulatorRecipeJEI>() {
             @Nullable
             public SanguinaryEnvironmentalAccumulatorRecipeJEI apply(RecipeEnvironmentalAccumulator input) {
                 if (!RECIPE_WRAPPERS_2.containsKey(input)) {
@@ -48,6 +49,6 @@ public class SanguinaryEnvironmentalAccumulatorRecipeJEI extends CommonEnvironme
 
                 return RECIPE_WRAPPERS_2.get(input);
             }
-        });
+        }).iterator());
     }
 }

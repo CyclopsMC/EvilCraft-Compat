@@ -2,10 +2,11 @@ package org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator;
 
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
@@ -37,7 +38,7 @@ public abstract class CommonEnvironmentalAccumulatorRecipeCategory<T extends Com
     }
 
     @Override
-    public void draw(T recipe, PoseStack matrixStack, double mouseX, double mouseY) {
+    public void draw(T recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrixStack, double mouseX, double mouseY) {
         if(lastRecipe != null) {
             if(lastRecipe.getInputWeather() != WeatherType.ANY) {
                 weatherIcons.get(lastRecipe.getInputWeather()).draw(matrixStack, weatherInPos.getLeft(), weatherInPos.getRight());
@@ -49,7 +50,7 @@ public abstract class CommonEnvironmentalAccumulatorRecipeCategory<T extends Com
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, T recipe, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayoutBuilder builder, T recipe, IFocusGroup focuses) {
         this.lastRecipe = recipe;
     }
 }

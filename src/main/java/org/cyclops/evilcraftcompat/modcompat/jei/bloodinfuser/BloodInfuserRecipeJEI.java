@@ -10,7 +10,6 @@ import org.cyclops.evilcraft.core.recipe.type.IInventoryFluidTier;
 import org.cyclops.evilcraft.core.recipe.type.RecipeBloodInfuser;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -82,7 +81,7 @@ public class BloodInfuserRecipeJEI extends RecipeRegistryJeiRecipeWrapper<IInven
         return new BloodInfuserRecipeJEI(recipe);
     }
 
-    public static Collection<BloodInfuserRecipeJEI> getAllRecipes() {
+    public static List<BloodInfuserRecipeJEI> getAllRecipes() {
         return new BloodInfuserRecipeJEI().createAllRecipes()
                 .stream()
                 .sorted(Comparator.comparing(r -> r.inputTier))
