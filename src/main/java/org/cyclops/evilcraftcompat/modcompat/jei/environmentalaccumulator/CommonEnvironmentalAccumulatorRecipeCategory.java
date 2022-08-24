@@ -2,11 +2,9 @@ package org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator;
 
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
-import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
@@ -25,8 +23,6 @@ public abstract class CommonEnvironmentalAccumulatorRecipeCategory<T extends Com
     private final Pair<Integer, Integer> weatherInPos;
     private final Pair<Integer, Integer> weatherOutPos;
 
-    private T lastRecipe = null;
-
     public CommonEnvironmentalAccumulatorRecipeCategory(IGuiHelper guiHelper, Pair<Integer, Integer> weatherInPos, Pair<Integer, Integer> weatherOutPos) {
         this.weatherInPos = weatherInPos;
         this.weatherOutPos = weatherOutPos;
@@ -39,18 +35,11 @@ public abstract class CommonEnvironmentalAccumulatorRecipeCategory<T extends Com
 
     @Override
     public void draw(T recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrixStack, double mouseX, double mouseY) {
-        if(lastRecipe != null) {
-            if(lastRecipe.getInputWeather() != WeatherType.ANY) {
-                weatherIcons.get(lastRecipe.getInputWeather()).draw(matrixStack, weatherInPos.getLeft(), weatherInPos.getRight());
-            }
-            if(lastRecipe.getOutputWeather() != WeatherType.ANY) {
-                weatherIcons.get(lastRecipe.getOutputWeather()).draw(matrixStack, weatherOutPos.getLeft(), weatherOutPos.getRight());
-            }
+        if(recipe.getInputWeather() != WeatherType.ANY) {
+            weatherIcons.get(recipe.getInputWeather()).draw(matrixStack, weatherInPos.getLeft(), weatherInPos.getRight());
         }
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, T recipe, IFocusGroup focuses) {
-        this.lastRecipe = recipe;
+        if(recipe.getOutputWeather() != WeatherType.ANY) {
+            weatherIcons.get(recipe.getOutputWeather()).draw(matrixStack, weatherOutPos.getLeft(), weatherOutPos.getRight());
+        }
     }
 }
