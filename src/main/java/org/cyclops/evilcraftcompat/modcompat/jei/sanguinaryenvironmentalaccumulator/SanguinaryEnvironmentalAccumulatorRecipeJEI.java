@@ -9,7 +9,9 @@ import org.cyclops.evilcraft.core.recipe.type.RecipeEnvironmentalAccumulator;
 import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.CommonEnvironmentalAccumulatorRecipeJEI;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,8 +35,9 @@ public class SanguinaryEnvironmentalAccumulatorRecipeJEI extends CommonEnvironme
         return new SanguinaryEnvironmentalAccumulatorRecipeJEI(input);
     }
 
-    public static Collection<SanguinaryEnvironmentalAccumulatorRecipeJEI> getAllRecipes() {
-        return new SanguinaryEnvironmentalAccumulatorRecipeJEI().createAllRecipes();
+    public static List<SanguinaryEnvironmentalAccumulatorRecipeJEI> getAllRecipes() {
+        Collection<SanguinaryEnvironmentalAccumulatorRecipeJEI> allRecipes = new SanguinaryEnvironmentalAccumulatorRecipeJEI().createAllRecipes();
+        return new ArrayList<>(allRecipes);
     }
 
     // Needed because the RECIPE_WRAPPERS would otherwise just return the envir acc instances, and fail

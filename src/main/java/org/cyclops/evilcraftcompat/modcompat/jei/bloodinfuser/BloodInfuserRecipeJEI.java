@@ -1,6 +1,6 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser;
 
-import mezz.jei.common.util.Translator;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.fluids.FluidStack;
@@ -10,7 +10,6 @@ import org.cyclops.evilcraft.core.recipe.type.IInventoryFluidTier;
 import org.cyclops.evilcraft.core.recipe.type.RecipeBloodInfuser;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +33,7 @@ public class BloodInfuserRecipeJEI extends RecipeRegistryJeiRecipeWrapper<IInven
         this.inputTier = recipe.getInputTier();
         this.inputItems = Arrays.stream(recipe.getInputIngredient().getItems()).collect(Collectors.toList());
         this.outputItem = recipe.getResultItem();
-        this.xpString = Translator.translateToLocalFormatted("gui.jei.category.smelting.experience", recipe.getXp());
+        this.xpString = I18n.get("gui.jei.category.smelting.experience", recipe.getXp());
         this.duration = recipe.getDuration();
     }
 
@@ -82,10 +81,10 @@ public class BloodInfuserRecipeJEI extends RecipeRegistryJeiRecipeWrapper<IInven
         return new BloodInfuserRecipeJEI(recipe);
     }
 
-    public static Collection<BloodInfuserRecipeJEI> getAllRecipes() {
+    public static List<BloodInfuserRecipeJEI> getAllRecipes() {
         return new BloodInfuserRecipeJEI().createAllRecipes()
                 .stream()
                 .sorted(Comparator.comparing(r -> r.inputTier))
-                .collect(Collectors.toList());
+                .toList();
     }
 }
