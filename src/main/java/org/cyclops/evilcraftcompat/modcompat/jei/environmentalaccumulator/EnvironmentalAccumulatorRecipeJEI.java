@@ -2,7 +2,9 @@ package org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator;
 
 import org.cyclops.evilcraft.core.recipe.type.RecipeEnvironmentalAccumulator;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Recipe wrapper for Envir Acc recipes
@@ -23,8 +25,9 @@ public class EnvironmentalAccumulatorRecipeJEI extends CommonEnvironmentalAccumu
         return new EnvironmentalAccumulatorRecipeJEI(recipe);
     }
 
-    public static Collection<EnvironmentalAccumulatorRecipeJEI> getAllRecipes() {
-        return new EnvironmentalAccumulatorRecipeJEI().createAllRecipes();
+    public static List<EnvironmentalAccumulatorRecipeJEI> getAllRecipes() {
+        Collection<EnvironmentalAccumulatorRecipeJEI> allRecipes = new EnvironmentalAccumulatorRecipeJEI().createAllRecipes();
+        return new ArrayList<>(allRecipes);
     }
 
 }

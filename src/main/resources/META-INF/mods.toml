@@ -25,6 +25,12 @@ EvilCraft compatibility with other mods.
     ordering="NONE"
     side="BOTH"
 [[dependencies.evilcraftcompat]]
+    modId="jei"
+    mandatory=false
+    versionRange="[9.7.0,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.evilcraftcompat]]
     modId="forge"
     mandatory=true
     versionRange="[40,)"
