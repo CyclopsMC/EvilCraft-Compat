@@ -1,6 +1,5 @@
 package org.cyclops.evilcraftcompat;
 
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -85,8 +84,7 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
     }
 
     @Override
-    protected CreativeModeTab constructDefaultCreativeModeTab() {
-        return null;
+    protected boolean hasDefaultCreativeModeTab() {
+        return false;
     }
-
 }

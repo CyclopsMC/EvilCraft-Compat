@@ -109,7 +109,7 @@ dependencies {
         exclude group: 'org.cyclops.cyclopscore', module: 'cyclopscore'
     }
 
-    implementation fg.deobf("mezz.jei:jei-${project.jei_version}") // https://dvs1.progwml6.com/files/maven/mezz/jei/
+    //implementation fg.deobf("mezz.jei:jei-${project.jei_version}") // https://dvs1.progwml6.com/files/maven/mezz/jei/
     //compile fg.deobf("hwyla:Hwyla-forge-${project.waila_version}") // https://www.curseforge.com/minecraft/mc-mods/hwyla/files/ https://github.com/TehNut/HWYLA and https://github.com/TehNut/temporary-maven-thing/tree/master/maven/mcp/mobius/waila/Hwyla
 
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") // https://maven.theillusivec4.top/top/theillusivec4/curios/curios-forge/
@@ -257,6 +257,7 @@ sourceSets {
     main {
         java {
             // TODO: temporarily disable some mod compats
+			exclude '**/modcompat/jei/**'
             exclude '**/modcompat/bloodmagic/**'
             exclude '**/modcompat/crafttweaker/**'
             exclude '**/modcompat/enderio/**'
