@@ -1,8 +1,4 @@
 org.cyclops.evilcraftcompat
 org.cyclops.evilcraftcompat.modcompat.capabilities
 org.cyclops.evilcraftcompat.modcompat.curios
-org.cyclops.evilcraftcompat.modcompat.jei
-org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser
-org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator
-org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator
 org.cyclops.evilcraftcompat.proxy
