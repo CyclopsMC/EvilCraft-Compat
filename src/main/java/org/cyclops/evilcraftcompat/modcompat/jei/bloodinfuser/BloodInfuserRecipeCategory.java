@@ -89,7 +89,7 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory<BloodInfuserR
     public void setRecipe(IRecipeLayoutBuilder builder, BloodInfuserRecipeJEI recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 42, 28)
                 .addItemStacks(recipe.getInputItems());
-        builder.addSlot(RecipeIngredientRole.INPUT, 6, 6)
+        builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 6, 6)
                 .setOverlay(tankOverlay, 0, 0)
                 .setFluidRenderer(getMaxTankSize(recipe), true, ContainerScreenBloodInfuser.TANKWIDTH, ContainerScreenBloodInfuser.TANKHEIGHT)
                 .addIngredient(ForgeTypes.FLUID_STACK, recipe.getInputFluid());

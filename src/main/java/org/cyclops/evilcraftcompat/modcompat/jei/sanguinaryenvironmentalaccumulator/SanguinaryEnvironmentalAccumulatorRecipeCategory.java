@@ -85,7 +85,7 @@ public class SanguinaryEnvironmentalAccumulatorRecipeCategory extends CommonEnvi
         builder.addSlot(RecipeIngredientRole.INPUT, 42, 28)
                 .addItemStacks(recipe.getInputItems());
         FluidStack fluidStack = new FluidStack(RegistryEntries.FLUID_BLOOD, AccumulateItemTickAction.getUsage(recipe.getCooldownTime()));
-        builder.addSlot(RecipeIngredientRole.INPUT, 6, 6)
+        builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 6, 6)
                 .setOverlay(tankOverlay, 0, 0)
                 .setFluidRenderer(fluidStack.getAmount(), true, ContainerScreenBloodInfuser.TANKWIDTH, ContainerScreenBloodInfuser.TANKHEIGHT)
                 .addIngredient(ForgeTypes.FLUID_STACK, fluidStack);
