@@ -27,7 +27,7 @@ EvilCraft compatibility with other mods.
 [[dependencies.evilcraftcompat]]
     modId="forge"
     mandatory=true
-    versionRange="[45.0.20,)"
+    versionRange="[45.0.50,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.evilcraftcompat]]
