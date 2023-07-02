@@ -14,12 +14,12 @@ import org.cyclops.evilcraft.blockentity.BlockEntityBloodInfuser;
 import org.cyclops.evilcraft.blockentity.BlockEntityEnvironmentalAccumulator;
 import org.cyclops.evilcraft.core.blockentity.BlockEntityTickingTankInventory;
 import org.cyclops.evilcraft.infobook.OriginsOfDarknessBook;
-import org.cyclops.evilcraft.proxy.ClientProxy;
-import org.cyclops.evilcraft.proxy.CommonProxy;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.RecipeHandlerBloodInfuserBlockEntityCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerEnvirAccBlockEntityCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerWorkingBlockEntityCompat;
 import org.cyclops.evilcraftcompat.modcompat.curios.CuriosCompat;
+import org.cyclops.evilcraftcompat.proxy.ClientProxy;
+import org.cyclops.evilcraftcompat.proxy.CommonProxy;
 
 /**
  * The main mod class of this mod.
