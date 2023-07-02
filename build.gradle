@@ -1,15 +1,5 @@
-// For those who want the bleeding edge
-buildscript {
-    repositories {
-		maven { url = 'https://maven.minecraftforge.net' }
-		        mavenCentral()
-    }
-    dependencies {
-		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1+', changing: true
-    }
-}
-
 plugins {
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'com.diffplug.spotless' version '5.14.3'
 }
 
@@ -116,7 +106,7 @@ dependencies {
     implementation fg.deobf("mezz.jei:jei-${project.jei_version}") // https://maven.blamejared.com/mezz/jei/ https://dvs1.progwml6.com/files/maven/mezz/jei/
     //compile fg.deobf("hwyla:Hwyla-forge-${project.waila_version}") // https://www.curseforge.com/minecraft/mc-mods/hwyla/files/ https://github.com/TehNut/HWYLA and https://github.com/TehNut/temporary-maven-thing/tree/master/maven/mcp/mobius/waila/Hwyla
 
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") // https://maven.theillusivec4.top/top/theillusivec4/curios/curios-forge/
+//    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") // https://maven.theillusivec4.top/top/theillusivec4/curios/curios-forge/
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}:api")
 }
 
@@ -182,7 +172,7 @@ jar {
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
-    classifier = 'deobf'
+    archiveClassifier.set('deobf')
     manifest {
         attributes([
                 "FMLAT": "accesstransformer.cfg",

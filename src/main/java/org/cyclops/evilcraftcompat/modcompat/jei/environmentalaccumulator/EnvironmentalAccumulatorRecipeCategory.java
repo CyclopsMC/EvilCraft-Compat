@@ -1,6 +1,5 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -13,6 +12,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -80,14 +80,15 @@ public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalA
     }
 
     @Override
-    public void draw(EnvironmentalAccumulatorRecipeJEI recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrixStack, double mouseX, double mouseY) {
-        super.draw(recipe, recipeSlotsView, matrixStack, mouseX, mouseY);
-        arrow.draw(matrixStack, 44, 0);
+    public void draw(EnvironmentalAccumulatorRecipeJEI recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
+        arrow.draw(guiGraphics, 44, 0);
 
         // Draw duration
         Font fontRenderer = Minecraft.getInstance().font;
         MutableComponent duration = JEIEvilCraftConfig.getDurationSecondsTextComponent(recipe.getDuration());
-        fontRenderer.draw(matrixStack, duration,
-                (background.getWidth() - fontRenderer.width(duration)), 48, 0xFF808080);
+        fontRenderer.drawInBatch(duration,
+                (background.getWidth() - fontRenderer.width(duration)), 48, 0xFF808080, false,
+                guiGraphics.pose().last().pose(), guiGraphics.bufferSource(), Font.DisplayMode.NORMAL, 0, 15728880);
     }
 }
