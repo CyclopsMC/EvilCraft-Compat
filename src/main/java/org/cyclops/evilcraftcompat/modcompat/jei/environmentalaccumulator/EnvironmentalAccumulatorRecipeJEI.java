@@ -1,6 +1,7 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator;
 
 import com.google.common.collect.Lists;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.cyclops.evilcraft.core.recipe.type.RecipeEnvironmentalAccumulator;
 
 import java.util.List;
@@ -20,8 +21,8 @@ public class EnvironmentalAccumulatorRecipeJEI extends CommonEnvironmentalAccumu
     }
 
     @Override
-    protected EnvironmentalAccumulatorRecipeJEI newInstance(RecipeEnvironmentalAccumulator recipe) {
-        return new EnvironmentalAccumulatorRecipeJEI(recipe);
+    protected EnvironmentalAccumulatorRecipeJEI newInstance(RecipeHolder<RecipeEnvironmentalAccumulator> recipe) {
+        return new EnvironmentalAccumulatorRecipeJEI(recipe.value());
     }
 
     public static List<EnvironmentalAccumulatorRecipeJEI> getAllRecipes() {

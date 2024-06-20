@@ -2,11 +2,11 @@ package org.cyclops.evilcraftcompat.modcompat.thermalexpansion;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
-import net.minecraftforge.oredict.OreDictionary;
+import net.neoforged.neoforge.fluids.Fluid;
+import net.neoforged.neoforge.fluids.FluidRegistry;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.fml.common.event.FMLInterModComms;
+import net.neoforged.neoforge.oredict.OreDictionary;
 import org.cyclops.cyclopscore.modcompat.IModCompat;
 import org.cyclops.cyclopscore.recipe.custom.api.IRecipe;
 import org.cyclops.cyclopscore.recipe.custom.component.IngredientRecipeComponent;

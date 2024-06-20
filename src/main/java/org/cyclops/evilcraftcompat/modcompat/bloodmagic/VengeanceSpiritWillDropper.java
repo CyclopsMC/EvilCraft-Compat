@@ -5,8 +5,8 @@ import WayofTime.bloodmagic.soul.IDemonWill;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
+import net.neoforged.fml.common.eventhandler.SubscribeEvent;
 import org.cyclops.evilcraft.ExtendedDamageSource;
 import org.cyclops.evilcraft.entity.monster.VengeanceSpirit;
 

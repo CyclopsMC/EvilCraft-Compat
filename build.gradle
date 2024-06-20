@@ -1,9 +1,8 @@
 plugins {
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'net.neoforged.gradle.userdev' version '7.0.97'
     id 'com.diffplug.spotless' version '5.14.3'
 }
 
-apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
@@ -22,7 +21,10 @@ logger.lifecycle "BUILDING VERSION: " + build_number
 // Set mod details
 version = project.mod_version
 group = "org.cyclops.evilcraftcompat"
-archivesBaseName = "EvilCraftCompat"
+archivesBaseName = "EvilCraftCompat-${project.minecraft_version}-neoforge"
+base {
+    archivesName = archivesBaseName
+}
 
 // Set Java details
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -43,6 +45,7 @@ sourceSets {
     main
     test
 }
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     mavenCentral()
@@ -51,8 +54,8 @@ repositories {
         name "Cyclops Repo"
         url "https://maven.pkg.github.com/CyclopsMC/packages"
         credentials {
-            username = project.findProperty("gpr.user") ?: System.getenv("MAVEN_USERNAME")
-            password = project.findProperty("gpr.key") ?: System.getenv("MAVEN_KEY")
+            username = project.findProperty("gpr.user") ?: System.getenv("MAVEN_USERNAME") ?: System.getenv("GITHUB_USER")
+            password = project.findProperty("gpr.key") ?: System.getenv("MAVEN_KEY") ?: System.getenv("GITHUB_TOKEN")
         }
     }
     maven {
@@ -82,78 +85,64 @@ repositories {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+    implementation "net.neoforged:neoforge:${project.neoforge_version}"
 
 	// Add something like 'evilcraft_version_local=0.1.0-DEV' to your secrets.properties if you want to use a custom local EvilCraft version.
     if(secrets.evilcraft_version_local) {
-        implementation "org.cyclops.evilcraft:evilcraft:${project.minecraft_version}-${secrets.evilcraft_version_local}:deobf"
+        implementation "org.cyclops.evilcraft:evilcraft-${project.minecraft_version}-neoforge:${secrets.evilcraft_version_local}:deobf"
     } else {
-        implementation("org.cyclops.evilcraft:evilcraft:${project.minecraft_version}-${project.evilcraft_version}:deobf") {
+        implementation("org.cyclops.evilcraft:evilcraft-${project.minecraft_version}-neoforge:${project.evilcraft_version}:deobf") {
             exclude group: 'org.cyclops.cyclopscore', module: 'cyclopscore'
         }
     }
     // Add something like 'cyclopscore_version_local=0.1.0-DEV' to your secrets.properties if you want to use a custom local CyclopsCore version.
     if(secrets.cyclopscore_version_local) {
-        implementation "org.cyclops.cyclopscore:cyclopscore:${project.minecraft_version}-${secrets.cyclopscore_version_local}:deobf"
+        implementation "org.cyclops.cyclopscore:cyclopscore-${project.minecraft_version}-neoforge:${secrets.cyclopscore_version_local}:deobf"
     } else {
-        implementation "org.cyclops.cyclopscore:cyclopscore:${project.minecraft_version}-${project.cyclopscore_version}:deobf"
+        implementation "org.cyclops.cyclopscore:cyclopscore-${project.minecraft_version}-neoforge:${project.cyclopscore_version}:deobf"
     }
 
-    implementation("org.cyclops.commoncapabilities:commoncapabilities:${project.commoncapabilities_version}:deobf") { // https://dl.bintray.com/cyclopsmc/dev/org/cyclops/commoncapabilities/CommonCapabilities/
+    implementation("org.cyclops.commoncapabilities:commoncapabilities-${project.minecraft_version}-neoforge:${project.commoncapabilities_version}:deobf") { // https://dl.bintray.com/cyclopsmc/dev/org/cyclops/commoncapabilities/CommonCapabilities/
         exclude group: 'org.cyclops.cyclopscore', module: 'cyclopscore'
     }
 
-    implementation fg.deobf("mezz.jei:jei-${project.jei_version}") // https://maven.blamejared.com/mezz/jei/ https://dvs1.progwml6.com/files/maven/mezz/jei/
+    implementation("mezz.jei:jei-${project.minecraft_version}-neoforge:${project.jei_version}") // https://maven.blamejared.com/mezz/jei/ https://dvs1.progwml6.com/files/maven/mezz/jei/
     //compile fg.deobf("hwyla:Hwyla-forge-${project.waila_version}") // https://www.curseforge.com/minecraft/mc-mods/hwyla/files/ https://github.com/TehNut/HWYLA and https://github.com/TehNut/temporary-maven-thing/tree/master/maven/mcp/mobius/waila/Hwyla
 
 //    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") // https://maven.theillusivec4.top/top/theillusivec4/curios/curios-forge/
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}:api")
+    compileOnly("top.theillusivec4.curios:curios-neoforge:${project.curios_version}:api")
 }
 
-minecraft {
-    mappings channel: "official", version: "${project.minecraft_version}"
+runs {
+    configureEach {
+		systemProperty 'forge.logging.markers', 'REGISTRIES'
+        systemProperty 'forge.logging.console.level', 'debug'
+        systemProperty 'forge.logging.console.level', 'debug'
+        modSource project.sourceSets.main
+    }
+	
+    client {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+    }
 
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    server {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+        programArgument '--nogui'
+    }
 
-    runs {
-        client {
-            workingDirectory project.file('run')
-            //property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                evilcraft {
-                    source sourceSets.main
-                }
-            }
-        }
+    gameTestServer {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+    }
 
-        server {
-            workingDirectory project.file('run')
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                evilcraft {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-            property 'forge.logging.console.level', 'debug'
-            args '--mod', 'evilcraft', '--all', '--output', file('src/generated/resources/')
-            mods {
-                evilcraft {
-                    source sourceSets.main
-                }
-            }
-        }
+    data {
+        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
 }
 
 if (build_number.equals("RELEASE"))
-    version = "${project.minecraft_version}-${project.mod_version}"
+    version = "${project.mod_version}"
 else
-    version = "${project.minecraft_version}-${project.mod_version}-${build_number}"
+    version = "${project.mod_version}-${build_number}"
 
 jar {
     manifest {
@@ -281,3 +270,7 @@ tasks.register('updateGitHooks', Copy) {
     into './.git/hooks'
 }
 compileJava.dependsOn updateGitHooks
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}

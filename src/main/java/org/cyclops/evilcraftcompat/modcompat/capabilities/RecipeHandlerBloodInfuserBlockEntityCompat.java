@@ -3,12 +3,15 @@ package org.cyclops.evilcraftcompat.modcompat.capabilities;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.neoforged.neoforge.capabilities.BaseCapability;
+import net.neoforged.neoforge.capabilities.ICapabilityProvider;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import org.cyclops.commoncapabilities.api.capability.Capabilities;
 import org.cyclops.commoncapabilities.api.capability.fluidhandler.FluidMatch;
 import org.cyclops.commoncapabilities.api.capability.recipehandler.IPrototypedIngredientAlternatives;
 import org.cyclops.commoncapabilities.api.capability.recipehandler.IRecipeHandler;
@@ -19,14 +22,12 @@ import org.cyclops.commoncapabilities.api.ingredient.MixedIngredients;
 import org.cyclops.commoncapabilities.api.ingredient.PrototypedIngredient;
 import org.cyclops.cyclopscore.ingredient.recipe.IngredientRecipeHelpers;
 import org.cyclops.cyclopscore.ingredient.recipe.RecipeHandlerRecipeType;
-import org.cyclops.cyclopscore.modcompat.capabilities.DefaultCapabilityProvider;
-import org.cyclops.cyclopscore.modcompat.capabilities.SimpleCapabilityConstructor;
+import org.cyclops.cyclopscore.modcompat.capabilities.ICapabilityConstructor;
 import org.cyclops.evilcraft.RegistryEntries;
+import org.cyclops.evilcraft.blockentity.BlockEntityBloodInfuser;
 import org.cyclops.evilcraft.core.recipe.type.IInventoryFluidTier;
 import org.cyclops.evilcraft.core.recipe.type.InventoryFluidTier;
 import org.cyclops.evilcraft.core.recipe.type.RecipeBloodInfuser;
-import org.cyclops.evilcraft.blockentity.BlockEntityBloodInfuser;
-import org.cyclops.evilcraftcompat.Capabilities;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -36,17 +37,17 @@ import java.util.Map;
  * Compatibility for blood infuser recipe handler capabilities.
  * @author rubensworks
  */
-public class RecipeHandlerBloodInfuserBlockEntityCompat extends SimpleCapabilityConstructor<IRecipeHandler, BlockEntityBloodInfuser> {
+public class RecipeHandlerBloodInfuserBlockEntityCompat implements ICapabilityConstructor<BlockEntityBloodInfuser, Direction, IRecipeHandler, BlockEntityType<BlockEntityBloodInfuser>> {
 
     @Override
-    public Capability<IRecipeHandler> getCapability() {
-        return Capabilities.RECIPE_HANDLER;
+    public BaseCapability<IRecipeHandler, Direction> getCapability() {
+        return Capabilities.RecipeHandler.BLOCK;
     }
 
     @Nullable
     @Override
-    public ICapabilityProvider createProvider(BlockEntityBloodInfuser host) {
-        return new DefaultCapabilityProvider<>(() -> Capabilities.RECIPE_HANDLER, new RecipeHandler(host));
+    public ICapabilityProvider<BlockEntityBloodInfuser, Direction, IRecipeHandler> createProvider(BlockEntityType<BlockEntityBloodInfuser> host) {
+        return (blockEntity, side) -> new RecipeHandler(blockEntity);
     }
 
     public static class RecipeHandler extends RecipeHandlerRecipeType<IInventoryFluidTier, RecipeBloodInfuser> {
@@ -54,7 +55,7 @@ public class RecipeHandlerBloodInfuserBlockEntityCompat extends SimpleCapability
         private final BlockEntityBloodInfuser host;
 
         public RecipeHandler(BlockEntityBloodInfuser host) {
-            super(host::getLevel, RegistryEntries.RECIPETYPE_BLOOD_INFUSER,
+            super(host::getLevel, RegistryEntries.RECIPETYPE_BLOOD_INFUSER.get(),
                     Sets.newHashSet(IngredientComponent.ITEMSTACK, IngredientComponent.FLUIDSTACK),
                     Sets.newHashSet(IngredientComponent.ITEMSTACK));
             this.host = host;
@@ -83,12 +84,12 @@ public class RecipeHandlerBloodInfuserBlockEntityCompat extends SimpleCapability
         @Override
         protected Map<IngredientComponent<?, ?>, List<IPrototypedIngredientAlternatives<?, ?>>> getRecipeInputIngredients(RecipeBloodInfuser recipe) {
             Map<IngredientComponent<?, ?>, List<IPrototypedIngredientAlternatives<?, ?>>> inputs = Maps.newIdentityHashMap();
-            if (!recipe.getInputIngredient().isEmpty()) {
-                inputs.put(IngredientComponent.ITEMSTACK, Lists.newArrayList(IngredientRecipeHelpers.getPrototypesFromIngredient(recipe.getInputIngredient())));
+            if (recipe.getInputIngredient().isPresent()) {
+                inputs.put(IngredientComponent.ITEMSTACK, Lists.newArrayList(IngredientRecipeHelpers.getPrototypesFromIngredient(recipe.getInputIngredient().get())));
             }
-            if (!recipe.getInputFluid().isEmpty()) {
+            if (recipe.getInputFluid().isPresent()) {
                 inputs.put(IngredientComponent.FLUIDSTACK, Lists.newArrayList(new PrototypedIngredientAlternativesList<>(
-                        Lists.newArrayList(new PrototypedIngredient<>(IngredientComponent.FLUIDSTACK, recipe.getInputFluid(), FluidMatch.EXACT)))));
+                        Lists.newArrayList(new PrototypedIngredient<>(IngredientComponent.FLUIDSTACK, recipe.getInputFluid().get(), FluidMatch.EXACT)))));
             }
             return inputs;
         }

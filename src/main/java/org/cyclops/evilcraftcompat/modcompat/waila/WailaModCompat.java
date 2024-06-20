@@ -1,6 +1,6 @@
 package org.cyclops.evilcraftcompat.modcompat.waila;
 
-import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.neoforged.fml.common.event.FMLInterModComms;
 import org.cyclops.cyclopscore.modcompat.IModCompat;
 import org.cyclops.evilcraft.Reference;
 

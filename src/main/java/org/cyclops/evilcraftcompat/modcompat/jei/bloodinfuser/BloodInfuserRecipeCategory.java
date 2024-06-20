@@ -1,7 +1,7 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser;
 
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.forge.ForgeTypes;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
@@ -45,7 +45,7 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory<BloodInfuserR
     public BloodInfuserRecipeCategory(IGuiHelper guiHelper) {
         ResourceLocation resourceLocation = new ResourceLocation(Reference.MOD_ID, Reference.TEXTURE_PATH_GUI + "blood_infuser_gui_jei.png");
         this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 130, 70);
-        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RegistryEntries.BLOCK_BLOOD_INFUSER));
+        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RegistryEntries.BLOCK_BLOOD_INFUSER.get()));
         IDrawableStatic arrowDrawable = guiHelper.createDrawable(resourceLocation,
                 146, 0, ContainerScreenBloodInfuser.PROGRESSWIDTH, ContainerScreenBloodInfuser.PROGRESSHEIGHT);
         this.arrow = guiHelper.createAnimatedDrawable(arrowDrawable, 200, IDrawableAnimated.StartDirection.LEFT, false);
@@ -60,7 +60,7 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory<BloodInfuserR
     @Nonnull
     @Override
     public Component getTitle() {
-        return Component.translatable(RegistryEntries.BLOCK_BLOOD_INFUSER.getDescriptionId());
+        return Component.translatable(RegistryEntries.BLOCK_BLOOD_INFUSER.get().getDescriptionId());
     }
 
     @Nonnull
@@ -92,7 +92,7 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory<BloodInfuserR
         builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 6, 6)
                 .setOverlay(tankOverlay, 0, 0)
                 .setFluidRenderer(getMaxTankSize(recipe), true, ContainerScreenBloodInfuser.TANKWIDTH, ContainerScreenBloodInfuser.TANKHEIGHT)
-                .addIngredient(ForgeTypes.FLUID_STACK, recipe.getInputFluid());
+                .addIngredient(NeoForgeTypes.FLUID_STACK, recipe.getInputFluid());
 
         ItemStack promise = getPromise(recipe);
         if (promise != null) {

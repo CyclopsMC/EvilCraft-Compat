@@ -49,18 +49,18 @@ public class JEIEvilCraftConfig implements IModPlugin {
     @Override
     public void registerItemSubtypes(ISubtypeRegistration subtypeRegistry) {
         SubtypeInterpreterActivatableFluidContainer subtypeInterpreter = new SubtypeInterpreterActivatableFluidContainer();
-        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntries.ITEM_BLOOD_EXTRACTOR, subtypeInterpreter);
-        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntries.ITEM_BLOOD_PEARL_OF_TELEPORTATION, subtypeInterpreter);
-        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntries.ITEM_DARK_TANK, subtypeInterpreter);
-        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_INVIGORATING_PENDANT, subtypeInterpreter);
-        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_PRIMED_PENDANT, subtypeInterpreter);
-        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_KINETICATOR, subtypeInterpreter);
-        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_KINETICATOR_REPELLING, subtypeInterpreter);
-        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntries.ITEM_MACE_OF_DISTORTION, subtypeInterpreter);
-        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_MACE_OF_DESTRUCTION, subtypeInterpreter);
-        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_NECROMANCER_STAFF, subtypeInterpreter);
-        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_FLESH_REJUVENATED, subtypeInterpreter);
-        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntries.ITEM_ENTANGLED_CHALICE, subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntries.ITEM_BLOOD_EXTRACTOR.get(), subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntries.ITEM_BLOOD_PEARL_OF_TELEPORTATION.get(), subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntries.ITEM_DARK_TANK.get(), subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_INVIGORATING_PENDANT.get(), subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_PRIMED_PENDANT.get(), subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_KINETICATOR.get(), subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_KINETICATOR_REPELLING.get(), subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntries.ITEM_MACE_OF_DISTORTION.get(), subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_MACE_OF_DESTRUCTION.get(), subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_NECROMANCER_STAFF.get(), subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_FLESH_REJUVENATED.get(), subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntries.ITEM_ENTANGLED_CHALICE.get(), subtypeInterpreter);
     }
 
     @Override
@@ -79,9 +79,9 @@ public class JEIEvilCraftConfig implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registry) {
-        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_BLOOD_INFUSER), BloodInfuserRecipeCategory.TYPE);
-        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR), EnvironmentalAccumulatorRecipeCategory.TYPE);
-        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR), SanguinaryEnvironmentalAccumulatorRecipeCategory.TYPE);
+        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_BLOOD_INFUSER.get()), BloodInfuserRecipeCategory.TYPE);
+        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR.get()), EnvironmentalAccumulatorRecipeCategory.TYPE);
+        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR.get()), SanguinaryEnvironmentalAccumulatorRecipeCategory.TYPE);
 
         registry.addRecipeCatalyst(new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER_WOODEN), RecipeTypes.CRAFTING);
         registry.addRecipeCatalyst(new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER), RecipeTypes.CRAFTING);

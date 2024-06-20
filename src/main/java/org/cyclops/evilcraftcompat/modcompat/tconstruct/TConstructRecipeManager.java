@@ -1,8 +1,8 @@
 package org.cyclops.evilcraftcompat.modcompat.tconstruct;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
+import net.neoforged.neoforge.fluids.Fluid;
+import net.neoforged.neoforge.fluids.FluidRegistry;
 import org.cyclops.evilcraft.Configs;
 import org.cyclops.evilcraft.EvilCraft;
 import org.cyclops.evilcraft.api.blockentity.bloodchest.IBloodChestRepairActionRegistry;

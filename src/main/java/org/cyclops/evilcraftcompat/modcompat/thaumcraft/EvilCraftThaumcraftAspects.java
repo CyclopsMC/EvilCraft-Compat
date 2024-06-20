@@ -1,7 +1,7 @@
 package org.cyclops.evilcraftcompat.modcompat.thaumcraft;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.neoforged.fml.common.eventhandler.SubscribeEvent;
 import org.cyclops.cyclopscore.config.extendedconfig.BlockConfig;
 import org.cyclops.cyclopscore.config.extendedconfig.ItemConfig;
 import org.cyclops.cyclopscore.config.extendedconfig.MobConfig;

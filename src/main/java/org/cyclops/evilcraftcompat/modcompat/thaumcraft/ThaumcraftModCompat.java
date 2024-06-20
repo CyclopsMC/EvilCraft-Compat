@@ -1,6 +1,6 @@
 package org.cyclops.evilcraftcompat.modcompat.thaumcraft;
 
-import net.minecraftforge.common.MinecraftForge;
+import net.neoforged.neoforge.common.MinecraftForge;
 import org.cyclops.cyclopscore.config.ConfigHandler;
 import org.cyclops.cyclopscore.modcompat.IModCompat;
 import org.cyclops.evilcraftcompat.EvilCraftCompat;

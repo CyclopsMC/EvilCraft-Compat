@@ -1,23 +1,20 @@
 package org.cyclops.evilcraftcompat;
 
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import org.cyclops.cyclopscore.infobook.IInfoBookRegistry;
 import org.cyclops.cyclopscore.init.ModBaseVersionable;
 import org.cyclops.cyclopscore.modcompat.ModCompatLoader;
 import org.cyclops.cyclopscore.proxy.IClientProxy;
 import org.cyclops.cyclopscore.proxy.ICommonProxy;
 import org.cyclops.evilcraft.EvilCraft;
-import org.cyclops.evilcraft.blockentity.BlockEntityBloodInfuser;
-import org.cyclops.evilcraft.blockentity.BlockEntityEnvironmentalAccumulator;
-import org.cyclops.evilcraft.core.blockentity.BlockEntityTickingTankInventory;
+import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.infobook.OriginsOfDarknessBook;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.RecipeHandlerBloodInfuserBlockEntityCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerEnvirAccBlockEntityCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerWorkingBlockEntityCompat;
-import org.cyclops.evilcraftcompat.modcompat.curios.CuriosCompat;
 import org.cyclops.evilcraftcompat.proxy.ClientProxy;
 import org.cyclops.evilcraftcompat.proxy.CommonProxy;
 
@@ -34,15 +31,14 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
      */
     public static EvilCraftCompat _instance;
 
-    public EvilCraftCompat() {
-        super(Reference.MOD_ID, (instance) -> _instance = instance);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::afterSetup);
+    public EvilCraftCompat(IEventBus modEventBus) {
+        super(Reference.MOD_ID, (instance) -> _instance = instance, modEventBus);
+        modEventBus.addListener(this::afterSetup);
     }
 
     @Override
     protected void loadModCompats(ModCompatLoader modCompatLoader) {
         // Mod compats
-        modCompatLoader.addModCompat(new CuriosCompat());
         /*modCompatLoader.addModCompat(new WailaModCompat());
         modCompatLoader.addModCompat(new BloodMagicModCompat());
         modCompatLoader.addModCompat(new TConstructModCompat());
@@ -55,9 +51,14 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
         modCompatLoader.addModCompat(new ThaumcraftModCompat());*/
 
         // Capabilities
-        getCapabilityConstructorRegistry().registerInheritableTile(BlockEntityTickingTankInventory.class, new WorkerWorkingBlockEntityCompat());
-        getCapabilityConstructorRegistry().registerTile(BlockEntityEnvironmentalAccumulator.class, new WorkerEnvirAccBlockEntityCompat());
-        getCapabilityConstructorRegistry().registerTile(BlockEntityBloodInfuser.class, new RecipeHandlerBloodInfuserBlockEntityCompat());
+        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_BLOOD_CHEST, new WorkerWorkingBlockEntityCompat<>());
+        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_BLOOD_INFUSER, new WorkerWorkingBlockEntityCompat<>());
+        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_COLOSSAL_BLOOD_CHEST, new WorkerWorkingBlockEntityCompat<>());
+        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR, new WorkerWorkingBlockEntityCompat<>());
+        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_SPIRIT_FURNACE, new WorkerWorkingBlockEntityCompat<>());
+        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_SPIRIT_REANIMATOR, new WorkerWorkingBlockEntityCompat<>());
+        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_ENVIRONMENTAL_ACCUMULATOR, new WorkerEnvirAccBlockEntityCompat());
+        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_BLOOD_INFUSER, new RecipeHandlerBloodInfuserBlockEntityCompat());
     }
 
     @Override

@@ -1,11 +1,12 @@
 package org.cyclops.evilcraftcompat.modcompat.capabilities;
 
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.neoforged.neoforge.capabilities.BaseCapability;
+import net.neoforged.neoforge.capabilities.ICapabilityProvider;
+import org.cyclops.commoncapabilities.api.capability.Capabilities;
 import org.cyclops.commoncapabilities.api.capability.work.IWorker;
-import org.cyclops.cyclopscore.modcompat.capabilities.DefaultCapabilityProvider;
-import org.cyclops.cyclopscore.modcompat.capabilities.SimpleCapabilityConstructor;
-import org.cyclops.evilcraftcompat.Capabilities;
+import org.cyclops.cyclopscore.modcompat.capabilities.ICapabilityConstructor;
 import org.cyclops.evilcraft.blockentity.BlockEntityEnvironmentalAccumulator;
 
 import javax.annotation.Nullable;
@@ -14,17 +15,17 @@ import javax.annotation.Nullable;
  * Compatibility for envir acc worker capabilities.
  * @author rubensworks
  */
-public class WorkerEnvirAccBlockEntityCompat extends SimpleCapabilityConstructor<IWorker, BlockEntityEnvironmentalAccumulator> {
+public class WorkerEnvirAccBlockEntityCompat implements ICapabilityConstructor<BlockEntityEnvironmentalAccumulator, Direction, IWorker, BlockEntityType<BlockEntityEnvironmentalAccumulator>> {
 
     @Override
-    public Capability<IWorker> getCapability() {
-        return Capabilities.WORKER;
+    public BaseCapability<IWorker, Direction> getCapability() {
+        return Capabilities.Worker.BLOCK;
     }
 
     @Nullable
     @Override
-    public ICapabilityProvider createProvider(BlockEntityEnvironmentalAccumulator host) {
-        return new DefaultCapabilityProvider<>(() -> Capabilities.WORKER, new Worker(host));
+    public ICapabilityProvider<BlockEntityEnvironmentalAccumulator, Direction, IWorker> createProvider(BlockEntityType<BlockEntityEnvironmentalAccumulator> host) {
+        return (blockEntity, side) -> new Worker(blockEntity);
     }
 
     public static class Worker implements IWorker {

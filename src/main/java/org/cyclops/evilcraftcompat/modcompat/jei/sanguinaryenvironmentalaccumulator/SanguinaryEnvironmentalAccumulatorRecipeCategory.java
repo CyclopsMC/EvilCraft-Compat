@@ -1,13 +1,13 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator;
 
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
@@ -18,7 +18,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.Pair;
 import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.blockentity.tickaction.sanguinaryenvironmentalaccumulator.AccumulateItemTickAction;
@@ -51,7 +51,7 @@ public class SanguinaryEnvironmentalAccumulatorRecipeCategory extends CommonEnvi
         super(guiHelper, Pair.of(42, 8), Pair.of(96, 8));
         ResourceLocation resourceLocation = new ResourceLocation(Reference.MOD_ID, Reference.TEXTURE_PATH_GUI + "sanguinary_environmental_accumulator_gui_jei.png");
         this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 130, 70);
-        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR));
+        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR.get()));
         IDrawableStatic arrowDrawable = guiHelper.createDrawable(resourceLocation,
                 146, 0, ContainerScreenSanguinaryEnvironmentalAccumulator.PROGRESSWIDTH, ContainerScreenSanguinaryEnvironmentalAccumulator.PROGRESSHEIGHT);
         this.arrow = guiHelper.createAnimatedDrawable(arrowDrawable, 200, IDrawableAnimated.StartDirection.LEFT, false);
@@ -66,7 +66,7 @@ public class SanguinaryEnvironmentalAccumulatorRecipeCategory extends CommonEnvi
     @Nonnull
     @Override
     public Component getTitle() {
-        return Component.translatable(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR.getDescriptionId());
+        return Component.translatable(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR.get().getDescriptionId());
     }
 
     @Nonnull
@@ -88,7 +88,7 @@ public class SanguinaryEnvironmentalAccumulatorRecipeCategory extends CommonEnvi
         builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 6, 6)
                 .setOverlay(tankOverlay, 0, 0)
                 .setFluidRenderer(fluidStack.getAmount(), true, ContainerScreenBloodInfuser.TANKWIDTH, ContainerScreenBloodInfuser.TANKHEIGHT)
-                .addIngredient(ForgeTypes.FLUID_STACK, fluidStack);
+                .addIngredient(NeoForgeTypes.FLUID_STACK, fluidStack);
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 96, 28)
                 .addItemStack(recipe.getOutputItem());

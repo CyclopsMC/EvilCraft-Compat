@@ -43,7 +43,7 @@ public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalA
         super(guiHelper, Pair.of(2, 8), Pair.of(76, 8));
         ResourceLocation resourceLocation = new ResourceLocation(Reference.MOD_ID, Reference.TEXTURE_PATH_GUI + "environmental_accumulator_gui_jei.png");
         this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 94, 54);
-        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR));
+        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR.get()));
         IDrawableStatic arrowDrawable = guiHelper.createDrawable(resourceLocation, 94, 0, 5, 34);
         this.arrow = guiHelper.createAnimatedDrawable(arrowDrawable, 200, IDrawableAnimated.StartDirection.BOTTOM, false);
     }
@@ -56,7 +56,7 @@ public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalA
     @Nonnull
     @Override
     public Component getTitle() {
-        return Component.translatable(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR.getDescriptionId());
+        return Component.translatable(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR.get().getDescriptionId());
     }
 
     @Nonnull

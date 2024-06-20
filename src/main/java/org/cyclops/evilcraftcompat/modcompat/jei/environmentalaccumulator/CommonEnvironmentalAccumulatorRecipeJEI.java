@@ -26,7 +26,7 @@ public abstract class CommonEnvironmentalAccumulatorRecipeJEI<T extends CommonEn
     private final float processingSpeed;
 
     public CommonEnvironmentalAccumulatorRecipeJEI(RecipeEnvironmentalAccumulator recipe) {
-        super(RegistryEntries.RECIPETYPE_ENVIRONMENTAL_ACCUMULATOR, recipe);
+        super(RegistryEntries.RECIPETYPE_ENVIRONMENTAL_ACCUMULATOR.get(), recipe);
         this.inputItems = Arrays.stream(recipe.getInputIngredient().getItems()).collect(Collectors.toList());
         this.inputWeather = recipe.getInputWeather();
         this.outputItem = recipe.getOutputItemFirst();
@@ -37,7 +37,7 @@ public abstract class CommonEnvironmentalAccumulatorRecipeJEI<T extends CommonEn
     }
 
     protected CommonEnvironmentalAccumulatorRecipeJEI() {
-        super(RegistryEntries.RECIPETYPE_ENVIRONMENTAL_ACCUMULATOR, null);
+        super(RegistryEntries.RECIPETYPE_ENVIRONMENTAL_ACCUMULATOR.get(), null);
         this.inputWeather = null;
         this.outputWeather = null;
         this.inputItems = null;
@@ -77,7 +77,7 @@ public abstract class CommonEnvironmentalAccumulatorRecipeJEI<T extends CommonEn
 
     @Override
     protected RecipeType<RecipeEnvironmentalAccumulator> getRecipeType() {
-        return RegistryEntries.RECIPETYPE_ENVIRONMENTAL_ACCUMULATOR;
+        return RegistryEntries.RECIPETYPE_ENVIRONMENTAL_ACCUMULATOR.get();
     }
 
 }

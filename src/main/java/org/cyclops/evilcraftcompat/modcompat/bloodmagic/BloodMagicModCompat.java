@@ -1,6 +1,6 @@
 package org.cyclops.evilcraftcompat.modcompat.bloodmagic;
 
-import net.minecraftforge.common.MinecraftForge;
+import net.neoforged.neoforge.common.MinecraftForge;
 import org.cyclops.cyclopscore.modcompat.IModCompat;
 import org.cyclops.evilcraft.EvilCraft;
 import org.cyclops.evilcraft.Reference;
