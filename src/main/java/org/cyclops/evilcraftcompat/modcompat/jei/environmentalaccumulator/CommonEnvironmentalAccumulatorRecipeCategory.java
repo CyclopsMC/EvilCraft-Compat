@@ -31,7 +31,7 @@ public abstract class CommonEnvironmentalAccumulatorRecipeCategory<T extends Com
         this.weatherInPos = weatherInPos;
         this.weatherOutPos = weatherOutPos;
         weatherIcons = Maps.newHashMap();
-        ResourceLocation weatherResourceLocation = new ResourceLocation(Reference.MOD_ID + ":" + Reference.TEXTURE_PATH_GUI + "weathers.png");
+        ResourceLocation weatherResourceLocation = ResourceLocation.parse(Reference.MOD_ID + ":" + Reference.TEXTURE_PATH_GUI + "weathers.png");
         weatherIcons.put(WeatherType.CLEAR, guiHelper.createDrawable(weatherResourceLocation, 0, 0, 16, 16));
         weatherIcons.put(WeatherType.RAIN, guiHelper.createDrawable(weatherResourceLocation, 16, 0, 16, 16));
         weatherIcons.put(WeatherType.LIGHTNING, guiHelper.createDrawable(weatherResourceLocation, 32, 0, 16, 16));

@@ -69,7 +69,7 @@ public class RecipeHandlerBloodInfuserBlockEntityCompat implements ICapabilityCo
         @Nullable
         @Override
         protected IInventoryFluidTier getRecipeInputContainer(IMixedIngredients input) {
-            IInventoryFluidTier inventory = new InventoryFluidTier(NonNullList.withSize(1, ItemStack.EMPTY), NonNullList.withSize(1, FluidStack.EMPTY),
+            InventoryFluidTier inventory = new InventoryFluidTier(NonNullList.withSize(1, ItemStack.EMPTY), NonNullList.withSize(1, FluidStack.EMPTY),
                     host.getTileWorkingMetadata().getTier(host.getInventory()));
             if (!input.getInstances(IngredientComponent.ITEMSTACK).isEmpty()) {
                 inventory.setItem(0, input.getInstances(IngredientComponent.ITEMSTACK).get(0));

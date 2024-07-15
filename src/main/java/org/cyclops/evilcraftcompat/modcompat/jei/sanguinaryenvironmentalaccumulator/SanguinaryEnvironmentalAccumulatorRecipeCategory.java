@@ -49,7 +49,7 @@ public class SanguinaryEnvironmentalAccumulatorRecipeCategory extends CommonEnvi
 
     public SanguinaryEnvironmentalAccumulatorRecipeCategory(IGuiHelper guiHelper) {
         super(guiHelper, Pair.of(42, 8), Pair.of(96, 8));
-        ResourceLocation resourceLocation = new ResourceLocation(Reference.MOD_ID, Reference.TEXTURE_PATH_GUI + "sanguinary_environmental_accumulator_gui_jei.png");
+        ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, Reference.TEXTURE_PATH_GUI + "sanguinary_environmental_accumulator_gui_jei.png");
         this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 130, 70);
         this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR.get()));
         IDrawableStatic arrowDrawable = guiHelper.createDrawable(resourceLocation,
