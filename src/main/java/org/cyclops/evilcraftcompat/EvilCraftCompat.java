@@ -10,11 +10,8 @@ import org.cyclops.cyclopscore.modcompat.ModCompatLoader;
 import org.cyclops.cyclopscore.proxy.IClientProxy;
 import org.cyclops.cyclopscore.proxy.ICommonProxy;
 import org.cyclops.evilcraft.EvilCraft;
-import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.infobook.OriginsOfDarknessBook;
-import org.cyclops.evilcraftcompat.modcompat.capabilities.RecipeHandlerBloodInfuserBlockEntityCompat;
-import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerEnvirAccBlockEntityCompat;
-import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerWorkingBlockEntityCompat;
+import org.cyclops.evilcraftcompat.modcompat.capabilities.CommonCapabilitiesCompat;
 import org.cyclops.evilcraftcompat.proxy.ClientProxy;
 import org.cyclops.evilcraftcompat.proxy.CommonProxy;
 
@@ -49,16 +46,7 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
         modCompatLoader.addModCompat(new ThermalExpansionModCompat());
         modCompatLoader.addModCompat(new CraftTweakerModCompat());
         modCompatLoader.addModCompat(new ThaumcraftModCompat());*/
-
-        // Capabilities
-        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_BLOOD_CHEST, new WorkerWorkingBlockEntityCompat<>());
-        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_BLOOD_INFUSER, new WorkerWorkingBlockEntityCompat<>());
-        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_COLOSSAL_BLOOD_CHEST, new WorkerWorkingBlockEntityCompat<>());
-        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR, new WorkerWorkingBlockEntityCompat<>());
-        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_SPIRIT_FURNACE, new WorkerWorkingBlockEntityCompat<>());
-        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_SPIRIT_REANIMATOR, new WorkerWorkingBlockEntityCompat<>());
-        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_ENVIRONMENTAL_ACCUMULATOR, new WorkerEnvirAccBlockEntityCompat());
-        getCapabilityConstructorRegistry().registerBlockEntity(RegistryEntries.BLOCK_ENTITY_BLOOD_INFUSER, new RecipeHandlerBloodInfuserBlockEntityCompat());
+        modCompatLoader.addModCompat(new CommonCapabilitiesCompat());
     }
 
     @Override
