@@ -1,6 +1,7 @@
 ## EvilCraftCompat
 
 [![Build Status](https://github.com/CyclopsMC/EvilCraft-Compat/workflows/CI/badge.svg)](https://github.com/CyclopsMC/EvilCraft-Compat/actions?query=workflow%3ACI)
+[![Crowdin](https://badges.crowdin.net/cyclopsmc-evilcraft-compat/localized.svg)](https://crowdin.com/project/cyclopsmc-evilcraft-compat)
 [![Download](https://img.shields.io/static/v1?label=Maven&message=GitHub%20Packages&color=blue)](https://github.com/CyclopsMC/packages/packages/770046)
 
 [EvilCraft](https://github.com/CyclopsMC/EvilCraft) compatibility with other mods.
