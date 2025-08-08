@@ -1,4 +1,4 @@
-package org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser;
+package org.cyclops.evilcraftcompat.modcompat.jei.spiritfurnace;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
@@ -20,30 +20,28 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.cyclops.evilcraft.RegistryEntries;
-import org.cyclops.evilcraft.blockentity.BlockEntityBloodInfuser;
 import org.cyclops.evilcraft.client.gui.container.ContainerScreenBloodInfuser;
-import org.cyclops.evilcraft.core.blockentity.BlockEntityWorking;
-import org.cyclops.evilcraft.item.ItemPromise;
+import org.cyclops.evilcraft.client.gui.container.ContainerScreenSpiritReanimator;
 import org.cyclops.evilcraftcompat.Reference;
 import org.cyclops.evilcraftcompat.modcompat.jei.JEIEvilCraftConfig;
 
 import javax.annotation.Nonnull;
 
 /**
- * Category for the Blood Infuser recipes.
+ * Category for the Spirit Furnace recipes.
  * @author rubensworks
  */
-public class BloodInfuserRecipeCategory implements IRecipeCategory<BloodInfuserRecipeJEI> {
+public class SpiritFurnaceRecipeCategory implements IRecipeCategory<SpiritFurnaceRecipeJEI> {
 
-    public static final RecipeType<BloodInfuserRecipeJEI> TYPE = RecipeType.create(Reference.MOD_ID, "blood_infuser", BloodInfuserRecipeJEI.class);
+    public static final RecipeType<SpiritFurnaceRecipeJEI> TYPE = RecipeType.create(Reference.MOD_ID, "spirit_furnace", SpiritFurnaceRecipeJEI.class);
 
     private final IDrawable background;
     private final IDrawable icon;
     private final IDrawableAnimated arrow;
     private final IDrawable tankOverlay;
 
-    public BloodInfuserRecipeCategory(IGuiHelper guiHelper) {
-        ResourceLocation resourceLocation = new ResourceLocation(Reference.MOD_ID, Reference.TEXTURE_PATH_GUI + "blood_infuser_gui_jei.png");
+    public SpiritFurnaceRecipeCategory(IGuiHelper guiHelper) {
+        ResourceLocation resourceLocation = new ResourceLocation(Reference.MOD_ID, Reference.TEXTURE_PATH_GUI + "spirit_furnace_gui_jei.png");
         this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 130, 70);
         this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RegistryEntries.BLOCK_BLOOD_INFUSER));
         IDrawableStatic arrowDrawable = guiHelper.createDrawable(resourceLocation,
@@ -53,14 +51,14 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory<BloodInfuserR
     }
 
     @Override
-    public RecipeType<BloodInfuserRecipeJEI> getRecipeType() {
+    public RecipeType<SpiritFurnaceRecipeJEI> getRecipeType() {
         return TYPE;
     }
 
     @Nonnull
     @Override
     public Component getTitle() {
-        return Component.translatable(RegistryEntries.BLOCK_BLOOD_INFUSER.getDescriptionId());
+        return Component.translatable(RegistryEntries.BLOCK_SPIRIT_REANIMATOR.getDescriptionId());
     }
 
     @Nonnull
@@ -74,38 +72,21 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory<BloodInfuserR
         return icon;
     }
 
-    protected int getMaxTankSize(org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeJEI bloodInfuserRecipe) {
-        return BlockEntityBloodInfuser.LIQUID_PER_SLOT * BlockEntityWorking.getTankTierMultiplier(bloodInfuserRecipe.getInputTier());
-    }
-
-    protected ItemStack getPromise(org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeJEI bloodInfuserRecipe) {
-        if(bloodInfuserRecipe.getInputTier() == 0) {
-            return null;
-        }
-        return new ItemStack(ItemPromise.getItem(bloodInfuserRecipe.getInputTier()));
-    }
-
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, BloodInfuserRecipeJEI recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, SpiritFurnaceRecipeJEI recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 42, 28)
-                .addItemStacks(recipe.getInputItems());
+                .addItemStack(recipe.getInputItem());
         builder.addSlot(RecipeIngredientRole.CATALYST, 6, 6)
                 .setOverlay(tankOverlay, 0, 0)
-                .setFluidRenderer(getMaxTankSize(recipe), true, ContainerScreenBloodInfuser.TANKWIDTH, ContainerScreenBloodInfuser.TANKHEIGHT)
+                .setFluidRenderer(recipe.getInputFluid().getAmount(), true, ContainerScreenSpiritReanimator.TANKWIDTH, ContainerScreenSpiritReanimator.TANKHEIGHT)
                 .addIngredient(ForgeTypes.FLUID_STACK, recipe.getInputFluid());
 
-        ItemStack promise = getPromise(recipe);
-        if (promise != null) {
-            builder.addSlot(RecipeIngredientRole.CATALYST, 42, 8)
-                    .addItemStack(promise);
-        }
-
         builder.addSlot(RecipeIngredientRole.OUTPUT, 96, 28)
-                .addItemStack(recipe.getOutputItem());
+                .addItemStacks(recipe.getOutputItems());
     }
 
     @Override
-    public void draw(BloodInfuserRecipeJEI recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrixStack, double mouseX, double mouseY) {
+    public void draw(SpiritFurnaceRecipeJEI recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrixStack, double mouseX, double mouseY) {
         arrow.draw(matrixStack, 65, 28);
 
         // Draw duration
