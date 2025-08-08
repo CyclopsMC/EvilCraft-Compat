@@ -116,6 +116,12 @@ dependencies {
     compileOnly("top.theillusivec4.curios:curios-neoforge:${project.curios_version}:api")
 }
 
+minecraft {
+    accessTransformers {
+        file('src/main/resources/META-INF/accesstransformer.cfg')
+    }
+}
+
 subsystems {
     parchment {
         minecraftVersion = "${project.parchment_minecraft_version}"

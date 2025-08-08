@@ -4,12 +4,7 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.registration.IGuiHandlerRegistration;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.api.registration.IRecipeTransferRegistration;
-import mezz.jei.api.registration.ISubtypeRegistration;
+import mezz.jei.api.registration.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -18,15 +13,12 @@ import org.cyclops.cyclopscore.helper.MinecraftHelpers;
 import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.blockentity.BlockEntityBloodInfuser;
 import org.cyclops.evilcraft.blockentity.BlockEntitySanguinaryEnvironmentalAccumulator;
-import org.cyclops.evilcraft.client.gui.container.ContainerScreenBloodInfuser;
-import org.cyclops.evilcraft.client.gui.container.ContainerScreenExaltedCrafter;
-import org.cyclops.evilcraft.client.gui.container.ContainerScreenOriginsOfDarkness;
-import org.cyclops.evilcraft.client.gui.container.ContainerScreenSanguinaryEnvironmentalAccumulator;
+import org.cyclops.evilcraft.blockentity.BlockEntitySpiritFurnace;
+import org.cyclops.evilcraft.blockentity.BlockEntitySpiritReanimator;
+import org.cyclops.evilcraft.client.gui.container.*;
 import org.cyclops.evilcraft.core.blockentity.BlockEntityWorking;
 import org.cyclops.evilcraft.core.client.gui.container.ContainerScreenTileWorking;
-import org.cyclops.evilcraft.inventory.container.ContainerBloodInfuser;
-import org.cyclops.evilcraft.inventory.container.ContainerExaltedCrafter;
-import org.cyclops.evilcraft.inventory.container.ContainerSanguinaryEnvironmentalAccumulator;
+import org.cyclops.evilcraft.inventory.container.*;
 import org.cyclops.evilcraftcompat.Reference;
 import org.cyclops.evilcraftcompat.RegistryEntriesCompat;
 import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeCategory;
@@ -35,6 +27,10 @@ import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.Enviro
 import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEI;
 import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeCategory;
 import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeJEI;
+import org.cyclops.evilcraftcompat.modcompat.jei.spiritfurnace.SpiritFurnaceRecipeCategory;
+import org.cyclops.evilcraftcompat.modcompat.jei.spiritfurnace.SpiritFurnaceRecipeJEI;
+import org.cyclops.evilcraftcompat.modcompat.jei.spiritreanimator.SpiritReanimatorRecipeCategory;
+import org.cyclops.evilcraftcompat.modcompat.jei.spiritreanimator.SpiritReanimatorRecipeJEI;
 
 import java.text.DecimalFormat;
 
@@ -61,6 +57,7 @@ public class JEIEvilCraftConfig implements IModPlugin {
         subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_NECROMANCER_STAFF.get(), subtypeInterpreter);
         subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntriesCompat.ITEM_FLESH_REJUVENATED.get(), subtypeInterpreter);
         subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntries.ITEM_ENTANGLED_CHALICE.get(), subtypeInterpreter);
+        subtypeRegistry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, RegistryEntries.ITEM_BOX_OF_ETERNAL_CLOSURE.get(), new SubtypeInterpreterBoxOfEternalClosure());
     }
 
     @Override
@@ -68,6 +65,8 @@ public class JEIEvilCraftConfig implements IModPlugin {
         registry.addRecipeCategories(new BloodInfuserRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeCategories(new EnvironmentalAccumulatorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeCategories(new SanguinaryEnvironmentalAccumulatorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new SpiritReanimatorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new SpiritFurnaceRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -75,6 +74,8 @@ public class JEIEvilCraftConfig implements IModPlugin {
         registry.addRecipes(BloodInfuserRecipeCategory.TYPE, BloodInfuserRecipeJEI.getAllRecipes());
         registry.addRecipes(EnvironmentalAccumulatorRecipeCategory.TYPE, EnvironmentalAccumulatorRecipeJEI.getAllRecipes());
         registry.addRecipes(SanguinaryEnvironmentalAccumulatorRecipeCategory.TYPE, SanguinaryEnvironmentalAccumulatorRecipeJEI.getAllRecipes());
+        registry.addRecipes(SpiritReanimatorRecipeCategory.TYPE, SpiritReanimatorRecipeJEI.getAllRecipes());
+        registry.addRecipes(SpiritFurnaceRecipeCategory.TYPE, SpiritFurnaceRecipeJEI.getAllRecipes());
     }
 
     @Override
@@ -82,6 +83,8 @@ public class JEIEvilCraftConfig implements IModPlugin {
         registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_BLOOD_INFUSER.get()), BloodInfuserRecipeCategory.TYPE);
         registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR.get()), EnvironmentalAccumulatorRecipeCategory.TYPE);
         registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR.get()), SanguinaryEnvironmentalAccumulatorRecipeCategory.TYPE);
+        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_SPIRIT_REANIMATOR.get()), SpiritReanimatorRecipeCategory.TYPE);
+        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_SPIRIT_FURNACE.get()), SpiritFurnaceRecipeCategory.TYPE);
 
         registry.addRecipeCatalyst(new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER_WOODEN), RecipeTypes.CRAFTING);
         registry.addRecipeCatalyst(new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER), RecipeTypes.CRAFTING);
@@ -95,6 +98,10 @@ public class JEIEvilCraftConfig implements IModPlugin {
                 1, 1, BlockEntityBloodInfuser.SLOTS + BlockEntityWorking.INVENTORY_SIZE_UPGRADES, 36);
         registry.addRecipeTransferHandler(ContainerSanguinaryEnvironmentalAccumulator.class, null, SanguinaryEnvironmentalAccumulatorRecipeCategory.TYPE,
                 0, 1, BlockEntitySanguinaryEnvironmentalAccumulator.SLOTS + BlockEntityWorking.INVENTORY_SIZE_UPGRADES, 36);
+        registry.addRecipeTransferHandler(ContainerSpiritReanimator.class, null, SpiritReanimatorRecipeCategory.TYPE,
+                1, 2, BlockEntitySpiritReanimator.SLOTS + BlockEntityWorking.INVENTORY_SIZE_UPGRADES, 36);
+        registry.addRecipeTransferHandler(ContainerSpiritFurnace.class, null, SpiritFurnaceRecipeCategory.TYPE,
+                1, 1, BlockEntitySpiritFurnace.SLOTS + BlockEntityWorking.INVENTORY_SIZE_UPGRADES, 36);
 
         registry.addRecipeTransferHandler(ContainerExaltedCrafter.class, null, RecipeTypes.CRAFTING,
                 0, 9, 10, 27 + 36);
@@ -110,6 +117,14 @@ public class JEIEvilCraftConfig implements IModPlugin {
                 ContainerScreenTileWorking.UPGRADES_OFFSET_X + ContainerScreenSanguinaryEnvironmentalAccumulator.PROGRESSTARGETX, ContainerScreenSanguinaryEnvironmentalAccumulator.PROGRESSTARGETY,
                 ContainerScreenSanguinaryEnvironmentalAccumulator.PROGRESSWIDTH, ContainerScreenSanguinaryEnvironmentalAccumulator.PROGRESSHEIGHT,
                 SanguinaryEnvironmentalAccumulatorRecipeCategory.TYPE);
+        registry.addRecipeClickArea(ContainerScreenSpiritReanimator.class,
+                ContainerScreenTileWorking.UPGRADES_OFFSET_X + ContainerScreenSpiritReanimator.PROGRESSTARGETX, ContainerScreenSpiritReanimator.PROGRESSTARGETY,
+                ContainerScreenSpiritReanimator.PROGRESSWIDTH, ContainerScreenSpiritReanimator.PROGRESSHEIGHT,
+                SpiritReanimatorRecipeCategory.TYPE);
+        registry.addRecipeClickArea(ContainerScreenSpiritFurnace.class,
+                ContainerScreenTileWorking.UPGRADES_OFFSET_X + ContainerScreenSpiritFurnace.PROGRESSTARGETX, ContainerScreenSpiritFurnace.PROGRESSTARGETY,
+                ContainerScreenSpiritFurnace.PROGRESSWIDTH, ContainerScreenSpiritFurnace.PROGRESSHEIGHT,
+                SpiritFurnaceRecipeCategory.TYPE);
 
         registry.addRecipeClickArea(ContainerScreenExaltedCrafter.class,
                 88, 32, 28, 23, RecipeTypes.CRAFTING);
