@@ -45,7 +45,7 @@ public class SpiritReanimatorRecipeCategory implements IRecipeCategory<SpiritRea
     public SpiritReanimatorRecipeCategory(IGuiHelper guiHelper) {
         ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, Reference.TEXTURE_PATH_GUI + "spirit_reanimator_gui_jei.png");
         this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 130, 70);
-        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RegistryEntries.BLOCK_BLOOD_INFUSER.get()));
+        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RegistryEntries.BLOCK_SPIRIT_REANIMATOR.get()));
         IDrawableStatic arrowDrawable = guiHelper.createDrawable(resourceLocation,
                 146, 0, ContainerScreenSpiritReanimator.PROGRESSWIDTH, ContainerScreenSpiritReanimator.PROGRESSHEIGHT);
         this.arrow = guiHelper.createAnimatedDrawable(arrowDrawable, 200, IDrawableAnimated.StartDirection.TOP, false);

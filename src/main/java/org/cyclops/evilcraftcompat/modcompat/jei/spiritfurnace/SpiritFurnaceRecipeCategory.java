@@ -43,7 +43,7 @@ public class SpiritFurnaceRecipeCategory implements IRecipeCategory<SpiritFurnac
     public SpiritFurnaceRecipeCategory(IGuiHelper guiHelper) {
         ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, Reference.TEXTURE_PATH_GUI + "spirit_furnace_gui_jei.png");
         this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 130, 70);
-        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RegistryEntries.BLOCK_BLOOD_INFUSER.get()));
+        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RegistryEntries.BLOCK_SPIRIT_FURNACE.get()));
         IDrawableStatic arrowDrawable = guiHelper.createDrawable(resourceLocation,
                 146, 0, ContainerScreenBloodInfuser.PROGRESSWIDTH, ContainerScreenBloodInfuser.PROGRESSHEIGHT);
         this.arrow = guiHelper.createAnimatedDrawable(arrowDrawable, 200, IDrawableAnimated.StartDirection.LEFT, false);
@@ -58,7 +58,7 @@ public class SpiritFurnaceRecipeCategory implements IRecipeCategory<SpiritFurnac
     @Nonnull
     @Override
     public Component getTitle() {
-        return Component.translatable(RegistryEntries.BLOCK_SPIRIT_REANIMATOR.get().getDescriptionId());
+        return Component.translatable(RegistryEntries.BLOCK_SPIRIT_FURNACE.get().getDescriptionId());
     }
 
     @Nonnull
