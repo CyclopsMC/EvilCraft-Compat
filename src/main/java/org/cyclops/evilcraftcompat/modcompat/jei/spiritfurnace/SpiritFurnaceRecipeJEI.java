@@ -1,6 +1,7 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.spiritfurnace;
 
 import com.google.common.collect.Lists;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -21,6 +22,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.block.BlockSpiritFurnaceConfig;
+import org.cyclops.evilcraft.entity.monster.EntityVengeanceSpirit;
 import org.cyclops.evilcraftcompat.modcompat.jei.spiritreanimator.SpiritReanimatorRecipeJEI;
 
 import java.util.List;
@@ -36,18 +38,26 @@ public class SpiritFurnaceRecipeJEI {
     private final List<ItemStack> outputItems;
     private final int duration;
 
-    public SpiritFurnaceRecipeJEI(EntityType<?> entityType) {
-        Entity entity = entityType.create(ServerLifecycleHooks.getCurrentServer().overworld());
-        this.duration = getRequiredTicks(entity);
-        this.inputFluid = new FluidStack(RegistryEntries.FLUID_BLOOD, this.duration * BlockSpiritFurnaceConfig.mBPerTick);
-        this.inputItem = SpiritReanimatorRecipeJEI.getBox(entityType);
-        this.outputItems = getMobDrops(entityType, entity);
+    public SpiritFurnaceRecipeJEI(FluidStack inputFluid, ItemStack inputItem, List<ItemStack> outputItems, int duration) {
+        this.inputFluid = inputFluid;
+        this.inputItem = inputItem;
+        this.outputItems = outputItems;
+        this.duration = duration;
     }
 
-    public static List<ItemStack> getMobDrops(EntityType<?> entityType, Entity entity) {
+    public static SpiritFurnaceRecipeJEI create(EntityType<?> entityType, LivingEntity entity, ServerLevel level) {
+        int duration = getRequiredTicks(entity);
+        return new SpiritFurnaceRecipeJEI(
+                new FluidStack(RegistryEntries.FLUID_BLOOD, duration * BlockSpiritFurnaceConfig.mBPerTick),
+                SpiritReanimatorRecipeJEI.getBox(entityType),
+                getMobDrops(entityType, entity, level),
+                getRequiredTicks(entity)
+        );
+    }
+
+    public static List<ItemStack> getMobDrops(EntityType<?> entityType, Entity entity, ServerLevel level) {
         List<ItemStack> items = Lists.newArrayList();
 
-        ServerLevel level = ServerLifecycleHooks.getCurrentServer().overworld();
         FakePlayer killerEntity = FakePlayerFactory.getMinecraft(level);
         LootParams.Builder lootParamsBuilder = (new LootParams.Builder(level))
                 .withParameter(LootContextParams.THIS_ENTITY, entity)
@@ -94,11 +104,37 @@ public class SpiritFurnaceRecipeJEI {
         return duration;
     }
 
-    public static List<SpiritFurnaceRecipeJEI> getAllRecipes() {
+    public static void encode(SpiritFurnaceRecipeJEI recipe, FriendlyByteBuf output) {
+        output.writeFluidStack(recipe.getInputFluid());
+        output.writeItem(recipe.inputItem);
+        output.writeInt(recipe.outputItems.size());
+        for (ItemStack outputItem : recipe.outputItems) {
+            output.writeItem(outputItem);
+        }
+        output.writeInt(recipe.duration);
+    }
+
+    public static SpiritFurnaceRecipeJEI decode(FriendlyByteBuf input) {
+        FluidStack inputFluid = input.readFluidStack();
+        ItemStack inputItem = input.readItem();
+        List<ItemStack> outputItems = Lists.newArrayList();
+        int outputItemsCount = input.readInt();
+        for (int i = 0; i < outputItemsCount; ++i) {
+            outputItems.add(input.readItem());
+        }
+        int duration = input.readInt();
+        return new SpiritFurnaceRecipeJEI(inputFluid, inputItem, outputItems, duration);
+    }
+
+    public static List<SpiritFurnaceRecipeJEI> generateServerRecipes() {
+        ServerLevel level = ServerLifecycleHooks.getCurrentServer().overworld();
         List<SpiritFurnaceRecipeJEI> recipes = Lists.newArrayList();
         for (EntityType<?> entityType : ForgeRegistries.ENTITY_TYPES) {
             try {
-                recipes.add(new SpiritFurnaceRecipeJEI(entityType));
+                Entity entity = entityType.create(level);
+                if (entity instanceof LivingEntity livingEntity && EntityVengeanceSpirit.canSustain(livingEntity)) {
+                    recipes.add(SpiritFurnaceRecipeJEI.create(entityType, livingEntity, level));
+                }
             } catch (RuntimeException e) {
                 // Ignore errors during entity creation
             }

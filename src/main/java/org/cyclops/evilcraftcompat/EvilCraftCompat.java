@@ -18,6 +18,7 @@ import org.cyclops.evilcraftcompat.modcompat.capabilities.RecipeHandlerBloodInfu
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerEnvirAccBlockEntityCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerWorkingBlockEntityCompat;
 import org.cyclops.evilcraftcompat.modcompat.curios.CuriosCompat;
+import org.cyclops.evilcraftcompat.modcompat.jei.JeiCompat;
 import org.cyclops.evilcraftcompat.proxy.ClientProxy;
 import org.cyclops.evilcraftcompat.proxy.CommonProxy;
 
@@ -43,6 +44,7 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
     protected void loadModCompats(ModCompatLoader modCompatLoader) {
         // Mod compats
         modCompatLoader.addModCompat(new CuriosCompat());
+        modCompatLoader.addModCompat(new JeiCompat());
         /*modCompatLoader.addModCompat(new WailaModCompat());
         modCompatLoader.addModCompat(new BloodMagicModCompat());
         modCompatLoader.addModCompat(new TConstructModCompat());
