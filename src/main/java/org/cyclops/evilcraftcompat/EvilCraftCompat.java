@@ -12,6 +12,7 @@ import org.cyclops.cyclopscore.proxy.ICommonProxy;
 import org.cyclops.evilcraft.EvilCraft;
 import org.cyclops.evilcraft.infobook.OriginsOfDarknessBook;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.CommonCapabilitiesCompat;
+import org.cyclops.evilcraftcompat.modcompat.jei.JeiCompat;
 import org.cyclops.evilcraftcompat.proxy.ClientProxy;
 import org.cyclops.evilcraftcompat.proxy.CommonProxy;
 
@@ -36,6 +37,7 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
     @Override
     protected void loadModCompats(ModCompatLoader modCompatLoader) {
         // Mod compats
+        modCompatLoader.addModCompat(new JeiCompat());
         /*modCompatLoader.addModCompat(new WailaModCompat());
         modCompatLoader.addModCompat(new BloodMagicModCompat());
         modCompatLoader.addModCompat(new TConstructModCompat());

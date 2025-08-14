@@ -33,6 +33,8 @@ import org.cyclops.evilcraftcompat.modcompat.jei.spiritreanimator.SpiritReanimat
 import org.cyclops.evilcraftcompat.modcompat.jei.spiritreanimator.SpiritReanimatorRecipeJEI;
 
 import java.text.DecimalFormat;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Helper for registering JEI manager.
@@ -41,6 +43,8 @@ import java.text.DecimalFormat;
  */
 @JeiPlugin
 public class JEIEvilCraftConfig implements IModPlugin {
+
+    public static Consumer<List<SpiritFurnaceRecipeJEI>> SPIRIT_FURNACE_RECIPES_REGISTRAR;
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration subtypeRegistry) {
@@ -75,7 +79,8 @@ public class JEIEvilCraftConfig implements IModPlugin {
         registry.addRecipes(EnvironmentalAccumulatorRecipeCategory.TYPE, EnvironmentalAccumulatorRecipeJEI.getAllRecipes());
         registry.addRecipes(SanguinaryEnvironmentalAccumulatorRecipeCategory.TYPE, SanguinaryEnvironmentalAccumulatorRecipeJEI.getAllRecipes());
         registry.addRecipes(SpiritReanimatorRecipeCategory.TYPE, SpiritReanimatorRecipeJEI.getAllRecipes());
-        registry.addRecipes(SpiritFurnaceRecipeCategory.TYPE, SpiritFurnaceRecipeJEI.getAllRecipes());
+        // We wait on the server, as these recipes depend on server-only data.
+        SPIRIT_FURNACE_RECIPES_REGISTRAR = (recipes) -> registry.addRecipes(SpiritFurnaceRecipeCategory.TYPE, recipes);
     }
 
     @Override
