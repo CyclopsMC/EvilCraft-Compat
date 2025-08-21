@@ -37,6 +37,7 @@ public class EvilCraftCompat extends ModBaseNeoForge<EvilCraftCompat> {
     @Override
     protected void loadModCompats(ModCompatLoader modCompatLoader) {
         // Mod compats
+        modCompatLoader.addModCompat(new JeiModCompat());
         /*modCompatLoader.addModCompat(new WailaModCompat());
         modCompatLoader.addModCompat(new BloodMagicModCompat());
         modCompatLoader.addModCompat(new TConstructModCompat());
@@ -48,7 +49,6 @@ public class EvilCraftCompat extends ModBaseNeoForge<EvilCraftCompat> {
         modCompatLoader.addModCompat(new CraftTweakerModCompat());
         modCompatLoader.addModCompat(new ThaumcraftModCompat());*/
         modCompatLoader.addModCompat(new CommonCapabilitiesCompat());
-        modCompatLoader.addModCompat(new JeiModCompat());
     }
 
     @Override
