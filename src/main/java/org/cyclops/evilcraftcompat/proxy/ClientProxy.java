@@ -1,6 +1,6 @@
 package org.cyclops.evilcraftcompat.proxy;
 
-import org.cyclops.cyclopscore.init.ModBase;
+import org.cyclops.cyclopscore.init.ModBaseNeoForge;
 import org.cyclops.cyclopscore.proxy.ClientProxyComponent;
 import org.cyclops.evilcraftcompat.EvilCraftCompat;
 
@@ -17,7 +17,7 @@ public class ClientProxy extends ClientProxyComponent {
     }
 
     @Override
-    public ModBase getMod() {
+    public ModBaseNeoForge<?> getMod() {
         return EvilCraftCompat._instance;
     }
 

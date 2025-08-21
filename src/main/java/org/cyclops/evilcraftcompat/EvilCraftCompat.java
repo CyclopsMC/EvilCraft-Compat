@@ -5,13 +5,14 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import org.cyclops.cyclopscore.infobook.IInfoBookRegistry;
-import org.cyclops.cyclopscore.init.ModBaseVersionable;
+import org.cyclops.cyclopscore.init.ModBaseNeoForge;
 import org.cyclops.cyclopscore.modcompat.ModCompatLoader;
 import org.cyclops.cyclopscore.proxy.IClientProxy;
 import org.cyclops.cyclopscore.proxy.ICommonProxy;
 import org.cyclops.evilcraft.EvilCraft;
 import org.cyclops.evilcraft.infobook.OriginsOfDarknessBook;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.CommonCapabilitiesCompat;
+import org.cyclops.evilcraftcompat.modcompat.jei.JeiModCompat;
 import org.cyclops.evilcraftcompat.proxy.ClientProxy;
 import org.cyclops.evilcraftcompat.proxy.CommonProxy;
 
@@ -21,7 +22,7 @@ import org.cyclops.evilcraftcompat.proxy.CommonProxy;
  *
  */
 @Mod(Reference.MOD_ID)
-public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
+public class EvilCraftCompat extends ModBaseNeoForge<EvilCraftCompat> {
 
     /**
      * The unique instance of this mod.
@@ -47,6 +48,7 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
         modCompatLoader.addModCompat(new CraftTweakerModCompat());
         modCompatLoader.addModCompat(new ThaumcraftModCompat());*/
         modCompatLoader.addModCompat(new CommonCapabilitiesCompat());
+        modCompatLoader.addModCompat(new JeiModCompat());
     }
 
     @Override

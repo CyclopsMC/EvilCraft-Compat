@@ -9,8 +9,10 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.apache.commons.lang3.tuple.Pair;
 import org.cyclops.evilcraft.Reference;
+import org.cyclops.evilcraft.core.recipe.type.RecipeEnvironmentalAccumulator;
 import org.cyclops.evilcraft.core.weather.WeatherType;
 
 import java.util.Map;
@@ -19,13 +21,13 @@ import java.util.Map;
  * Category for the Envir Acc recipes.
  * @author rubensworks
  */
-public abstract class CommonEnvironmentalAccumulatorRecipeCategory<T extends CommonEnvironmentalAccumulatorRecipeJEI<T>> implements IRecipeCategory<T> {
+public abstract class CommonEnvironmentalAccumulatorRecipeCategory implements IRecipeCategory<RecipeHolder<RecipeEnvironmentalAccumulator>> {
 
     private final Map<WeatherType, IDrawableStatic> weatherIcons;
     private final Pair<Integer, Integer> weatherInPos;
     private final Pair<Integer, Integer> weatherOutPos;
 
-    private T lastRecipe = null;
+    private RecipeHolder<RecipeEnvironmentalAccumulator> lastRecipe = null;
 
     public CommonEnvironmentalAccumulatorRecipeCategory(IGuiHelper guiHelper, Pair<Integer, Integer> weatherInPos, Pair<Integer, Integer> weatherOutPos) {
         this.weatherInPos = weatherInPos;
@@ -38,19 +40,19 @@ public abstract class CommonEnvironmentalAccumulatorRecipeCategory<T extends Com
     }
 
     @Override
-    public void draw(T recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(RecipeHolder<RecipeEnvironmentalAccumulator> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         if(lastRecipe != null) {
-            if(lastRecipe.getInputWeather() != WeatherType.ANY) {
-                weatherIcons.get(lastRecipe.getInputWeather()).draw(guiGraphics, weatherInPos.getLeft(), weatherInPos.getRight());
+            if(lastRecipe.value().getInputWeather() != WeatherType.ANY) {
+                weatherIcons.get(lastRecipe.value().getInputWeather()).draw(guiGraphics, weatherInPos.getLeft(), weatherInPos.getRight());
             }
-            if(lastRecipe.getOutputWeather() != WeatherType.ANY) {
-                weatherIcons.get(lastRecipe.getOutputWeather()).draw(guiGraphics, weatherOutPos.getLeft(), weatherOutPos.getRight());
+            if(lastRecipe.value().getOutputWeather() != WeatherType.ANY) {
+                weatherIcons.get(lastRecipe.value().getOutputWeather()).draw(guiGraphics, weatherOutPos.getLeft(), weatherOutPos.getRight());
             }
         }
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, T recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<RecipeEnvironmentalAccumulator> recipe, IFocusGroup focuses) {
         this.lastRecipe = recipe;
     }
 }

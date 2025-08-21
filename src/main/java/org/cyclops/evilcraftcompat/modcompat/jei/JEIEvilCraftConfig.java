@@ -1,20 +1,20 @@
 package org.cyclops.evilcraftcompat.modcompat.jei;
 
+import com.google.common.collect.Lists;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.registration.IGuiHandlerRegistration;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.api.registration.IRecipeTransferRegistration;
-import mezz.jei.api.registration.ISubtypeRegistration;
+import mezz.jei.api.recipe.types.IRecipeHolderType;
+import mezz.jei.api.registration.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import org.cyclops.cyclopscore.helper.MinecraftHelpers;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
+import net.minecraft.world.item.crafting.RecipeType;
+import org.cyclops.cyclopscore.helper.IModHelpers;
 import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.blockentity.BlockEntityBloodInfuser;
 import org.cyclops.evilcraft.blockentity.BlockEntitySanguinaryEnvironmentalAccumulator;
@@ -30,11 +30,8 @@ import org.cyclops.evilcraft.inventory.container.ContainerSanguinaryEnvironmenta
 import org.cyclops.evilcraftcompat.Reference;
 import org.cyclops.evilcraftcompat.RegistryEntriesCompat;
 import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeCategory;
-import org.cyclops.evilcraftcompat.modcompat.jei.bloodinfuser.BloodInfuserRecipeJEI;
 import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeCategory;
-import org.cyclops.evilcraftcompat.modcompat.jei.environmentalaccumulator.EnvironmentalAccumulatorRecipeJEI;
 import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeCategory;
-import org.cyclops.evilcraftcompat.modcompat.jei.sanguinaryenvironmentalaccumulator.SanguinaryEnvironmentalAccumulatorRecipeJEI;
 
 import java.text.DecimalFormat;
 
@@ -72,21 +69,25 @@ public class JEIEvilCraftConfig implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registry) {
-        registry.addRecipes(BloodInfuserRecipeCategory.TYPE, BloodInfuserRecipeJEI.getAllRecipes());
-        registry.addRecipes(EnvironmentalAccumulatorRecipeCategory.TYPE, EnvironmentalAccumulatorRecipeJEI.getAllRecipes());
-        registry.addRecipes(SanguinaryEnvironmentalAccumulatorRecipeCategory.TYPE, SanguinaryEnvironmentalAccumulatorRecipeJEI.getAllRecipes());
+        addRecipes(registry, BloodInfuserRecipeCategory.TYPE, RegistryEntries.RECIPETYPE_BLOOD_INFUSER.get());
+        addRecipes(registry, EnvironmentalAccumulatorRecipeCategory.TYPE, RegistryEntries.RECIPETYPE_ENVIRONMENTAL_ACCUMULATOR.get());
+        addRecipes(registry, SanguinaryEnvironmentalAccumulatorRecipeCategory.TYPE, RegistryEntries.RECIPETYPE_ENVIRONMENTAL_ACCUMULATOR.get());
+    }
+
+    protected <I extends RecipeInput, T extends Recipe<I>> void addRecipes(IRecipeRegistration registry, IRecipeHolderType<T> recipeTypeJei, RecipeType<T> recipeType) {
+        registry.addRecipes(recipeTypeJei, Lists.newArrayList(IModHelpers.get().getMinecraftClientHelpers().getRecipes().byType(recipeType)));
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registry) {
-        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_BLOOD_INFUSER.get()), BloodInfuserRecipeCategory.TYPE);
-        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR.get()), EnvironmentalAccumulatorRecipeCategory.TYPE);
-        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR.get()), SanguinaryEnvironmentalAccumulatorRecipeCategory.TYPE);
+        registry.addCraftingStation(BloodInfuserRecipeCategory.TYPE, new ItemStack(RegistryEntries.BLOCK_BLOOD_INFUSER.get()));
+        registry.addCraftingStation(EnvironmentalAccumulatorRecipeCategory.TYPE, new ItemStack(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR.get()));
+        registry.addCraftingStation(SanguinaryEnvironmentalAccumulatorRecipeCategory.TYPE, new ItemStack(RegistryEntries.BLOCK_SANGUINARY_ENVIRONMENTAL_ACCUMULATOR.get()));
 
-        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER_WOODEN), RecipeTypes.CRAFTING);
-        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER), RecipeTypes.CRAFTING);
-        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER_WOODEN_EMPOWERED), RecipeTypes.CRAFTING);
-        registry.addRecipeCatalyst(new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER_EMPOWERED), RecipeTypes.CRAFTING);
+        registry.addCraftingStation(RecipeTypes.CRAFTING, new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER_WOODEN));
+        registry.addCraftingStation(RecipeTypes.CRAFTING, new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER));
+        registry.addCraftingStation(RecipeTypes.CRAFTING, new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER_WOODEN_EMPOWERED));
+        registry.addCraftingStation(RecipeTypes.CRAFTING, new ItemStack(RegistryEntries.ITEM_EXALTED_CRAFTER_EMPOWERED));
     }
 
     @Override
@@ -123,7 +124,7 @@ public class JEIEvilCraftConfig implements IModPlugin {
     }
 
     public static MutableComponent getDurationSecondsTextComponent(int durationTicks) {
-        String seconds = new DecimalFormat("#.##").format((double) durationTicks / MinecraftHelpers.SECOND_IN_TICKS);
+        String seconds = new DecimalFormat("#.##").format((double) durationTicks / IModHelpers.get().getMinecraftHelpers().getSecondInTicks());
         return Component.translatable("gui.jei.category.smelting.time.seconds", seconds);
     }
 }
