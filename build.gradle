@@ -73,17 +73,15 @@ repositories {
         name 'tterrag'
         url 'https://maven.tterrag.com/'
     }
-    /*maven {
-        name 'Tehnut'
-        url 'https://tehnut.info/maven/'
-    }*/
-    /*maven {
-        name "CurseForge"
-        url "https://minecraft.curseforge.com/api/maven/"
-    }*/
     maven {
         name "Curios"
         url "https://maven.theillusivec4.top/"
+    }
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
     }
 }
 
@@ -110,10 +108,11 @@ dependencies {
     }
 
     implementation fg.deobf("mezz.jei:jei-${project.jei_version}") // https://dvs1.progwml6.com/files/maven/mezz/jei/
-    //compile fg.deobf("hwyla:Hwyla-forge-${project.waila_version}") // https://www.curseforge.com/minecraft/mc-mods/hwyla/files/ https://github.com/TehNut/HWYLA and https://github.com/TehNut/temporary-maven-thing/tree/master/maven/mcp/mobius/waila/Hwyla
 
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") // https://maven.theillusivec4.top/top/theillusivec4/curios/curios-forge/
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}:api")
+
+    implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
 }
 
 minecraft {
@@ -266,7 +265,6 @@ sourceSets {
             exclude '**/modcompat/tconstruct/**'
             exclude '**/modcompat/thaumcraft/**'
             exclude '**/modcompat/thermalexpansion/**'
-            exclude '**/modcompat/waila/**'
         }
     }
 }
