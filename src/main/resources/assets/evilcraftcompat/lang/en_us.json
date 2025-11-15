@@ -37,6 +37,9 @@
   "info_book.evilcraftcompat.mod_integrations.tinkers_construct": "Tinkers' Construct",
   "info_book.evilcraftcompat.mod_integrations.tinkers_construct.text": "&0Tools, tools and tools!&r It seems to be all these folks think about. Using nothing but these tools must damage them severely, luckily they have the &1Blood Chest&0 to repair them!",
 
-  "info_book.evilcraftcompat.mod_integrations.waila": "WAILA",
-  "info_book.evilcraftcompat.mod_integrations.waila.text": "What are you looking at, you ask? You should be able to tell, really."
+  "info_book.evilcraftcompat.mod_integrations.jade": "Jade",
+  "info_book.evilcraftcompat.mod_integrations.jade.text": "What are you looking at, you ask? You should be able to tell, really.",
+
+  "config.jade.plugin_evilcraft.broom": "Broom",
+  "config.jade.plugin_evilcraft.box_of_eternal_closure": "Box Of Eternal Closure"
 }
