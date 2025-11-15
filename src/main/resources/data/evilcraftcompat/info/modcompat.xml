@@ -49,8 +49,8 @@
         <tag type="mod">tconstruct</tag>
         <paragraph>info_book.evilcraftcompat.mod_integrations.tinkers_construct.text</paragraph>
     </section-disabled>
-    <section-disabled name="info_book.evilcraftcompat.mod_integrations.waila">
-        <tag type="mod">waila</tag>
-        <paragraph>info_book.evilcraftcompat.mod_integrations.waila.text</paragraph>
+    <section-disabled name="info_book.evilcraftcompat.mod_integrations.jade">
+        <tag type="mod">jade</tag>
+        <paragraph>info_book.evilcraftcompat.mod_integrations.jade.text</paragraph>
     </section-disabled>
 </section>
