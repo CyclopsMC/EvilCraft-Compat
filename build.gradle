@@ -73,17 +73,15 @@ repositories {
         name 'jared'
         url 'https://maven.blamejared.com/'
     }
-    /*maven {
-        name 'Tehnut'
-        url 'https://tehnut.info/maven/'
-    }*/
-    /*maven {
-        name "CurseForge"
-        url "https://minecraft.curseforge.com/api/maven/"
-    }*/
     maven {
         name "Curios"
         url "https://maven.theillusivec4.top/"
+    }
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
     }
 }
 
@@ -114,6 +112,8 @@ dependencies {
 
 //    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") // https://maven.theillusivec4.top/top/theillusivec4/curios/curios-forge/
     compileOnly("top.theillusivec4.curios:curios-neoforge:${project.curios_version}:api")
+
+    implementation("curse.maven:jade-324717:${jade_version}")
 }
 
 minecraft {
@@ -290,7 +290,6 @@ sourceSets {
             exclude '**/modcompat/tconstruct/**'
             exclude '**/modcompat/thaumcraft/**'
             exclude '**/modcompat/thermalexpansion/**'
-            exclude '**/modcompat/waila/**'
         }
     }
 }

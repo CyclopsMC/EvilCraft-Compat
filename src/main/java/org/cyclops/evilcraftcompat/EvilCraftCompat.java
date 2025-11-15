@@ -38,8 +38,7 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
     protected void loadModCompats(ModCompatLoader modCompatLoader) {
         // Mod compats
         modCompatLoader.addModCompat(new JeiCompat());
-        /*modCompatLoader.addModCompat(new WailaModCompat());
-        modCompatLoader.addModCompat(new BloodMagicModCompat());
+        /*modCompatLoader.addModCompat(new BloodMagicModCompat());
         modCompatLoader.addModCompat(new TConstructModCompat());
         modCompatLoader.addModCompat(new ForestryModCompat());
         modCompatLoader.addModCompat(new IC2ModCompat());
