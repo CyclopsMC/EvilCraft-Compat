@@ -13,10 +13,10 @@ import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -47,7 +47,7 @@ public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalA
 
     public EnvironmentalAccumulatorRecipeCategory(IGuiHelper guiHelper) {
         super(guiHelper, Pair.of(2, 8), Pair.of(76, 8));
-        ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, Reference.TEXTURE_PATH_GUI + "environmental_accumulator_gui_jei.png");
+        Identifier resourceLocation = Identifier.fromNamespaceAndPath(Reference.MOD_ID, Reference.TEXTURE_PATH_GUI + "environmental_accumulator_gui_jei.png");
         this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 94, 54);
         this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RegistryEntries.BLOCK_ENVIRONMENTAL_ACCUMULATOR.get()));
         IDrawableStatic arrowDrawable = guiHelper.createDrawable(resourceLocation, 94, 0, 5, 34);
@@ -88,11 +88,11 @@ public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalA
                 .add(recipe.getInputIngredient());
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 76, 28)
-                .add(recipe.getOutputItem().map(l -> Ingredient.of(l.getItem()), ItemStackFromIngredient::getIngredient));
+                .add(recipe.getOutputItem().map(l -> Ingredient.of(l.typeHolder().value()), ItemStackFromIngredient::getIngredient));
     }
 
     @Override
-    public void draw(RecipeHolder<RecipeEnvironmentalAccumulator> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(RecipeHolder<RecipeEnvironmentalAccumulator> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
         this.background.draw(guiGraphics);
         arrow.draw(guiGraphics, 44, 0);
@@ -100,6 +100,6 @@ public class EnvironmentalAccumulatorRecipeCategory extends CommonEnvironmentalA
         // Draw duration
         Font fontRenderer = Minecraft.getInstance().font;
         MutableComponent duration = JEIEvilCraftConfig.getDurationSecondsTextComponent(recipe.value().getDuration());
-        guiGraphics.drawString(fontRenderer, duration, (background.getWidth() - fontRenderer.width(duration)) / 2, 48, ARGB.opaque(0xFF808080), false);
+        guiGraphics.text(fontRenderer, duration, (background.getWidth() - fontRenderer.width(duration)) / 2, 48, ARGB.opaque(0xFF808080), false);
     }
 }

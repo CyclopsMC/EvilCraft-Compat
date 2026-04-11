@@ -26,7 +26,7 @@ public class SpiritReanimatorRecipeJEI {
     public SpiritReanimatorRecipeJEI(EntityType<?> entityType) {
         this.inputFluid = new FluidStack(RegistryEntries.FLUID_BLOOD, BlockSpiritReanimatorConfig.mBPerTick * BlockSpiritReanimatorConfig.requiredTicks);
         this.inputItem = getBox(entityType);
-        this.outputItem = new ItemStack(SpawnEggItem.byId(entityType));
+        this.outputItem = SpawnEggItem.byId(entityType).map(ItemStack::new).orElse(ItemStack.EMPTY);
         this.duration = BlockSpiritReanimatorConfig.requiredTicks;
     }
 
@@ -57,7 +57,7 @@ public class SpiritReanimatorRecipeJEI {
     public static List<SpiritReanimatorRecipeJEI> getAllRecipes() {
         List<SpiritReanimatorRecipeJEI> recipes = Lists.newArrayList();
         for (EntityType<?> entityType : BuiltInRegistries.ENTITY_TYPE) {
-            if (SpawnEggItem.byId(entityType) != null) {
+            if (SpawnEggItem.byId(entityType).isPresent()) {
                 recipes.add(new SpiritReanimatorRecipeJEI(entityType));
             }
         }

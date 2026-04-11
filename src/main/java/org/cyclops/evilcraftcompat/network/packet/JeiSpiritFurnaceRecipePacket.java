@@ -2,7 +2,7 @@ package org.cyclops.evilcraftcompat.network.packet;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -18,7 +18,7 @@ import org.cyclops.evilcraftcompat.modcompat.jei.spiritfurnace.SpiritFurnaceReci
  */
 public class JeiSpiritFurnaceRecipePacket extends PacketCodec {
 
-    public static final Type<JeiSpiritFurnaceRecipePacket> ID = new Type<>(ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "jei_spirit_furnace_recipe"));
+    public static final Type<JeiSpiritFurnaceRecipePacket> ID = new Type<>(Identifier.fromNamespaceAndPath(Reference.MOD_ID, "jei_spirit_furnace_recipe"));
     public static final StreamCodec<RegistryFriendlyByteBuf, JeiSpiritFurnaceRecipePacket> CODEC = getCodec(JeiSpiritFurnaceRecipePacket::new);
 
     private SpiritFurnaceRecipeJEI recipe;

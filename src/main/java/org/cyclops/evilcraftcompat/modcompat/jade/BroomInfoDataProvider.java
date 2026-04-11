@@ -1,7 +1,7 @@
 package org.cyclops.evilcraftcompat.modcompat.jade;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -19,7 +19,7 @@ import snownee.jade.api.config.IPluginConfig;
  */
 public class BroomInfoDataProvider implements IEntityComponentProvider {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "broom");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Reference.MOD_ID, "broom");
 
     @Override
     public void appendTooltip(ITooltip tooltip, EntityAccessor entityAccessor, IPluginConfig iPluginConfig) {
@@ -32,7 +32,7 @@ public class BroomInfoDataProvider implements IEntityComponentProvider {
     }
 
     @Override
-    public ResourceLocation getUid() {
+    public Identifier getUid() {
         return ID;
     }
 }
