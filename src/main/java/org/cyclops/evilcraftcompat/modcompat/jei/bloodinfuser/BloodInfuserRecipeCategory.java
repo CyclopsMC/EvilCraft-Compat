@@ -16,10 +16,10 @@ import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -50,7 +50,7 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory<RecipeHolder<
     private final IDrawable tankOverlay;
 
     public BloodInfuserRecipeCategory(IGuiHelper guiHelper) {
-        ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, Reference.TEXTURE_PATH_GUI + "blood_infuser_gui_jei.png");
+        Identifier resourceLocation = Identifier.fromNamespaceAndPath(Reference.MOD_ID, Reference.TEXTURE_PATH_GUI + "blood_infuser_gui_jei.png");
         this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 130, 70);
         this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RegistryEntries.BLOCK_BLOOD_INFUSER.get()));
         IDrawableStatic arrowDrawable = guiHelper.createDrawable(resourceLocation,
@@ -105,7 +105,7 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory<RecipeHolder<
         IRecipeSlotBuilder inputSlotFluid = builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 6, 6)
                 .setOverlay(tankOverlay, 0, 0)
                 .setFluidRenderer(getMaxTankSize(recipe), true, ContainerScreenBloodInfuser.TANKWIDTH, ContainerScreenBloodInfuser.TANKHEIGHT);
-        recipe.getInputFluid().ifPresent(fluidStack -> inputSlotFluid.add(NeoForgeTypes.FLUID_STACK, fluidStack));
+        recipe.getInputFluid().ifPresent(fluidTemplate -> inputSlotFluid.add(NeoForgeTypes.FLUID_STACK, fluidTemplate.create()));
 
         ItemStack promise = getPromise(recipe);
         if (promise != null) {
@@ -114,17 +114,17 @@ public class BloodInfuserRecipeCategory implements IRecipeCategory<RecipeHolder<
         }
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 96, 28)
-                .add(recipe.getOutputItem().map(l -> Ingredient.of(l.getItem()), ItemStackFromIngredient::getIngredient));
+                .add(recipe.getOutputItem().map(l -> Ingredient.of(l.typeHolder().value()), ItemStackFromIngredient::getIngredient));
     }
 
     @Override
-    public void draw(RecipeHolder<RecipeBloodInfuser> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(RecipeHolder<RecipeBloodInfuser> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         this.background.draw(guiGraphics);
         arrow.draw(guiGraphics, 65, 28);
 
         // Draw duration
         Font fontRenderer = Minecraft.getInstance().font;
         MutableComponent duration = JEIEvilCraftConfig.getDurationSecondsTextComponent(recipe.value().getDuration());
-        guiGraphics.drawString(fontRenderer, duration, (background.getWidth() - fontRenderer.width(duration)) / 2 + 12, 50, ARGB.opaque(0xFF808080), false);
+        guiGraphics.text(fontRenderer, duration, (background.getWidth() - fontRenderer.width(duration)) / 2 + 12, 50, ARGB.opaque(0xFF808080), false);
     }
 }

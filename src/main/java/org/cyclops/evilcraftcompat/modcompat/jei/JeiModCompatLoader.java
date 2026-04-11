@@ -33,7 +33,12 @@ public class JeiModCompatLoader implements ICompatInitializer {
         // Send loot tables from server to client.
         List<SpiritFurnaceRecipeJEI> recipes = SpiritFurnaceRecipeJEI.generateServerRecipes();
         for (SpiritFurnaceRecipeJEI recipe : recipes) {
-            EvilCraftCompat._instance.getPacketHandler().sendToPlayer(new JeiSpiritFurnaceRecipePacket(recipe, recipes.size()), (ServerPlayer) event.getEntity());
+            try {
+                EvilCraftCompat._instance.getPacketHandler().sendToPlayer(new JeiSpiritFurnaceRecipePacket(recipe, recipes.size()), (ServerPlayer) event.getEntity());
+            } catch (UnsupportedOperationException e) {
+                // Can occur during game testing
+                e.printStackTrace();
+            }
         }
     }
 

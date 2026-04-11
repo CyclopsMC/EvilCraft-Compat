@@ -69,7 +69,7 @@ public class SpiritFurnaceRecipeJEI {
                 .withParameter(LootContextParams.DAMAGE_SOURCE, killerEntity.damageSources().generic())
                 .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, killerEntity);
         LootParams params = lootParamsBuilder.create(LootContextParamSets.ENTITY);
-        LootContext context = new LootContext.Builder(params).create(entityType.getDefaultLootTable().map(ResourceKey::location));
+        LootContext context = new LootContext.Builder(params).create(entityType.getDefaultLootTable().map(ResourceKey::identifier));
 
         entityType.getDefaultLootTable().ifPresent(lootTableKey -> {
             LootTable lootTable = ServerLifecycleHooks.getCurrentServer().reloadableRegistries().getLootTable(lootTableKey);

@@ -10,7 +10,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.capabilities.BaseCapability;
 import net.neoforged.neoforge.capabilities.ICapabilityProvider;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.cyclops.commoncapabilities.api.capability.Capabilities;
 import org.cyclops.commoncapabilities.api.capability.fluidhandler.FluidMatch;
 import org.cyclops.commoncapabilities.api.capability.recipehandler.IPrototypedIngredientAlternatives;
@@ -75,7 +76,11 @@ public class RecipeHandlerBloodInfuserBlockEntityCompat implements ICapabilityCo
                 inventory.setItem(0, input.getInstances(IngredientComponent.ITEMSTACK).get(0));
             }
             if (!input.getInstances(IngredientComponent.FLUIDSTACK).isEmpty()) {
-                inventory.getFluidHandler().fill(input.getInstances(IngredientComponent.FLUIDSTACK).get(0), IFluidHandler.FluidAction.EXECUTE);
+                FluidStack fluidInput = input.getInstances(IngredientComponent.FLUIDSTACK).get(0);
+                try (Transaction transaction = Transaction.openRoot()) {
+                    inventory.getFluidHandler().insert(FluidResource.of(fluidInput), fluidInput.getAmount(), transaction);
+                    transaction.commit();
+                }
             }
             return inventory;
         }
@@ -89,7 +94,7 @@ public class RecipeHandlerBloodInfuserBlockEntityCompat implements ICapabilityCo
             }
             if (recipe.getInputFluid().isPresent()) {
                 inputs.put(IngredientComponent.FLUIDSTACK, Lists.newArrayList(new PrototypedIngredientAlternativesList<>(
-                        Lists.newArrayList(new PrototypedIngredient<>(IngredientComponent.FLUIDSTACK, recipe.getInputFluid().get(), FluidMatch.EXACT)))));
+                        Lists.newArrayList(new PrototypedIngredient<>(IngredientComponent.FLUIDSTACK, recipe.getInputFluid().get().create(), FluidMatch.EXACT)))));
             }
             return inputs;
         }

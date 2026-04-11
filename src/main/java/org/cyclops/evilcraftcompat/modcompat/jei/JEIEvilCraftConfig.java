@@ -9,7 +9,7 @@ import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.registration.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
@@ -145,8 +145,8 @@ public class JEIEvilCraftConfig implements IModPlugin {
     }
 
     @Override
-    public ResourceLocation getPluginUid() {
-        return ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "main");
+    public Identifier getPluginUid() {
+        return Identifier.fromNamespaceAndPath(Reference.MOD_ID, "main");
     }
 
     public static MutableComponent getDurationSecondsTextComponent(int durationTicks) {

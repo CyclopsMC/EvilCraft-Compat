@@ -2,7 +2,7 @@ package org.cyclops.evilcraftcompat.modcompat.jade;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import org.cyclops.evilcraft.Reference;
 import org.cyclops.evilcraft.RegistryEntries;
@@ -20,7 +20,7 @@ import snownee.jade.api.config.IPluginConfig;
  */
 public class BoxOfEternalClosureDataProvider implements IBlockComponentProvider {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "box_of_eternal_closure");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Reference.MOD_ID, "box_of_eternal_closure");
 
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor blockAccessor, IPluginConfig iPluginConfig) {
@@ -46,7 +46,7 @@ public class BoxOfEternalClosureDataProvider implements IBlockComponentProvider 
     }
 
     @Override
-    public ResourceLocation getUid() {
+    public Identifier getUid() {
         return ID;
     }
 
