@@ -1,1 +1,27 @@
-{}
+{
+  "item.items.evilcraft.veined_scribing_tools": "Ferramentas de escrita com veios",
+  "_comment": "--- Mod Integrations ---",
+  "info_book.evilcraftcompat.mod_integrations": "&oIntegrações de mods&r",
+  "info_book.evilcraftcompat.mod_integrations.baubles": "Baubles",
+  "info_book.evilcraftcompat.mod_integrations.baubles.text": "O mod que adiciona vários novos slots de acessórios convenientes ao seu personagem também é capaz de armazenar os anéis e pingentes oferecidos neste livro. Eles continuam funcionando como se estivessem dentro do seu inventário. Bijuterias para todos!",
+  "info_book.evilcraftcompat.mod_integrations.blood_magic": "Blood Magic",
+  "info_book.evilcraftcompat.mod_integrations.blood_magic.text": "Um dia eu descobri um &1Orbe de Sangue&0 muito estranho que deve ter sido possuído por algum tipo de &1Mágico&0. Ao usá-lo, senti como se estivesse de alguma forma conectado a ele. Depois de um tempo, descobri que ele estava, de fato, conectado à minha corrente de &4Sangue&0. Forçando uma grande quantidade de &4Sangue&0 através dele usando o &1Infusor de Sangue&0, consegui criar um item que está tanto conectado à minha corrente de &4Sangue&0 quanto pode ser usado como um simples recipiente, permitindo que eu o coloque nas minhas máquinas favoritas e o use com meus itens.",
+  "info_book.evilcraftcompat.mod_integrations.ee3": "Equivalent Exchange 3",
+  "info_book.evilcraftcompat.mod_integrations.ee3.text": "Os Mágicos descobriram que quase todas as coisas neste mundo têm algum tipo de &1valor&0 relativo a outras coisas. Essas pessoas dominaram o ato de &1transmutar&0 essas coisas umas para as outras. Seus métodos estranhos até parecem funcionar com meus itens.",
+  "info_book.evilcraftcompat.mod_integrations.forestry": "Forestry",
+  "info_book.evilcraftcompat.mod_integrations.forestry.text": "Quando &ovisitei&r alguns dos meus amigos que trabalham com árvores e abelhas, notei que algumas das bolsas deles me permitem inserir alguns dos meus itens. Também percebi que a máquina deles chamada &1Prensador&0 é capaz de extrair &4Sangue&0 de partes da &1Árvore Morta-viva&0, que pode ser facilmente cultivada usando o sistema de cultivo de árvores deles.",
+  "info_book.evilcraftcompat.mod_integrations.enderio": "Ender IO",
+  "info_book.evilcraftcompat.mod_integrations.enderio.text": "Essas tecnologias baseadas em Ender são muito interessantes, talvez eu possa melhorar minhas máquinas com base nisso em algum momento. De qualquer forma, parece que consigo processar &1Minério Sombrio&0 e &1Gemas Sombrias&0 usando as máquinas deles, o que é bastante útil.",
+  "info_book.evilcraftcompat.mod_integrations.ic2": "Industrial Craft 2",
+  "info_book.evilcraftcompat.mod_integrations.ic2.text": "Existe um grupo de pessoas estranhas que constantemente trabalham com máquinas zumbindo. Eu não faço ideia do que essas máquinas fazem, exceto pelo &1Macerador&0. Consigo inserir &1Minério Sombrio&0 nele para imediatamente obter &1Gemas Sombrias&0 e sua variante esmagada. Gemas Sombrias comuns também podem ser inseridas para serem trituradas.",
+  "info_book.evilcraftcompat.mod_integrations.jei": "Just Enough Items",
+  "info_book.evilcraftcompat.mod_integrations.jei.text": "Algumas pessoas parecem ter \"&oMuitos Itens&r\", enquanto outras têm \"&oPoucos Itens&r\". Parece que finalmente chegamos a um estágio onde as pessoas têm \"&oItens Suficientes&r\", o conhecimento deste livro é compreensível para elas.",
+  "info_book.evilcraftcompat.mod_integrations.immersiveengineering": "Immersive Engineering",
+  "info_book.evilcraftcompat.mod_integrations.immersiveengineering.text": "Tenho que admitir, as máquinas daqueles engenheiros parecem bem legais. Além disso, elas também parecem ser muito boas em processar &1Minério Sombrio&0 e &1Gemas Sombrinhas&0, mas também em espremer &1Madeira dos Mortos&0 e &1Folhas dos Mortos&0 para &4Sangue&0.",
+  "info_book.evilcraftcompat.mod_integrations.thermal_expansion": "Thermal Expansion",
+  "info_book.evilcraftcompat.mod_integrations.thermal_expansion.text": "Essas pessoas são bastante estranhas, elas sempre usam roupas muito esquisitas e, na maioria das vezes, parecem estar empunhando muitos tipos de chaves inglesas por algum motivo. Eu sei apenas uma coisa sobre elas, elas têm uma máquina que pode transpor fluidos, o que permite uma infusão básica de sangue, mas infelizmente isso não pode ser aprimorado.",
+  "info_book.evilcraftcompat.mod_integrations.thaumcraft": "Thaumcraft",
+  "info_book.evilcraftcompat.mod_integrations.thaumcraft.text": "Eu notei que a Taumaturgia é um tipo de magia bem diferente. Parece que os Taumaturgos ficam muito felizes quando veem meus itens, eles sempre andam por aqui com seus estranhos hexágonos. Para agradar meus amigos, eu construí algumas &1Ferramentas de Escrita Veinadas&0 que podem ser usadas para escrever com &4Sangue&0 em vez de tinta.",
+  "info_book.evilcraftcompat.mod_integrations.tinkers_construct": "Tinkers' Construct",
+  "info_book.evilcraftcompat.mod_integrations.tinkers_construct.text": "&0Ferramentas, ferramentas e mais ferramentas!&r Parece ser tudo o que essas pessoas pensam. Usar apenas essas ferramentas deve danificá-los severamente, felizmente eles têm o &1Peito de Sangue&0 para repará-las!"
+}

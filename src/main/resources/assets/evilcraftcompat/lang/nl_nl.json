@@ -12,10 +12,8 @@
   "info_book.evilcraftcompat.mod_integrations.jei": "Just Enough Items",
   "info_book.evilcraftcompat.mod_integrations.jei.text": "Sommige mensen hebben blijkbaar \"&oToo Many Items&r\", terwijl anderen \"&oNot Enough Items&r\" hebben. Het lijkt erop dat we eindelijk een stadium hebben bereikt waarin mensen \"&oJust Enough Items&r\" hebben, de kennis uit dit boek is begrijpenlijk voor hen.",
   "info_book.evilcraftcompat.mod_integrations.immersiveengineering": "Immersive Engineering",
-  "info_book.evilcraftcompat.mod_integrations.immersiveengineering.text": "Ik moet toegeven dat de machines van die ingenieurs er behoorlijk keurig uitzien. Buiten dat, ze lijken ook zeer goed in het verwerking van &1duistere erts&0 en &1duistere edelstenen&0, maar ook in het samenpersen van &1ondode stammen&0 en &1ondode bladeren&0 voor &4bloed&0.",
+  "info_book.evilcraftcompat.mod_integrations.immersiveengineering.text": "Ik moet toegeven dat de machines van die ingenieurs er behoorlijk keurig uitzien. Buiten dat, ze lijken ook zeer goed in het verwerken van &1duistere erts&0 en &1duistere edelstenen&0, maar ook in het samenpersen van &1ondode stammen&0 en &1ondode bladeren&0 voor &4bloed&0.",
   "info_book.evilcraftcompat.mod_integrations.thermal_expansion": "Thermal Expansion",
   "info_book.evilcraftcompat.mod_integrations.thaumcraft": "Thaumcraft",
-  "info_book.evilcraftcompat.mod_integrations.tinkers_construct": "Tinkers' Construct",
-  "info_book.evilcraftcompat.mod_integrations.waila": "WAILA",
-  "info_book.evilcraftcompat.mod_integrations.waila.text": "Waar kijk je naar, vraag je? Je zou er achter moeten kunnen komen."
+  "info_book.evilcraftcompat.mod_integrations.tinkers_construct": "Tinkers' Construct"
 }
