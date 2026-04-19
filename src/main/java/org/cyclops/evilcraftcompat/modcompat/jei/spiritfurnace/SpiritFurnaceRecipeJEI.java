@@ -75,7 +75,11 @@ public class SpiritFurnaceRecipeJEI {
             LootTable lootTable = ServerLifecycleHooks.getCurrentServer().reloadableRegistries().getLootTable(lootTableKey);
             for (LootPool pool : lootTable.pools) {
                 for (LootPoolEntryContainer entryContainer : pool.entries) {
-                    entryContainer.expand(context, entry -> entry.createItemStack(items::add, context));
+                    entryContainer.expand(context, entry -> entry.createItemStack(item -> {
+                        if (!item.isEmpty()) {
+                            items.add(item);
+                        }
+                    }, context));
                 }
             }
         });
