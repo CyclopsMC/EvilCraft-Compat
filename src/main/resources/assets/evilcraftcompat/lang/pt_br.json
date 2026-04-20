@@ -23,5 +23,9 @@
   "info_book.evilcraftcompat.mod_integrations.thaumcraft": "Thaumcraft",
   "info_book.evilcraftcompat.mod_integrations.thaumcraft.text": "Eu notei que a Taumaturgia é um tipo de magia bem diferente. Parece que os Taumaturgos ficam muito felizes quando veem meus itens, eles sempre andam por aqui com seus estranhos hexágonos. Para agradar meus amigos, eu construí algumas &1Ferramentas de Escrita Veinadas&0 que podem ser usadas para escrever com &4Sangue&0 em vez de tinta.",
   "info_book.evilcraftcompat.mod_integrations.tinkers_construct": "Tinkers' Construct",
-  "info_book.evilcraftcompat.mod_integrations.tinkers_construct.text": "&0Ferramentas, ferramentas e mais ferramentas!&r Parece ser tudo o que essas pessoas pensam. Usar apenas essas ferramentas deve danificá-los severamente, felizmente eles têm o &1Peito de Sangue&0 para repará-las!"
+  "info_book.evilcraftcompat.mod_integrations.tinkers_construct.text": "&0Ferramentas, ferramentas e mais ferramentas!&r Parece ser tudo o que essas pessoas pensam. Usar apenas essas ferramentas deve danificá-los severamente, felizmente eles têm o &1Peito de Sangue&0 para repará-las!",
+  "info_book.evilcraftcompat.mod_integrations.jade": "Jade",
+  "info_book.evilcraftcompat.mod_integrations.jade.text": "O que você está olhando, você pergunta? Você deveria ser capaz de dizer, na verdade.",
+  "config.jade.plugin_evilcraft.broom": "Vassoura",
+  "config.jade.plugin_evilcraft.box_of_eternal_closure": "Caixa do Encerramento Eterno"
 }
