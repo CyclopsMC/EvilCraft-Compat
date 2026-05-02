@@ -145,7 +145,7 @@ public class SpiritFurnaceRecipeJEI {
                 if (entity instanceof LivingEntity livingEntity && EntityVengeanceSpirit.canSustain(livingEntity)) {
                     recipes.add(SpiritFurnaceRecipeJEI.create(entityType, livingEntity, level));
                 }
-            } catch (RuntimeException e) {
+            } catch (Throwable e) {
                 // Ignore errors during entity creation
             }
         }
