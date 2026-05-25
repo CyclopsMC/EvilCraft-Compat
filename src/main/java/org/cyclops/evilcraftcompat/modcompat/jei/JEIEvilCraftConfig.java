@@ -47,6 +47,7 @@ import java.util.function.Consumer;
 public class JEIEvilCraftConfig implements IModPlugin {
 
     public static Consumer<List<SpiritFurnaceRecipeJEI>> SPIRIT_FURNACE_RECIPES_REGISTRAR;
+    public static List<SpiritFurnaceRecipeJEI> PENDING_SPIRIT_FURNACE_RECIPES;
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration subtypeRegistry) {
@@ -84,6 +85,10 @@ public class JEIEvilCraftConfig implements IModPlugin {
         registry.addRecipes(SpiritReanimatorRecipeCategory.TYPE, SpiritReanimatorRecipeJEI.getAllRecipes());
         // We wait on the server, as these recipes depend on server-only data.
         SPIRIT_FURNACE_RECIPES_REGISTRAR = (recipes) -> registry.addRecipes(SpiritFurnaceRecipeCategory.TYPE, recipes);
+        if (PENDING_SPIRIT_FURNACE_RECIPES != null) {
+            SPIRIT_FURNACE_RECIPES_REGISTRAR.accept(PENDING_SPIRIT_FURNACE_RECIPES);
+            PENDING_SPIRIT_FURNACE_RECIPES = null;
+        }
     }
 
     protected <I extends RecipeInput, T extends Recipe<I>> void addRecipes(IRecipeRegistration registry, IRecipeHolderType<T> recipeTypeJei, RecipeType<T> recipeType) {
