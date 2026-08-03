@@ -14,6 +14,7 @@ import org.cyclops.evilcraft.blockentity.BlockEntityBloodInfuser;
 import org.cyclops.evilcraft.blockentity.BlockEntityEnvironmentalAccumulator;
 import org.cyclops.evilcraft.core.blockentity.BlockEntityTickingTankInventory;
 import org.cyclops.evilcraft.infobook.OriginsOfDarknessBook;
+import org.cyclops.evilcraftcompat.modcompat.bloodmagic.BloodMagicModCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.RecipeHandlerBloodInfuserBlockEntityCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerEnvirAccBlockEntityCompat;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.WorkerWorkingBlockEntityCompat;
@@ -45,8 +46,8 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
         // Mod compats
         modCompatLoader.addModCompat(new CuriosCompat());
         modCompatLoader.addModCompat(new JeiCompat());
-        /*modCompatLoader.addModCompat(new BloodMagicModCompat());
-        modCompatLoader.addModCompat(new TConstructModCompat());
+        modCompatLoader.addModCompat(new BloodMagicModCompat());
+        /*modCompatLoader.addModCompat(new TConstructModCompat());
         modCompatLoader.addModCompat(new ForestryModCompat());
         modCompatLoader.addModCompat(new IC2ModCompat());
         modCompatLoader.addModCompat(new ImmersiveEngineeringModCompat());

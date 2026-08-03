@@ -4,12 +4,12 @@
         <tag type="mod">baubles</tag>
         <paragraph>info_book.evilcraftcompat.mod_integrations.baubles.text</paragraph>
     </section-disabled>
-    <section-disabled name="info_book.evilcraftcompat.mod_integrations.blood_magic">
+    <section name="info_book.evilcraftcompat.mod_integrations.blood_magic">
         <tag type="mod">bloodmagic</tag>
-        <tag>bound_blood_drop</tag>
+        <tag>evilcraftcompat:bound_blood_drop</tag>
         <paragraph>info_book.evilcraftcompat.mod_integrations.blood_magic.text</paragraph>
-        <appendix type="evilcraft:blood_infuser_recipe">evilcraft:bound_blood_drop</appendix>
-    </section-disabled>
+        <appendix type="evilcraft:blood_infuser">evilcraftcompat:blood_infuser/bloodmagic/bound_blood_drop</appendix>
+    </section>
     <section-disabled name="info_book.evilcraftcompat.mod_integrations.ee3">
         <tag type="mod">ee3</tag>
         <paragraph>info_book.evilcraftcompat.mod_integrations.ee3.text</paragraph>

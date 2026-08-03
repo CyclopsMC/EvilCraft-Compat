@@ -1,38 +1,34 @@
 package org.cyclops.evilcraftcompat.modcompat.bloodmagic;
 
-import WayofTime.bloodmagic.block.BlockLifeEssence;
-import WayofTime.bloodmagic.core.data.Binding;
-import WayofTime.bloodmagic.iface.IBindable;
-import WayofTime.bloodmagic.util.helper.NetworkHelper;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.cyclops.cyclopscore.config.configurable.ConfigurableDamageIndicatedItemFluidContainer;
-import org.cyclops.cyclopscore.config.extendedconfig.ExtendedConfig;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.cyclops.cyclopscore.config.extendedconfig.ItemConfig;
 import org.cyclops.cyclopscore.helper.FluidHelpers;
-import org.cyclops.cyclopscore.helper.ItemStackHelpers;
 import org.cyclops.cyclopscore.helper.L10NHelpers;
 import org.cyclops.cyclopscore.helper.MinecraftHelpers;
-import org.cyclops.evilcraft.core.fluid.BloodFluidConverter;
+import org.cyclops.cyclopscore.item.DamageIndicatedItemFluidContainer;
+import org.cyclops.evilcraft.RegistryEntries;
 import org.cyclops.evilcraft.core.fluid.FluidContainerItemWrapperWithSimulation;
 import org.cyclops.evilcraft.core.helper.ItemHelpers;
-import org.cyclops.evilcraft.fluid.Blood;
+import wayoftime.bloodmagic.common.item.IBindable;
+import wayoftime.bloodmagic.core.data.Binding;
+import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -43,25 +39,25 @@ import java.util.UUID;
  * @author rubensworks
  *
  */
-public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContainer implements IBindable {
+public class BoundBloodDrop extends DamageIndicatedItemFluidContainer implements IBindable {
 
-    private static org.cyclops.evilcraftcompat.modcompat.bloodmagic.BoundBloodDrop _instance = null;
+    private static BoundBloodDrop _instance = null;
 
     /**
      * Get the unique instance.
      * @return The instance.
      */
-    public static org.cyclops.evilcraftcompat.modcompat.bloodmagic.BoundBloodDrop getInstance() {
+    public static BoundBloodDrop getInstance() {
         return _instance;
     }
 
-    public BoundBloodDrop(ExtendedConfig<ItemConfig> eConfig) {
-        super(eConfig, Fluid.BUCKET_VOLUME, Blood.getInstance());
-        setPlaceFluids(true);
+    public BoundBloodDrop(ItemConfig eConfig) {
+        super(new Item.Properties(), FluidHelpers.BUCKET_VOLUME, () -> RegistryEntries.FLUID_BLOOD);
+        _instance = this;
     }
 
     @Override
-    public boolean onBind(EntityPlayer player, ItemStack stack) {
+    public boolean onBind(Player player, ItemStack stack) {
         return true;
     }
 
@@ -74,63 +70,56 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
     }
 
     @Override
-    public boolean hasEffect(ItemStack itemStack) {
+    public boolean isFoil(ItemStack itemStack) {
         return ItemHelpers.isActivated(itemStack);
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> itemList) {
-        if (ItemStackHelpers.isValidCreativeTab(this, tab)) {
-            itemList.add(new ItemStack(this));
-        }
-    }
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void addInformation(ItemStack itemStack, World world, List<String> list, ITooltipFlag flag) {
-        super.addInformation(itemStack, world, list, flag);
+    public void appendHoverText(ItemStack itemStack, Level world, List<Component> list, TooltipFlag flag) {
+        super.appendHoverText(itemStack, world, list, flag);
         L10NHelpers.addStatusInfo(list, ItemHelpers.isActivated(itemStack),
-                getTranslationKey() + ".info.auto_supply");
+                getDescriptionId() + ".info.auto_supply");
         Binding binding = getBinding(itemStack);
-        if(binding != null) {
+        if (binding != null) {
             String owner = binding.getOwnerName();
-            if(owner == null || owner.isEmpty()) {
-                owner = TextFormatting.ITALIC + L10NHelpers.localize(getTranslationKey() + ".info.current_owner.none");
+            if (owner == null || owner.isEmpty()) {
+                owner = ChatFormatting.ITALIC + L10NHelpers.localize(getDescriptionId() + ".info.current_owner.none");
             }
-            list.add(L10NHelpers.localize(getTranslationKey() + ".info.current_owner", owner));
+            list.add(Component.literal(L10NHelpers.localize(getDescriptionId() + ".info.current_owner", owner)));
         }
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-        ItemStack itemStack = player.getHeldItem(hand);
-        if(player.isSneaking()) {
-            if(!world.isRemote)
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        if (player.isShiftKeyDown()) {
+            if (!world.isClientSide) {
                 ItemHelpers.toggleActivation(itemStack);
-            return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStack);
+            }
+            return new InteractionResultHolder<>(InteractionResult.PASS, itemStack);
         }
-        return super.onItemRightClick(world, player, hand);
+        return super.use(world, player, hand);
     }
 
     @Override
-    public void onUpdate(ItemStack itemStack, World world, Entity entity, int par4, boolean par5) {
-        if(ItemHelpers.isActivated(itemStack)) {
-            ItemHelpers.updateAutoFill(FluidUtil.getFluidHandler(itemStack), world, entity, BoundBloodDropConfig.autoFillBuckets);
+    public void inventoryTick(ItemStack itemStack, Level world, Entity entity, int slot, boolean selected) {
+        if (ItemHelpers.isActivated(itemStack)) {
+            FluidUtil.getFluidHandler(itemStack).ifPresent(h ->
+                    ItemHelpers.updateAutoFill(h, world, entity, BoundBloodDropConfig.autoFillBuckets));
         }
-        super.onUpdate(itemStack, world, entity, par4, par5);
+        super.inventoryTick(itemStack, world, entity, slot, selected);
     }
 
     @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
-        // This is a hack!
-        return new FluidHandler(stack, Fluid.BUCKET_VOLUME);
+    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
+        return new FluidHandler(stack, FluidHelpers.BUCKET_VOLUME);
     }
 
     public static class FluidHandler extends FluidContainerItemWrapperWithSimulation {
 
         public FluidHandler(ItemStack container, int capacity) {
-            super(container, capacity, Blood.getInstance());
+            super(container, capacity, RegistryEntries.FLUID_BLOOD);
         }
 
         @Nullable
@@ -148,7 +137,7 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
             if (uuid == null) {
                 return 0;
             }
-            if (MinecraftHelpers.isClientSide()) {
+            if (MinecraftHelpers.isClientSideThread()) {
                 return getMaxEssence(uuid);
             }
             return NetworkHelper.getMaximumForTier(NetworkHelper.getSoulNetwork(uuid).getOrbTier());
@@ -160,46 +149,44 @@ public class BoundBloodDrop extends ConfigurableDamageIndicatedItemFluidContaine
         }
 
         @Override
-        public int fill(FluidStack resource, boolean doFill) {
-            doFill = shouldDoFill(resource, doFill);
+        public int fill(FluidStack resource, IFluidHandler.FluidAction action) {
+            IFluidHandler.FluidAction doFill = shouldDoFill(resource, action);
             UUID uuid = getUuid();
             if (uuid == null) {
                 return 0;
             }
             int essence = getCurrentEssence(uuid);
-            FluidStack essenceFluid = BloodFluidConverter.getInstance().convertReverse(BlockLifeEssence.getLifeEssence(), resource);
             int maxFill = Math.max(0, getCapacity() - essence);
-            int filled = Math.min(maxFill, essenceFluid == null ? 0 : essenceFluid.amount);
-            if(doFill && !MinecraftHelpers.isClientSide()) {
+            int filled = Math.min(maxFill, resource.getAmount());
+            if (doFill.execute() && !MinecraftHelpers.isClientSideThread()) {
                 NetworkHelper.getSoulNetwork(uuid).setCurrentEssence(essence + filled);
             }
-            return FluidHelpers.getAmount(BloodFluidConverter.getInstance().convert(new FluidStack(BlockLifeEssence.getLifeEssence(), filled)));
+            return filled;
         }
 
         @Override
-        public FluidStack drain(int maxDrain, boolean doDrain) {
+        public FluidStack drain(int maxDrain, IFluidHandler.FluidAction action) {
             UUID uuid = getUuid();
-            if(uuid == null) {
-                return null;
+            if (uuid == null) {
+                return FluidStack.EMPTY;
             }
             int essence = getCurrentEssence(uuid);
-            FluidStack toDrain = new FluidStack(Blood.getInstance(), maxDrain);
-            FluidStack toDrainEssence = BloodFluidConverter.getInstance().convertReverse(BlockLifeEssence.getLifeEssence(), toDrain);
-            int drainEssence = Math.min(essence, toDrainEssence == null ? 0 : toDrainEssence.amount);
-            if(doDrain && !MinecraftHelpers.isClientSide()) {
+            FluidStack toDrain = new FluidStack(RegistryEntries.FLUID_BLOOD, maxDrain);
+            int drainEssence = Math.min(essence, toDrain == null ? 0 : toDrain.getAmount());
+            if (action.execute() && !MinecraftHelpers.isClientSideThread()) {
                 NetworkHelper.getSoulNetwork(uuid).setCurrentEssence(essence - drainEssence);
             }
-            FluidStack drainedEssence = new FluidStack(BlockLifeEssence.getLifeEssence(), drainEssence);
-            return wrapSimulatedDrained(BloodFluidConverter.getInstance().convert(drainedEssence), doDrain);
+            FluidStack drained = new FluidStack(RegistryEntries.FLUID_BLOOD, drainEssence);
+            return wrapSimulatedDrained(drained, action);
         }
 
         @Override
-        public FluidStack drain(FluidStack resource, boolean doDrain) {
-            doDrain = shouldDoDrain(resource, doDrain);
-            if (resource != null && canDrainFluidType(resource)) {
-                return drain(resource.amount, doDrain);
+        public FluidStack drain(FluidStack resource, IFluidHandler.FluidAction action) {
+            IFluidHandler.FluidAction doDrain = shouldDoDrain(resource, action);
+            if (resource != null && canFillFluidType(resource)) {
+                return drain(resource.getAmount(), doDrain);
             }
-            return null;
+            return FluidStack.EMPTY;
         }
     }
 

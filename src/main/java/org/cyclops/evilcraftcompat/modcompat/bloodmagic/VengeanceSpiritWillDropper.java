@@ -1,14 +1,14 @@
 package org.cyclops.evilcraftcompat.modcompat.bloodmagic;
 
-import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.soul.IDemonWill;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.cyclops.evilcraft.ExtendedDamageSource;
-import org.cyclops.evilcraft.entity.monster.VengeanceSpirit;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import org.cyclops.evilcraft.ExtendedDamageSources;
+import org.cyclops.evilcraft.entity.monster.EntityVengeanceSpirit;
+import wayoftime.bloodmagic.api.compat.IDemonWill;
+import wayoftime.bloodmagic.common.item.BloodMagicItems;
 
 /**
  * Will's will be dropped when Vengeance Spirits are killed.
@@ -18,11 +18,11 @@ public class VengeanceSpiritWillDropper {
 
     @SubscribeEvent
     public void onLivingDrops(LivingDropsEvent event) {
-        EntityLivingBase attackedEntity = event.getEntityLiving();
-        if (attackedEntity instanceof VengeanceSpirit && event.getSource() instanceof ExtendedDamageSource.VengeanceBeamDamageSource) {
-            double amountOfSouls = attackedEntity.getEntityWorld().rand.nextDouble() * 20;
-            ItemStack soulStack = ((IDemonWill) RegistrarBloodMagicItems.MONSTER_SOUL).createWill(0, amountOfSouls);
-            event.getDrops().add(new EntityItem(attackedEntity.getEntityWorld(), attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
+        LivingEntity attackedEntity = event.getEntity();
+        if (attackedEntity instanceof EntityVengeanceSpirit && event.getSource().is(ExtendedDamageSources.DAMAGE_TYPE_VENGEANCE_BEAM)) {
+            double amountOfSouls = attackedEntity.level().random.nextDouble() * 20;
+            ItemStack soulStack = ((IDemonWill) BloodMagicItems.MONSTER_SOUL_RAW.get()).createWill(amountOfSouls);
+            event.getDrops().add(new ItemEntity(attackedEntity.level(), attackedEntity.getX(), attackedEntity.getY(), attackedEntity.getZ(), soulStack));
         }
     }
 

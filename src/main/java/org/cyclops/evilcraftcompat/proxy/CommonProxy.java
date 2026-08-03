@@ -4,6 +4,8 @@ import org.cyclops.cyclopscore.init.ModBase;
 import org.cyclops.cyclopscore.network.PacketHandler;
 import org.cyclops.cyclopscore.proxy.CommonProxyComponent;
 import org.cyclops.evilcraftcompat.EvilCraftCompat;
+import org.cyclops.evilcraftcompat.modcompat.bloodmagic.RequestSoulNetworkUpdatesPacket;
+import org.cyclops.evilcraftcompat.modcompat.bloodmagic.UpdateSoulNetworkCachePacket;
 import org.cyclops.evilcraftcompat.network.packet.JeiSpiritFurnaceRecipePacket;
 
 /**
@@ -21,6 +23,12 @@ public class CommonProxy extends CommonProxyComponent {
     @Override
     public void registerPacketHandlers(PacketHandler packetHandler) {
         super.registerPacketHandlers(packetHandler);
+
+        // JEI
         packetHandler.register(JeiSpiritFurnaceRecipePacket.class);
+
+        // Blood Magic
+        packetHandler.register(UpdateSoulNetworkCachePacket.class);
+        packetHandler.register(RequestSoulNetworkUpdatesPacket.class);
     }
 }

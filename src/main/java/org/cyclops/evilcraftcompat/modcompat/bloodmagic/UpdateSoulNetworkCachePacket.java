@@ -1,11 +1,11 @@
 package org.cyclops.evilcraftcompat.modcompat.bloodmagic;
 
 import com.google.common.collect.Maps;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.cyclops.cyclopscore.network.CodecField;
 import org.cyclops.cyclopscore.network.PacketCodec;
 
@@ -47,18 +47,18 @@ public class UpdateSoulNetworkCachePacket extends PacketCodec {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void actionClient(World world, EntityPlayer player) {
-        for(Map.Entry<String, Integer> entry : playerEssences.entrySet()) {
+    @OnlyIn(Dist.CLIENT)
+    public void actionClient(Level world, Player player) {
+        for (Map.Entry<String, Integer> entry : playerEssences.entrySet()) {
             ClientSoulNetworkHandler.getInstance().setCurrentEssence(entry.getKey(), entry.getValue());
         }
-        for(Map.Entry<String, Integer> entry : playerEssencesMax.entrySet()) {
+        for (Map.Entry<String, Integer> entry : playerEssencesMax.entrySet()) {
             ClientSoulNetworkHandler.getInstance().setMaxEssence(entry.getKey(), entry.getValue());
         }
     }
 
     @Override
-    public void actionServer(World world, EntityPlayerMP player) {
+    public void actionServer(Level world, ServerPlayer player) {
         // Do nothing
     }
 }

@@ -1,20 +1,13 @@
 package org.cyclops.evilcraftcompat.modcompat.bloodmagic;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.cyclops.cyclopscore.config.ConfigurableProperty;
-import org.cyclops.cyclopscore.config.ConfigurableTypeCategory;
 import org.cyclops.cyclopscore.config.extendedconfig.ItemConfig;
+import org.cyclops.cyclopscore.init.ModBase;
 import org.cyclops.evilcraft.EvilCraft;
 import org.cyclops.evilcraftcompat.EvilCraftCompat;
 
 /**
- * Config for the {@link org.cyclops.evilcraftcompat.modcompat.bloodmagic.BoundBloodDrop}.
+ * Config for the {@link BoundBloodDrop}.
  * @author rubensworks
  *
  */
@@ -23,48 +16,28 @@ public class BoundBloodDropConfig extends ItemConfig {
     /**
      * The unique instance.
      */
-    public static org.cyclops.evilcraftcompat.modcompat.bloodmagic.BoundBloodDropConfig _instance;
+    public static BoundBloodDropConfig _instance;
 
     /**
      * Max update frequency
      */
-    @ConfigurableProperty(category = ConfigurableTypeCategory.WORLDGENERATION, comment = "The amount of ticks the server should wait before sending a soul network update. (only for servers)")
+    @ConfigurableProperty(category = "item", comment = "The amount of ticks the server should wait before sending a soul network update. (only for servers)", isCommandable = true)
     public static int maxUpdateTicks = 40;
     /**
      * If held buckets should be autofilled when enabled.
      */
-    @ConfigurableProperty(category = ConfigurableTypeCategory.ITEM, comment = "If held buckets should be autofilled when enabled.", isCommandable = true)
+    @ConfigurableProperty(category = "item", comment = "If held buckets should be autofilled when enabled.", isCommandable = true)
     public static boolean autoFillBuckets = false;
 
     /**
      * Make a new instance.
      */
     public BoundBloodDropConfig() {
-        super(
-                EvilCraft._instance,
-                true,
-                "bound_blood_drop",
-                null,
-                BoundBloodDrop.class
-        );
-        MinecraftForge.EVENT_BUS.register(this);
+        super(EvilCraftCompat._instance, "bound_blood_drop", BoundBloodDrop::new);
     }
 
     @Override
-    public void onRegistered() {
-        super.onRegistered();
-        // TODO: make this not required anymore
-        // This is to make the recipe work, which was registered in EC
-        EvilCraft._instance.getConfigHandler().addToConfigDictionary(this);
-    }
-
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void afterItemsRegistered(RegistryEvent<Item> event) {
-        // Register predefined item for recipe
-        ItemStack weakOrb = new ItemStack(Item.getByNameOrId("bloodmagic:blood_orb"));
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setString("orb", "bloodmagic:weak");
-        weakOrb.setTagCompound(tag);
-        EvilCraftCompat._instance.getRecipeHandler().getPredefinedItems().put("evilcraft:weakbloodorb", weakOrb);
+    public ModBase getMod() {
+        return EvilCraft._instance;
     }
 }

@@ -16,7 +16,7 @@ EvilCraft compatibility with other mods.
     modId="evilcraft"
     mandatory=true
     versionRange="[1.2.0,)"
-    ordering="NONE"
+    ordering="AFTER"
     side="BOTH"
 [[dependencies.evilcraftcompat]]
     modId="cyclopscore"
