@@ -21,6 +21,11 @@ public class CommonProxy extends CommonProxyComponent {
     @Override
     public void registerPacketHandlers(PacketHandler packetHandler) {
         super.registerPacketHandlers(packetHandler);
+        // JEI
         packetHandler.register(JeiSpiritFurnaceRecipePacket.class, JeiSpiritFurnaceRecipePacket.ID, JeiSpiritFurnaceRecipePacket.CODEC);
+
+        // Blood Magic
+//        packetHandler.register(UpdateSoulNetworkCachePacket.class);
+//        packetHandler.register(RequestSoulNetworkUpdatesPacket.class);
     }
 }

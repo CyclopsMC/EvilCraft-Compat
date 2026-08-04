@@ -1,0 +1,24 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "bloodmagic"
+    }
+  ],
+  "type": "evilcraft:blood_infuser",
+  "item": {
+    "type": "bloodmagic:bloodorb",
+    "orb_tier": 1
+  },
+  "fluid": {
+    "fluid": "evilcraft:blood",
+    "amount": 10000
+  },
+  "result": {
+    "item": "evilcraft:bound_blood_drop"
+  },
+  "duration": 1000,
+  "tier": 2,
+  "xp": 10
+}
+
