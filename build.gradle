@@ -63,10 +63,6 @@ repositories {
         }
     }
     maven {
-        name 'DVS1 Maven FS'
-        url 'https://dvs1.progwml6.com/files/maven/'
-    }
-    maven {
         name 'tterrag'
         url 'https://maven.tterrag.com/'
     }
