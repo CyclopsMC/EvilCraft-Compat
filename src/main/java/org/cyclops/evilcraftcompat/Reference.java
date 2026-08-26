@@ -26,5 +26,5 @@ public class Reference {
     public static final String MOD_COMMONCAPABILITIES = "commoncapabilities";
     public static final String MOD_CURIOS = "curios";
     public static final String MOD_JEI = "jei";
-    public static final String MOD_BLOODMAGIC = "bloodmagic";
+    public static final String MOD_NEOVITAE = "neovitae";
 }

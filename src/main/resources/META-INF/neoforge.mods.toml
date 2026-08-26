@@ -31,6 +31,13 @@ description="${description}"
     ordering="NONE"
     side="BOTH"
 [[dependencies.${mod_id}]]
+    modId="neovitae"
+    type="optional"
+    versionRange="*"
+    # Must load after Neo Vitae, so that the tranquility values we add override the ones of Neo Vitae
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.${mod_id}]]
     modId="minecraft"
     type="required"
     versionRange="[${minecraft_version},]"

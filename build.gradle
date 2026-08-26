@@ -83,10 +83,32 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven {
+        name 'BreakinBlocks' // Neo Vitae
+        url 'https://maven.breakinblocks.com/releases'
+    }
+    maven {
+        name 'Klikli' // Modonomicon, required at runtime by Neo Vitae
+        url 'https://dl.cloudsmith.io/public/klikli-dev/mods/maven/'
+    }
+    maven {
+        name 'GeckoLib' // Required at runtime by Neo Vitae
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    }
+}
+
+// NeoForm adds its own (older) ASM to the classpath of the dev runs,
+// which clashes with the version that our NeoForge version depends on.
+configurations.configureEach {
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'org.ow2.asm') {
+            details.useVersion project.asm_version
+        }
+    }
 }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${project.neoforge_version}"
+    implementation "net.neoforged:neoforge:${project.neoforge_version_dev}"
 
 	// Add something like 'evilcraft_version_local=0.1.0-DEV' to your secrets.properties if you want to use a custom local EvilCraft version.
     if(secrets.evilcraft_version_local) {
@@ -115,8 +137,18 @@ dependencies {
 
     implementation("curse.maven:jade-324717:${jade_version}")
 
-//    implementation fg.deobf("curse.maven:blood-magic-224791:${bloodmagic_version}") // https://www.curseforge.com/minecraft/mc-mods/blood-magic/files/all?page=1&pageSize=20&showAlphaFiles=show
-//    implementation fg.deobf("curse.maven:patchouli-306770:${patchouli_version}") // https://www.curseforge.com/minecraft/mc-mods/patchouli/files/all?page=1&pageSize=20&showAlphaFiles=show
+    // Neo Vitae (the Blood Magic successor) https://maven.breakinblocks.com/#/releases/com/breakinblocks/neovitae/neovitae
+    // Its published metadata declares runtime dependencies that are not available on this repo, so they are pulled in manually below.
+    implementation("com.breakinblocks.neovitae:neovitae:${project.neovitae_version}") {
+        transitive = false
+    }
+    // Neo Vitae's mandatory runtime dependencies, only needed to be able to run Neo Vitae in dev (e.g. for game tests)
+    runtimeOnly("software.bernie.geckolib:geckolib-neoforge-${project.minecraft_version}:${project.geckolib_version}") {
+        transitive = false
+    }
+    runtimeOnly("com.klikli_dev:modonomicon-${project.minecraft_version}-neoforge:${project.modonomicon_version}") {
+        transitive = false
+    }
 }
 
 minecraft {
@@ -292,7 +324,6 @@ sourceSets {
             exclude '**/modcompat/tconstruct/**'
             exclude '**/modcompat/thaumcraft/**'
             exclude '**/modcompat/thermalexpansion/**'
-            exclude '**/modcompat/bloodmagic/**'
         }
     }
 }

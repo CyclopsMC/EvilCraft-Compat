@@ -1,0 +1,41 @@
+{
+  "replace": false,
+  "values": {
+    "evilcraft:undead_log": {
+      "type": "tree",
+      "value": 1.2
+    },
+    "evilcraft:undead_log_stripped": {
+      "type": "tree",
+      "value": 1.2
+    },
+    "evilcraft:undead_leaves": {
+      "type": "plant",
+      "value": 1.2
+    },
+    "evilcraft:undead_planks": {
+      "type": "plant",
+      "value": 0.8
+    },
+    "evilcraft:blood": {
+      "type": "water",
+      "value": 1.6
+    },
+    "evilcraft:poison": {
+      "type": "water",
+      "value": 0.8
+    },
+    "evilcraft:hardened_blood": {
+      "type": "earthen",
+      "value": 1.5
+    },
+    "evilcraft:dark_brick": {
+      "type": "earthen",
+      "value": 1.0
+    },
+    "evilcraft:dark_blood_brick": {
+      "type": "earthen",
+      "value": 1.5
+    }
+  }
+}

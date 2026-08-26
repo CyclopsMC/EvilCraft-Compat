@@ -13,6 +13,7 @@ import org.cyclops.evilcraft.EvilCraft;
 import org.cyclops.evilcraft.infobook.OriginsOfDarknessBook;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.CommonCapabilitiesCompat;
 import org.cyclops.evilcraftcompat.modcompat.jei.JeiCompat;
+import org.cyclops.evilcraftcompat.modcompat.neovitae.NeoVitaeModCompat;
 import org.cyclops.evilcraftcompat.proxy.ClientProxy;
 import org.cyclops.evilcraftcompat.proxy.CommonProxy;
 
@@ -38,8 +39,8 @@ public class EvilCraftCompat extends ModBaseVersionable<EvilCraftCompat> {
     protected void loadModCompats(ModCompatLoader modCompatLoader) {
         // Mod compats
         modCompatLoader.addModCompat(new JeiCompat());
-        /*modCompatLoader.addModCompat(new BloodMagicModCompat());
-        modCompatLoader.addModCompat(new TConstructModCompat());
+        modCompatLoader.addModCompat(new NeoVitaeModCompat());
+        /*modCompatLoader.addModCompat(new TConstructModCompat());
         modCompatLoader.addModCompat(new ForestryModCompat());
         modCompatLoader.addModCompat(new IC2ModCompat());
         modCompatLoader.addModCompat(new ImmersiveEngineeringModCompat());
