@@ -108,7 +108,7 @@ configurations.configureEach {
 }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${project.neoforge_version_dev}"
+    implementation "net.neoforged:neoforge:${project.neoforge_version}"
 
 	// Add something like 'evilcraft_version_local=0.1.0-DEV' to your secrets.properties if you want to use a custom local EvilCraft version.
     if(secrets.evilcraft_version_local) {

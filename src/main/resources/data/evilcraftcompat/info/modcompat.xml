@@ -4,10 +4,10 @@
         <tag type="mod">baubles</tag>
         <paragraph>info_book.evilcraftcompat.mod_integrations.baubles.text</paragraph>
     </section-disabled>
-    <section name="info_book.evilcraftcompat.mod_integrations.blood_magic">
+    <section name="info_book.evilcraftcompat.mod_integrations.neovitae">
         <tag type="mod">neovitae</tag>
         <tag>evilcraft:bound_blood_drop</tag>
-        <paragraph>info_book.evilcraftcompat.mod_integrations.blood_magic.text</paragraph>
+        <paragraph>info_book.evilcraftcompat.mod_integrations.neovitae.text</paragraph>
         <appendix type="evilcraft:blood_infuser">evilcraftcompat:blood_infuser/neovitae/bound_blood_drop</appendix>
     </section>
     <section-disabled name="info_book.evilcraftcompat.mod_integrations.ee3">

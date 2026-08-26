@@ -7,8 +7,8 @@
   "info_book.evilcraftcompat.mod_integrations.baubles": "Baubles",
   "info_book.evilcraftcompat.mod_integrations.baubles.text": "The mod that adds several convenient new accessory slots to your player is also able to store the rings and pendants that are offered in this book. They still keep working as if they were inside your inventory. Baubles for everyone!",
 
-  "info_book.evilcraftcompat.mod_integrations.blood_magic": "Neo Vitae",
-  "info_book.evilcraftcompat.mod_integrations.blood_magic.text": "One day I discovered a very strange &1Divination Sigil&0 that must have been owned by some kind of &1Magician&0. When using it I felt like I was somehow connected to it. After a while I discovered that it was in fact connected to my &4Blood&0 stream. By forcing a large amount of &4Blood&0 through it using the &1Blood Infuser&0, I've managed to create an item that is both connected to my &4Blood&0 stream and can be used as a simple container, allowing me to place it in my favorite machines and using it with my items.",
+  "info_book.evilcraftcompat.mod_integrations.neovitae": "Neo Vitae",
+  "info_book.evilcraftcompat.mod_integrations.neovitae.text": "One day I discovered a very strange &1Divination Sigil&0 that must have been owned by some kind of &1Magician&0. When using it I felt like I was somehow connected to it. After a while I discovered that it was in fact connected to my &4Blood&0 stream. By forcing a large amount of &4Blood&0 through it using the &1Blood Infuser&0, I've managed to create an item that is both connected to my &4Blood&0 stream and can be used as a simple container, allowing me to place it in my favorite machines and using it with my items.",
 
   "info_book.evilcraftcompat.mod_integrations.ee3": "Equivalent Exchange 3",
   "info_book.evilcraftcompat.mod_integrations.ee3.text": "Magicians have discovered that almost all things in this world have some kind of &1value&0 relative to other things. These people have mastered the act of &1transmuting&0 these things to each other. Their strange methods even seem to work with my items.",
