@@ -1,5 +1,6 @@
 {
   "item.items.evilcraft.veined_scribing_tools": "Veined Scribing Tools",
+  "item.evilcraft.bound_blood_drop.info": "Right click to bind with your Neo Vitae Anima.",
 
   "_comment": "--- Mod Integrations ---",
   "info_book.evilcraftcompat.mod_integrations": "&oMod Integrations&r",
