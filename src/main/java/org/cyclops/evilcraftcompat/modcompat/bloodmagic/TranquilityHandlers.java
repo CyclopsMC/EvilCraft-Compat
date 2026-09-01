@@ -1,15 +1,14 @@
 package org.cyclops.evilcraftcompat.modcompat.bloodmagic;
 
-import WayofTime.bloodmagic.incense.EnumTranquilityType;
-import WayofTime.bloodmagic.incense.ITranquilityHandler;
-import WayofTime.bloodmagic.incense.IncenseTranquilityRegistry;
-import WayofTime.bloodmagic.incense.TranquilityStack;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import org.cyclops.evilcraft.Configs;
-import org.cyclops.evilcraft.block.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import org.cyclops.evilcraft.RegistryEntries;
+import wayoftime.bloodmagic.incense.EnumTranquilityType;
+import wayoftime.bloodmagic.incense.ITranquilityHandler;
+import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
+import wayoftime.bloodmagic.incense.TranquilityStack;
 
 /**
  * Tranquility handlers for Blood Magic
@@ -18,19 +17,19 @@ import org.cyclops.evilcraft.block.*;
 public class TranquilityHandlers {
 
     public static void register() {
-        IncenseTranquilityRegistry.registerTranquilityHandler(new org.cyclops.evilcraftcompat.modcompat.bloodmagic.TranquilityHandlers.TreeLog());
-        IncenseTranquilityRegistry.registerTranquilityHandler(new org.cyclops.evilcraftcompat.modcompat.bloodmagic.TranquilityHandlers.TreeLeaves());
-        IncenseTranquilityRegistry.registerTranquilityHandler(new org.cyclops.evilcraftcompat.modcompat.bloodmagic.TranquilityHandlers.Planks());
-        IncenseTranquilityRegistry.registerTranquilityHandler(new org.cyclops.evilcraftcompat.modcompat.bloodmagic.TranquilityHandlers.Poison());
-        IncenseTranquilityRegistry.registerTranquilityHandler(new org.cyclops.evilcraftcompat.modcompat.bloodmagic.TranquilityHandlers.HardenedBlood());
-        IncenseTranquilityRegistry.registerTranquilityHandler(new org.cyclops.evilcraftcompat.modcompat.bloodmagic.TranquilityHandlers.DarkBricks());
-        IncenseTranquilityRegistry.registerTranquilityHandler(new org.cyclops.evilcraftcompat.modcompat.bloodmagic.TranquilityHandlers.DarkBloodBricks());
+        IncenseTranquilityRegistry.registerTranquilityHandler(new TreeLog());
+        IncenseTranquilityRegistry.registerTranquilityHandler(new TreeLeaves());
+        IncenseTranquilityRegistry.registerTranquilityHandler(new Planks());
+        IncenseTranquilityRegistry.registerTranquilityHandler(new Poison());
+        IncenseTranquilityRegistry.registerTranquilityHandler(new HardenedBlood());
+        IncenseTranquilityRegistry.registerTranquilityHandler(new DarkBricks());
+        IncenseTranquilityRegistry.registerTranquilityHandler(new DarkBloodBricks());
     }
 
     public static class TreeLog implements ITranquilityHandler {
         @Override
-        public TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state) {
-            if (Configs.isEnabled(UndeadLogConfig.class) && block == UndeadLogConfig._instance.getBlockInstance()) {
+        public TranquilityStack getTranquilityOfBlock(Level world, BlockPos pos, Block block, BlockState state) {
+            if (block == RegistryEntries.BLOCK_UNDEAD_LOG) {
                 return new TranquilityStack(EnumTranquilityType.TREE, 1.2);
             }
             return null;
@@ -39,8 +38,8 @@ public class TranquilityHandlers {
 
     public static class TreeLeaves implements ITranquilityHandler {
         @Override
-        public TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state) {
-            if (Configs.isEnabled(UndeadLeavesConfig.class) && block == UndeadLeaves.getInstance()) {
+        public TranquilityStack getTranquilityOfBlock(Level world, BlockPos pos, Block block, BlockState state) {
+            if (block == RegistryEntries.BLOCK_UNDEAD_LEAVES) {
                 return new TranquilityStack(EnumTranquilityType.PLANT, 1.2);
             }
             return null;
@@ -49,8 +48,8 @@ public class TranquilityHandlers {
 
     public static class Planks implements ITranquilityHandler {
         @Override
-        public TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state) {
-            if (Configs.isEnabled(UndeadPlankConfig.class) && block == UndeadPlankConfig._instance.getBlockInstance()) {
+        public TranquilityStack getTranquilityOfBlock(Level world, BlockPos pos, Block block, BlockState state) {
+            if (block == RegistryEntries.BLOCK_UNDEAD_PLANK) {
                 return new TranquilityStack(EnumTranquilityType.PLANT, 0.8);
             }
             return null;
@@ -59,8 +58,8 @@ public class TranquilityHandlers {
 
     public static class Blood implements ITranquilityHandler {
         @Override
-        public TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state) {
-            if (Configs.isEnabled(org.cyclops.evilcraft.fluid.BloodConfig.class) && block == org.cyclops.evilcraft.fluid.Blood.getInstance().getBlock()) {
+        public TranquilityStack getTranquilityOfBlock(Level world, BlockPos pos, Block block, BlockState state) {
+            if (block == RegistryEntries.BLOCK_BLOOD) {
                 return new TranquilityStack(EnumTranquilityType.WATER, 1.6);
             }
             return null;
@@ -69,8 +68,8 @@ public class TranquilityHandlers {
 
     public static class Poison implements ITranquilityHandler {
         @Override
-        public TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state) {
-            if (Configs.isEnabled(org.cyclops.evilcraft.fluid.PoisonConfig.class) && block == org.cyclops.evilcraft.fluid.Poison.getInstance().getBlock()) {
+        public TranquilityStack getTranquilityOfBlock(Level world, BlockPos pos, Block block, BlockState state) {
+            if (block == RegistryEntries.BLOCK_POISON) {
                 return new TranquilityStack(EnumTranquilityType.WATER, 0.8);
             }
             return null;
@@ -79,8 +78,8 @@ public class TranquilityHandlers {
 
     public static class HardenedBlood implements ITranquilityHandler {
         @Override
-        public TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state) {
-            if (Configs.isEnabled(HardenedBloodConfig.class) && block == org.cyclops.evilcraft.block.HardenedBlood.getInstance()) {
+        public TranquilityStack getTranquilityOfBlock(Level world, BlockPos pos, Block block, BlockState state) {
+            if (block == RegistryEntries.BLOCK_HARDENED_BLOOD) {
                 return new TranquilityStack(EnumTranquilityType.EARTHEN, 1.5);
             }
             return null;
@@ -89,8 +88,8 @@ public class TranquilityHandlers {
 
     public static class DarkBricks implements ITranquilityHandler {
         @Override
-        public TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state) {
-            if (Configs.isEnabled(DarkBrickConfig.class) && block == DarkBrickConfig._instance.getBlockInstance()) {
+        public TranquilityStack getTranquilityOfBlock(Level world, BlockPos pos, Block block, BlockState state) {
+            if (block == RegistryEntries.BLOCK_DARK_BRICK) {
                 return new TranquilityStack(EnumTranquilityType.EARTHEN, 1);
             }
             return null;
@@ -99,8 +98,8 @@ public class TranquilityHandlers {
 
     public static class DarkBloodBricks implements ITranquilityHandler {
         @Override
-        public TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state) {
-            if (Configs.isEnabled(DarkBloodBrickConfig.class) && block == DarkBloodBrickConfig._instance.getBlockInstance()) {
+        public TranquilityStack getTranquilityOfBlock(Level world, BlockPos pos, Block block, BlockState state) {
+            if (block == RegistryEntries.BLOCK_DARK_BLOOD_BRICK) {
                 return new TranquilityStack(EnumTranquilityType.EARTHEN, 1.5);
             }
             return null;
