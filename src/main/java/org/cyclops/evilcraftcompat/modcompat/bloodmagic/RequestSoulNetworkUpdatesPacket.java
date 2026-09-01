@@ -1,10 +1,5 @@
 package org.cyclops.evilcraftcompat.modcompat.bloodmagic;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.world.World;
-import net.neoforged.fml.relauncher.Side;
-import net.neoforged.fml.relauncher.SideOnly;
 import org.cyclops.cyclopscore.network.CodecField;
 import org.cyclops.cyclopscore.network.PacketCodec;
 
@@ -40,13 +35,13 @@ public class RequestSoulNetworkUpdatesPacket extends PacketCodec {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void actionClient(World world, EntityPlayer player) {
+    @OnlyIn(Dist.CLIENT)
+    public void actionClient(Level world, Player player) {
         // Do nothing
     }
 
     @Override
-    public void actionServer(World world, EntityPlayerMP player) {
+    public void actionServer(Level world, ServerPlayer player) {
         ClientSoulNetworkHandler.getInstance().addUpdatePlayer(player, this.uuid);
     }
 }

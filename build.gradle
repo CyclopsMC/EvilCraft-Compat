@@ -63,10 +63,6 @@ repositories {
         }
     }
     maven {
-        name 'DVS1 Maven FS'
-        url 'https://dvs1.progwml6.com/files/maven/'
-    }
-    maven {
         name 'tterrag'
         url 'https://maven.tterrag.com/'
     }
@@ -113,6 +109,9 @@ dependencies {
     compileOnly("top.theillusivec4.curios:curios-neoforge:${project.curios_version}:api")
 
     implementation("curse.maven:jade-324717:${jade_version}")
+
+//    implementation fg.deobf("curse.maven:blood-magic-224791:${bloodmagic_version}") // https://www.curseforge.com/minecraft/mc-mods/blood-magic/files/all?page=1&pageSize=20&showAlphaFiles=show
+//    implementation fg.deobf("curse.maven:patchouli-306770:${patchouli_version}") // https://www.curseforge.com/minecraft/mc-mods/patchouli/files/all?page=1&pageSize=20&showAlphaFiles=show
 }
 
 neoForge {
@@ -274,7 +273,6 @@ sourceSets {
     main {
         java {
             // TODO: temporarily disable some mod compats
-            exclude '**/modcompat/bloodmagic/**'
             exclude '**/modcompat/crafttweaker/**'
             exclude '**/modcompat/enderio/**'
             exclude '**/modcompat/forestry/**'
@@ -283,6 +281,7 @@ sourceSets {
             exclude '**/modcompat/tconstruct/**'
             exclude '**/modcompat/thaumcraft/**'
             exclude '**/modcompat/thermalexpansion/**'
+            exclude '**/modcompat/bloodmagic/**'
         }
     }
 }
