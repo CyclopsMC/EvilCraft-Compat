@@ -4,7 +4,7 @@ import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
+import net.neoforged.neoforge.transfer.fluid.FluidUtil;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -14,7 +14,7 @@ public class SubtypeInterpreterActivatableFluidContainer implements ISubtypeInte
 
     @Override
     public @Nullable Object getSubtypeData(ItemStack itemStack, UidContext context) {
-        FluidStack fluidStack = FluidUtil.getFluidContained(itemStack).orElse(FluidStack.EMPTY);
+        FluidStack fluidStack = FluidUtil.getFirstStackContained(itemStack);
         return fluidStack.getFluid();
     }
 }
