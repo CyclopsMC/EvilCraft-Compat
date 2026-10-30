@@ -5,6 +5,8 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.*;
+import mezz.jei.api.runtime.IJeiRuntime;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -34,7 +36,6 @@ import org.cyclops.evilcraftcompat.modcompat.jei.spiritreanimator.SpiritReanimat
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * Helper for registering JEI manager.
@@ -44,7 +45,8 @@ import java.util.function.Consumer;
 @JeiPlugin
 public class JEIEvilCraftConfig implements IModPlugin {
 
-    public static Consumer<List<SpiritFurnaceRecipeJEI>> SPIRIT_FURNACE_RECIPES_REGISTRAR;
+    private static IJeiRuntime RUNTIME;
+    private static List<SpiritFurnaceRecipeJEI> PENDING_SPIRIT_FURNACE_RECIPES;
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration subtypeRegistry) {
@@ -79,8 +81,51 @@ public class JEIEvilCraftConfig implements IModPlugin {
         registry.addRecipes(EnvironmentalAccumulatorRecipeCategory.TYPE, EnvironmentalAccumulatorRecipeJEI.getAllRecipes());
         registry.addRecipes(SanguinaryEnvironmentalAccumulatorRecipeCategory.TYPE, SanguinaryEnvironmentalAccumulatorRecipeJEI.getAllRecipes());
         registry.addRecipes(SpiritReanimatorRecipeCategory.TYPE, SpiritReanimatorRecipeJEI.getAllRecipes());
-        // We wait on the server, as these recipes depend on server-only data.
-        SPIRIT_FURNACE_RECIPES_REGISTRAR = (recipes) -> registry.addRecipes(SpiritFurnaceRecipeCategory.TYPE, recipes);
+        // Spirit furnace recipes depend on server-only data, so they are added via the runtime once received.
+    }
+
+    /**
+     * Add spirit furnace recipes received from the server.
+     * If JEI is not running yet, they are added once its runtime becomes available.
+     * @param recipes The recipes.
+     */
+    public static void addSpiritFurnaceRecipes(List<SpiritFurnaceRecipeJEI> recipes) {
+        synchronized (JEIEvilCraftConfig.class) {
+            PENDING_SPIRIT_FURNACE_RECIPES = recipes;
+        }
+        flushSpiritFurnaceRecipes();
+    }
+
+    // JEI requires runtime recipe additions on the main thread.
+    private static void flushSpiritFurnaceRecipes() {
+        Minecraft.getInstance().execute(() -> {
+            IJeiRuntime runtime;
+            List<SpiritFurnaceRecipeJEI> recipes;
+            synchronized (JEIEvilCraftConfig.class) {
+                runtime = RUNTIME;
+                recipes = PENDING_SPIRIT_FURNACE_RECIPES;
+                if (runtime == null || recipes == null) {
+                    return;
+                }
+                PENDING_SPIRIT_FURNACE_RECIPES = null;
+            }
+            runtime.getRecipeManager().addRecipes(SpiritFurnaceRecipeCategory.TYPE, recipes);
+        });
+    }
+
+    @Override
+    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+        synchronized (JEIEvilCraftConfig.class) {
+            RUNTIME = jeiRuntime;
+        }
+        flushSpiritFurnaceRecipes();
+    }
+
+    @Override
+    public void onRuntimeUnavailable() {
+        synchronized (JEIEvilCraftConfig.class) {
+            RUNTIME = null;
+        }
     }
 
     @Override

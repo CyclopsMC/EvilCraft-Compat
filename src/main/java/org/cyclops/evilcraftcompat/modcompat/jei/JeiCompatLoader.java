@@ -37,7 +37,7 @@ public class JeiCompatLoader implements ICompatInitializer {
         }
         SPIRIT_FURNACE_RECIPES.add(recipe);
         if (SPIRIT_FURNACE_RECIPES.size() == totalCount) {
-            JEIEvilCraftConfig.SPIRIT_FURNACE_RECIPES_REGISTRAR.accept(SPIRIT_FURNACE_RECIPES);
+            JEIEvilCraftConfig.addSpiritFurnaceRecipes(SPIRIT_FURNACE_RECIPES);
             SPIRIT_FURNACE_RECIPES = null;
         }
     }
