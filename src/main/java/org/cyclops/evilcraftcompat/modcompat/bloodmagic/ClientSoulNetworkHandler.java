@@ -25,9 +25,10 @@ import java.util.UUID;
 public class ClientSoulNetworkHandler {
 
     private static ClientSoulNetworkHandler _instance = null;
-    private Map<String, Integer> PLAYER_CONTENTS_CACHE = Maps.newHashMap();
-    private Map<String, Integer> PLAYER_MAX_CACHE = Maps.newHashMap();
-    private final Set<String> UPDATE_PLAYERS = Sets.newHashSet();
+    // Concurrent, as these are accessed from network threads, and shared between client and server in singleplayer.
+    private Map<String, Integer> PLAYER_CONTENTS_CACHE = Maps.newConcurrentMap();
+    private Map<String, Integer> PLAYER_MAX_CACHE = Maps.newConcurrentMap();
+    private final Set<String> UPDATE_PLAYERS = Sets.newConcurrentHashSet();
 
     private ClientSoulNetworkHandler() {
 
@@ -37,8 +38,8 @@ public class ClientSoulNetworkHandler {
      * Reset the instance.
      */
     public static void reset() {
-        getInstance().PLAYER_CONTENTS_CACHE = Maps.newHashMap();
-        getInstance().PLAYER_MAX_CACHE = Maps.newHashMap();
+        getInstance().PLAYER_CONTENTS_CACHE = Maps.newConcurrentMap();
+        getInstance().PLAYER_MAX_CACHE = Maps.newConcurrentMap();
     }
 
     /**
@@ -116,8 +117,9 @@ public class ClientSoulNetworkHandler {
      */
     public void addUpdatePlayer(ServerPlayer player, String uuid) {
         UPDATE_PLAYERS.add(uuid);
+        // Send copies, so that the encoded map size matches its encoded entries.
         EvilCraftCompat._instance.getPacketHandler().sendToPlayer(
-                new UpdateSoulNetworkCachePacket(PLAYER_CONTENTS_CACHE, PLAYER_MAX_CACHE), player);
+                new UpdateSoulNetworkCachePacket(Maps.newHashMap(PLAYER_CONTENTS_CACHE), Maps.newHashMap(PLAYER_MAX_CACHE)), player);
     }
 
     /**
