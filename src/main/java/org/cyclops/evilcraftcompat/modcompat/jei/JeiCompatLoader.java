@@ -2,7 +2,9 @@ package org.cyclops.evilcraftcompat.modcompat.jei;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import org.cyclops.cyclopscore.modcompat.ICompatInitializer;
 import org.cyclops.evilcraftcompat.EvilCraftCompat;
 import org.cyclops.evilcraftcompat.modcompat.jei.spiritfurnace.SpiritFurnaceRecipeJEI;
@@ -17,18 +19,39 @@ import java.util.List;
 public class JeiCompatLoader implements ICompatInitializer {
 
     private static List<SpiritFurnaceRecipeJEI> SPIRIT_FURNACE_RECIPES;
+    private static List<SpiritFurnaceRecipeJEI> SERVER_SPIRIT_FURNACE_RECIPES;
 
     @Override
     public void initialize() {
         NeoForge.EVENT_BUS.addListener(this::onPlayerJoin);
+        NeoForge.EVENT_BUS.addListener(this::onDatapackSync);
+        NeoForge.EVENT_BUS.addListener(this::onServerStopped);
     }
 
     private void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
         // Send loot tables from server to client.
-        List<SpiritFurnaceRecipeJEI> recipes = SpiritFurnaceRecipeJEI.generateServerRecipes();
+        List<SpiritFurnaceRecipeJEI> recipes = getServerSpiritFurnaceRecipes();
         for (SpiritFurnaceRecipeJEI recipe : recipes) {
             EvilCraftCompat._instance.getPacketHandler().sendToPlayer(new JeiSpiritFurnaceRecipePacket(recipe, recipes.size()), (ServerPlayer) event.getEntity());
         }
+    }
+
+    private static List<SpiritFurnaceRecipeJEI> getServerSpiritFurnaceRecipes() {
+        if (SERVER_SPIRIT_FURNACE_RECIPES == null) {
+            SERVER_SPIRIT_FURNACE_RECIPES = SpiritFurnaceRecipeJEI.generateServerRecipes();
+        }
+        return SERVER_SPIRIT_FURNACE_RECIPES;
+    }
+
+    private void onDatapackSync(OnDatapackSyncEvent event) {
+        // A null player means datapacks were reloaded, which may change loot tables.
+        if (event.getPlayer() == null) {
+            SERVER_SPIRIT_FURNACE_RECIPES = null;
+        }
+    }
+
+    private void onServerStopped(ServerStoppedEvent event) {
+        SERVER_SPIRIT_FURNACE_RECIPES = null;
     }
 
     public static void receiveSpiritFurnaceRecipeOnClient(SpiritFurnaceRecipeJEI recipe, int totalCount) {
