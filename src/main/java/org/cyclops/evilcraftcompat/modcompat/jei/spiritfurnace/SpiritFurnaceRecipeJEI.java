@@ -119,7 +119,6 @@ public class SpiritFurnaceRecipeJEI {
                 result = function.apply(result, context);
             }
         }
-        // Functions such as random counts can produce an empty stack, while the item can still drop.
         return result.isEmpty() ? itemStack : result;
     }
 
