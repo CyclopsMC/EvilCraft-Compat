@@ -79,7 +79,8 @@ public class SpiritFurnaceRecipeJEI {
     }
 
     /**
-     * Collect the drops of all entries in the given loot table, including nested tables and composite entries.
+     * Collect the possible drops of all entries in the given loot table, including nested tables and composite entries.
+     * Pool and entry conditions are not checked, so that the result does not depend on random chance.
      * Exploration map functions are skipped, as their structure search can generate chunks and block the server for a long time.
      */
     private static void addLootTableDrops(LootTable lootTable, LootContext context, Consumer<ItemStack> output) {
@@ -95,9 +96,6 @@ public class SpiritFurnaceRecipeJEI {
     }
 
     private static void addEntryDrops(LootPoolEntryContainer entryContainer, LootContext context, Consumer<ItemStack> output) {
-        if (!entryContainer.canRun(context)) {
-            return;
-        }
         if (entryContainer instanceof CompositeEntryBase compositeEntry) {
             for (LootPoolEntryContainer child : compositeEntry.children) {
                 addEntryDrops(child, context, output);
@@ -115,12 +113,14 @@ public class SpiritFurnaceRecipeJEI {
     }
 
     private static ItemStack applyFunctionsExceptExplorationMaps(LootItemFunction[] functions, ItemStack itemStack, LootContext context) {
+        ItemStack result = itemStack.copy();
         for (LootItemFunction function : functions) {
             if (!(function instanceof ExplorationMapFunction)) {
-                itemStack = function.apply(itemStack, context);
+                result = function.apply(result, context);
             }
         }
-        return itemStack;
+        // Functions such as random counts can produce an empty stack, while the item can still drop.
+        return result.isEmpty() ? itemStack : result;
     }
 
     public static int getRequiredTicks(Entity entity) {
