@@ -12,6 +12,9 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
@@ -25,6 +28,7 @@ import org.cyclops.evilcraft.block.BlockSpiritFurnaceConfig;
 import org.cyclops.evilcraft.entity.monster.EntityVengeanceSpirit;
 import org.cyclops.evilcraftcompat.modcompat.jei.spiritreanimator.SpiritReanimatorRecipeJEI;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -70,10 +74,27 @@ public class SpiritFurnaceRecipeJEI {
         LootTable lootTable = ServerLifecycleHooks.getCurrentServer().getLootData().getLootTable(entityType.getDefaultLootTable());
         for (LootPool pool : lootTable.pools) {
             for (LootPoolEntryContainer entryContainer : pool.entries) {
-                entryContainer.expand(context, entry -> entry.createItemStack(items::add, context));
+                if (entryContainer instanceof LootPoolSingletonContainer singletonContainer
+                        && Arrays.stream(singletonContainer.functions).anyMatch(function -> function instanceof ExplorationMapFunction)) {
+                    // Skip exploration maps, as their structure search can generate chunks and block the server for a long time.
+                    if (singletonContainer.canRun(context)) {
+                        singletonContainer.createItemStack(item -> items.add(applyFunctionsExceptExplorationMaps(singletonContainer.functions, item, context)), context);
+                    }
+                } else {
+                    entryContainer.expand(context, entry -> entry.createItemStack(items::add, context));
+                }
             }
         }
         return items;
+    }
+
+    private static ItemStack applyFunctionsExceptExplorationMaps(LootItemFunction[] functions, ItemStack itemStack, LootContext context) {
+        for (LootItemFunction function : functions) {
+            if (!(function instanceof ExplorationMapFunction)) {
+                itemStack = function.apply(itemStack, context);
+            }
+        }
+        return itemStack;
     }
 
     public static int getRequiredTicks(Entity entity) {
