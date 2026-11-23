@@ -11,6 +11,7 @@ import org.cyclops.cyclopscore.proxy.IClientProxy;
 import org.cyclops.cyclopscore.proxy.ICommonProxy;
 import org.cyclops.evilcraft.EvilCraft;
 import org.cyclops.evilcraft.infobook.OriginsOfDarknessBook;
+import org.cyclops.evilcraftcompat.gametest.GameTestsSpiritFurnaceJEI;
 import org.cyclops.evilcraftcompat.modcompat.capabilities.CommonCapabilitiesCompat;
 import org.cyclops.evilcraftcompat.modcompat.jei.JeiModCompat;
 import org.cyclops.evilcraftcompat.proxy.ClientProxy;
@@ -71,6 +72,13 @@ public class EvilCraftCompat extends ModBaseNeoForge<EvilCraftCompat> {
     @Override
     protected ICommonProxy constructCommonProxy() {
         return new CommonProxy();
+    }
+
+    @Override
+    public Class<?>[] getGameTestClasses() {
+        return new Class<?>[]{
+                GameTestsSpiritFurnaceJEI.class
+        };
     }
 
     @Override
