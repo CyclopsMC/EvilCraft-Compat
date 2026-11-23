@@ -11,8 +11,10 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.CompositeEntryBase;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.entries.LootTableReference;
 import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -28,8 +30,8 @@ import org.cyclops.evilcraft.block.BlockSpiritFurnaceConfig;
 import org.cyclops.evilcraft.entity.monster.EntityVengeanceSpirit;
 import org.cyclops.evilcraftcompat.modcompat.jei.spiritreanimator.SpiritReanimatorRecipeJEI;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Recipe wrapper for Spirit Furnace recipes
@@ -72,20 +74,44 @@ public class SpiritFurnaceRecipeJEI {
         LootContext context = new LootContext.Builder(params).create(entityType.getDefaultLootTable());
 
         LootTable lootTable = ServerLifecycleHooks.getCurrentServer().getLootData().getLootTable(entityType.getDefaultLootTable());
-        for (LootPool pool : lootTable.pools) {
-            for (LootPoolEntryContainer entryContainer : pool.entries) {
-                if (entryContainer instanceof LootPoolSingletonContainer singletonContainer
-                        && Arrays.stream(singletonContainer.functions).anyMatch(function -> function instanceof ExplorationMapFunction)) {
-                    // Skip exploration maps, as their structure search can generate chunks and block the server for a long time.
-                    if (singletonContainer.canRun(context)) {
-                        singletonContainer.createItemStack(item -> items.add(applyFunctionsExceptExplorationMaps(singletonContainer.functions, item, context)), context);
-                    }
-                } else {
-                    entryContainer.expand(context, entry -> entry.createItemStack(items::add, context));
+        addLootTableDrops(lootTable, context, items::add);
+        return items;
+    }
+
+    /**
+     * Collect the drops of all entries in the given loot table, including nested tables and composite entries.
+     * Exploration map functions are skipped, as their structure search can generate chunks and block the server for a long time.
+     */
+    private static void addLootTableDrops(LootTable lootTable, LootContext context, Consumer<ItemStack> output) {
+        LootContext.VisitedEntry<LootTable> visitedEntry = LootContext.createVisitedEntry(lootTable);
+        if (context.pushVisitedElement(visitedEntry)) {
+            for (LootPool pool : lootTable.pools) {
+                for (LootPoolEntryContainer entryContainer : pool.entries) {
+                    addEntryDrops(entryContainer, context, output);
                 }
             }
+            context.popVisitedElement(visitedEntry);
         }
-        return items;
+    }
+
+    private static void addEntryDrops(LootPoolEntryContainer entryContainer, LootContext context, Consumer<ItemStack> output) {
+        if (!entryContainer.canRun(context)) {
+            return;
+        }
+        if (entryContainer instanceof CompositeEntryBase compositeEntry) {
+            for (LootPoolEntryContainer child : compositeEntry.children) {
+                addEntryDrops(child, context, output);
+            }
+        } else if (entryContainer instanceof LootPoolSingletonContainer singletonEntry) {
+            Consumer<ItemStack> functionOutput = item -> output.accept(applyFunctionsExceptExplorationMaps(singletonEntry.functions, item, context));
+            if (singletonEntry instanceof LootTableReference tableReference) {
+                addLootTableDrops(context.getResolver().getLootTable(tableReference.name), context, functionOutput);
+            } else {
+                singletonEntry.createItemStack(functionOutput, context);
+            }
+        } else {
+            entryContainer.expand(context, entry -> entry.createItemStack(output, context));
+        }
     }
 
     private static ItemStack applyFunctionsExceptExplorationMaps(LootItemFunction[] functions, ItemStack itemStack, LootContext context) {
