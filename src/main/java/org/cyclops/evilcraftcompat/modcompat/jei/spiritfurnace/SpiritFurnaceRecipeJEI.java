@@ -1,6 +1,7 @@
 package org.cyclops.evilcraftcompat.modcompat.jei.spiritfurnace;
 
 import com.google.common.collect.Lists;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
@@ -15,11 +16,13 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.CompositeEntryBase;
+import net.minecraft.world.level.storage.loot.entries.ExpandableContainerBase;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
-import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
+import net.minecraft.world.level.storage.loot.entries.SingleEntryContainerBase;
 import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
+import net.minecraft.world.level.storage.loot.functions.SequenceFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
@@ -102,33 +105,38 @@ public class SpiritFurnaceRecipeJEI {
     }
 
     private static void addEntryDrops(LootPoolEntryContainer entryContainer, LootContext context, Consumer<ItemStack> output) {
+        Consumer<ItemStack> modifierOutput = entryContainer.modifier.isEmpty() ? output
+                : item -> output.accept(applyModifierExceptExplorationMaps(entryContainer.modifier.get().value(), item, context));
         if (entryContainer instanceof CompositeEntryBase compositeEntry) {
             for (LootPoolEntryContainer child : compositeEntry.children) {
-                addEntryDrops(child, context, output);
+                addEntryDrops(child, context, modifierOutput);
             }
-        } else if (entryContainer instanceof LootPoolSingletonContainer singletonEntry) {
-            Consumer<ItemStack> functionOutput = item -> output.accept(applyFunctionsExceptExplorationMaps(singletonEntry.functions, item, context));
-            if (singletonEntry instanceof NestedLootTable nestedEntry) {
-                LootTable nestedTable = nestedEntry.contents.map(
-                        key -> context.getLevel().getServer().reloadableRegistries().getLootTable(key),
-                        table -> table
-                );
-                addLootTableDrops(nestedTable, context, functionOutput);
-            } else {
-                singletonEntry.createItemStack(functionOutput, context);
+        } else if (entryContainer instanceof NestedLootTable nestedEntry) {
+            for (Holder<LootTable> nestedTable : nestedEntry.value) {
+                addLootTableDrops(nestedTable.value(), context, modifierOutput);
             }
+        } else if (entryContainer instanceof SingleEntryContainerBase singleEntry) {
+            // expandRaw skips the entry condition and modifier, which are handled above.
+            singleEntry.expandRaw(context, entry -> entry.createItemStack(modifierOutput, context));
+        } else if (entryContainer instanceof ExpandableContainerBase expandableEntry) {
+            expandableEntry.expandRaw(context, entry -> entry.createItemStack(modifierOutput, context));
         } else {
             entryContainer.expand(context, entry -> entry.createItemStack(output, context));
         }
     }
 
-    private static ItemStack applyFunctionsExceptExplorationMaps(List<LootItemFunction> functions, ItemStack itemStack, LootContext context) {
-        ItemStack result = itemStack.copy();
-        for (LootItemFunction function : functions) {
-            if (!(function instanceof ExplorationMapFunction)) {
-                result = function.apply(result, context);
-            }
+    private static ItemStack applyModifierExceptExplorationMaps(LootItemFunction function, ItemStack itemStack, LootContext context) {
+        if (function instanceof ExplorationMapFunction) {
+            return itemStack;
         }
+        if (function instanceof SequenceFunction sequenceFunction) {
+            ItemStack result = itemStack;
+            for (Holder<LootItemFunction> child : sequenceFunction.functions) {
+                result = applyModifierExceptExplorationMaps(child.value(), result, context);
+            }
+            return result;
+        }
+        ItemStack result = function.apply(itemStack.copy(), context);
         return result.isEmpty() ? itemStack : result;
     }
 
